@@ -1,13 +1,28 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
+using BoardLobbyServer.Model;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SignalRChat.Hubs
 {
     public class ChatHub : Hub
     {
-        public async Task SendMessage(string user, string message)
+        public async Task CreateLobby(string user, string lobbyName)
         {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            Lobby lobby = Lobby.Instance;
+            lobby.AddGame(lobbyName);
+            await Clients.All.SendAsync("ReceiveLobby", user, lobbyName);
+
         }
+        public async Task getLobbies()
+        {
+            Lobby lobby = Lobby.Instance;
+            string lobbies = JsonSerializer.Serialize(lobby.Games);
+            await Clients.All.SendAsync("ReceiveLobbies", lobbies);
+
+        }
+
+
     }
 }
