@@ -27,11 +27,11 @@ connection.on("ReceiveLobby", function (user, lobbyName) {
 });
 
 connection.start().then(function () {
-
+    
     connection.invoke("getLobbies").catch(function (err) {
         return console.error(err.toString());
     });
-
+    
     document.getElementById("createButton").disabled = false;
 }).catch(function (err) {
     return console.error(err.toString());
