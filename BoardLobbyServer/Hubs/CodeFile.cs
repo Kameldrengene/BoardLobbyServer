@@ -15,6 +15,7 @@ namespace SignalRChat.Hubs
             await Clients.All.SendAsync("ReceiveLobby", user, lobbyName);
 
         }
+        // Når man joiner serveren så må tidligere tilsluttede bruger skal ikke have listen igen
         public async Task getLobbies()
         {
             Lobby lobby = Lobby.Instance;
