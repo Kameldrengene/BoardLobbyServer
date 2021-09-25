@@ -2,43 +2,43 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BoardLobbyServer.DTO;
 
 namespace BoardLobbyServer.Model
 {
-    public sealed class Lobby
+    public sealed class LobbyData
     {
         private static readonly object padlock = new object();
-        private List<String> _games;
-        private static Lobby instance = null;
+        private List<Lobby> _games;
+        private static LobbyData instance = null;
 
-        Lobby()
+        LobbyData()
         {
-            _games = new List<string>();
-            string game1 = "HEj";
-            _games.Add(game1);
+            _games = new List<Lobby>();
+            _games.Add(new Lobby("volkan","hygge",2));
         }
 
-        public static Lobby Instance
+        public static LobbyData Instance
         {
             get {
                 lock (padlock)
                 {
                     if (instance == null)
                     {
-                        instance = new Lobby();
+                        instance = new LobbyData();
                     }
                     return instance;
                 }
             }
         }
 
-        public List<String> Games
+        public List<Lobby> Games
         {
             get { return _games; }
             set { this._games = value; }
         }
 
-        public void AddGame(String game)
+        public void AddGame(Lobby game)
         {
             this._games.Add(game);
         }

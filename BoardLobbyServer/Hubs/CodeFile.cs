@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BoardLobbyServer.Model;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using BoardLobbyServer.DTO;
 
 namespace SignalRChat.Hubs
 {
@@ -10,19 +11,11 @@ namespace SignalRChat.Hubs
     {
         public async Task CreateLobby(string user, string lobbyName)
         {
-            Lobby lobby = Lobby.Instance;
-            lobby.AddGame(lobbyName);
+            LobbyData lobby = LobbyData.Instance;
+            lobby.AddGame(new Lobby(user, lobbyName, 3));
             await Clients.All.SendAsync("ReceiveLobby", user, lobbyName);
-
+            
         }
-        public async Task getLobbies()
-        {
-            Lobby lobby = Lobby.Instance;
-            string lobbies = JsonSerializer.Serialize(lobby.Games);
-            await Clients.All.SendAsync("ReceiveLobbies", lobbies);
-
-        }
-
-
+       
     }
 }
