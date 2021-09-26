@@ -1,10 +1,22 @@
 ﻿"use strict";
-
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
 //Disable send button until connection is established
 
 document.getElementById("createButton").disabled = true;
+
+function createPlayer() {
+    let playername = document.getElementById("playername").value;
+    connection.invoke("CreatePlayer", playername).catch(function (err) {
+        return console.error(err.toString());
+    });
+    return false;
+}
+
+connection.on("CreatePlayer", function (player) {
+    console.log(player);
+    document.getElementById('createbutton').click();
+});
 
 
 connection.on("ReceiveLobbies", function (lobbies) {
@@ -27,11 +39,6 @@ connection.on("ReceiveLobby", function (user, lobbyName) {
 });
 
 connection.start().then(function () {
-    
-    connection.invoke("getLobbies").catch(function (err) {
-        return console.error(err.toString());
-    });
-    
     document.getElementById("createButton").disabled = false;
 }).catch(function (err) {
     return console.error(err.toString());
@@ -41,6 +48,7 @@ connection.start().then(function () {
 document.getElementById("createButton").addEventListener("click", function (event) {
     var user = document.getElementById("playerName").value;
     var lobbyName = document.getElementById("lobbyName").value;
+    console.log("evbetnt")
     connection.invoke("CreateLobby", user, lobbyName).catch(function (err) {
         return console.error(err.toString());
     });

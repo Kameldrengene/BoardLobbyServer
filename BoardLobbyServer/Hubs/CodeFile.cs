@@ -12,10 +12,18 @@ namespace SignalRChat.Hubs
         public async Task CreateLobby(string user, string lobbyName)
         {
             LobbyData lobby = LobbyData.Instance;
-            lobby.AddGame(new Lobby(user, lobbyName, 3));
-            await Clients.All.SendAsync("ReceiveLobby", user, lobbyName);
+            string playername = PlayerData.Instance.Name;
+            lobby.AddGame(new Lobby(playername, lobbyName, 3));
+            await Clients.All.SendAsync("ReceiveLobby", playername, lobbyName);
             
         }
-       
+        public async Task CreatePlayer(string user)
+        {
+            PlayerData player = PlayerData.Instance;
+            player.Name = user;
+            await Clients.Caller.SendAsync("CreatePlayer", player);
+
+        }
+
     }
 }

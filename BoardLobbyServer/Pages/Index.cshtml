@@ -1,43 +1,26 @@
 ﻿@page
 
-<!-- Lobby code her. -->
+<form id="playerdata" onsubmit="return createPlayer();">
+    <div class="form-group">
+        <label for="playername">Enter Your Name</label>
+        <input type="text" class="form-control" id="playername" aria-describedby="nameplz" placeholder="Enter Your Name">
+        <small id="nameplz" class="form-text text-muted">Please enter your name so anyone else can see you.</small>
+    </div>
+    <button id="okbutton" type="submit" class="btn btn-primary">OK</button>
+</form>
 
-<div class="container">
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-2">Player Name</div>
-        <div class="col-4"><input type="text" id="playerName" /></div>
+<div class="row no-gutters">
+    <div class="col-md-6 no-gutters ">
+        <div class="leftside d-flex justify-content-center align-items-center">
+            <a id="listlobbybutton" class="btn btn-link btn-lg text-dark" asp-area="" asp-page="/joinlobby">joinlobby</a>
+
+        </div>
     </div>
-    <div class="row">
-        <div class="col-2">Lobby name</div>
-        <div class="col-4"><input type="text" id="lobbyName" /></div>
-    </div>
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-6">
-            <input type="button" id="createButton" value="Create Lobby" />
+    <div class="col-md-6 no-gutters">
+        <div class="rightside d-flex justify-content-center align-items-center">
+            <a id="createbutton" class="btn btn-link btn-lg text-dark" asp-area="" asp-page="/createlobby">Create Lobby</a>
         </div>
     </div>
 </div>
-
-<!-- ^^^^^^^^^^^^^^^ -->
-
-<div class="row">
-    <div class="col-12">
-        <hr />
-    </div>
-</div>
-<div class="row">
-    <div class="col-6">
-        <ul id="messagesList"></ul>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-6">
-        <ul id="LobbyList"></ul>
-    </div>
-</div>
-
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
+<script src="~/js/playerdata.js"></script>
