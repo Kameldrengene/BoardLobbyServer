@@ -4,8 +4,8 @@
 <div class="container">
     <div class="row">&nbsp;</div>
     <div class="row">
-        <div class="col-2">Player Name</div>
-        <div class="col-4"><input type="text" id="playerName" /></div>
+        <div class="col-2">Player name</div>
+        <div id="playername" class="col-4"></div>
     </div>
     <div class="row">
         <div class="col-2">Lobby name</div>
@@ -18,6 +18,9 @@
         </div>
     </div>
 </div>
+<script>
+    document.getElementById("playername").innerHTML = window.localStorage.getItem('playername');
+</script>
 
 <!-- ^^^^^^^^^^^^^^^ -->
 
@@ -39,4 +42,4 @@
 </div>
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
+<script src="~/js/create.js"></script>

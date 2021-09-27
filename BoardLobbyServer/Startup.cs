@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SignalRChat.Hubs;
-using BoardLobbyServer.Hubs;
 
 namespace BoardLobbyServer
 {
@@ -53,8 +52,7 @@ namespace BoardLobbyServer
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                endpoints.MapHub<ChatHub>("/chatHub");
-                endpoints.MapHub<ListLobbiesHub>("/listlobbies");
+                endpoints.MapHub<LobbyHub>("/lobbyHub");
             });
         }
     }

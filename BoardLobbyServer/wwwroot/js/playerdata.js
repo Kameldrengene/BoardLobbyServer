@@ -1,5 +1,5 @@
 ﻿"use strict";
-var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+var connection = new signalR.HubConnectionBuilder().withUrl("/lobbyHub").build();
 
 //Disable send button until connection is established
 
@@ -15,6 +15,7 @@ function createPlayer() {
 
 connection.on("CreatePlayer", function (player) {
     console.log(player);
+    window.localStorage.setItem('playername', player.name);
     document.getElementById('createbutton').click();
 });
 
