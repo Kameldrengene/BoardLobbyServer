@@ -14,6 +14,7 @@ connection.start().then(function () {
 // TODO: Når man opretter en ny spil så skal serveren returnere spillet med en uniq id og kalderen skal diregeres til
 // ny page med spillet. 
 
+
 //Når knappen trykkes kald funktionen CreateLobby med  værdierne i felterne 
 document.getElementById("createButton").addEventListener("click", function (event) {
     var user = window.localStorage.getItem('playername');

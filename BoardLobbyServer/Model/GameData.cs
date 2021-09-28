@@ -7,6 +7,7 @@ namespace BoardLobbyServer.Model
 {
     public class GameData
     {
+        private string _id;
         private string _gameName;
         private PlayerData _leader;
         private List<PlayerData> _participants;
@@ -25,6 +26,11 @@ namespace BoardLobbyServer.Model
         {
             get { return _gameName; }
             set { this._gameName = value; }
+        }
+        public string Id
+        {
+            get { return _id; }
+            set { this._id = value; }
         }
 
         public PlayerData Leader

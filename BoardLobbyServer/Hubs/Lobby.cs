@@ -13,8 +13,12 @@ namespace SignalRChat.Hubs
             GameData game = new GameData();
             game.Leader = new PlayerData(leaderName);
             game.GameName = gameName;
+            Guid myuuid = Guid.NewGuid();
+            string myuuidAsString = myuuid.ToString();
+
             LobbyData.Instance.AddGame(game);
             await Clients.All.SendAsync("ReceiveGame", game);
+            await Clients.Caller.SendAsync("EnterGame", game);
         }
         public async Task CreatePlayer(string playerName)
         {
