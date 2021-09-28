@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using BoardLobbyServer.Model;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System;
+using System.Collections.Generic;
 
 namespace SignalRChat.Hubs
 {
@@ -13,9 +15,6 @@ namespace SignalRChat.Hubs
             GameData game = new GameData();
             game.Leader = new PlayerData(leaderName);
             game.GameName = gameName;
-            Guid myuuid = Guid.NewGuid();
-            string myuuidAsString = myuuid.ToString();
-
             LobbyData.Instance.AddGame(game);
             await Clients.All.SendAsync("ReceiveGame", game);
             await Clients.Caller.SendAsync("EnterGame", game);
@@ -28,9 +27,20 @@ namespace SignalRChat.Hubs
         }
         public async Task getLobbies()
         {
-            LobbyData lobby = LobbyData.Instance;
-            string lobbies = JsonSerializer.Serialize(lobby.Games);
+            List<GameData> lobby = new List<GameData>(LobbyData.Instance.Games.Values);
+            string lobbies = JsonSerializer.Serialize(lobby);
             await Clients.All.SendAsync("ReceiveLobbies", lobbies);
+        }
+        public async Task MonitorGame(string gameId)
+        {
+            GameData result;
+            if(LobbyData.Instance.Games.TryGetValue(gameId, out result))
+            {
+                await Clients.Caller.SendAsync("MonitorGame", result);
+            }
+            
+            
+
         }
 
     }

@@ -25,21 +25,11 @@
 <!-- ^^^^^^^^^^^^^^^ -->
 
 <div class="row">
-    <div class="col-12">
-        <hr />
-    </div>
-</div>
-<div class="row">
     <div class="col-6">
-        <ul id="messagesList"></ul>
+        <a hidden id="entergame" class="btn btn-link btn-lg text-dark" asp-area="" asp-page="/Game">Enter Game</a>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-6">
-        <ul id="LobbyList"></ul>
-    </div>
-</div>
-
+@section Scripts{
+    <script src="~/js/create.js"></script>
+}
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/create.js"></script>

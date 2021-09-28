@@ -13,13 +13,16 @@ connection.start().then(function () {
 
 // TODO: Når man opretter en ny spil så skal serveren returnere spillet med en uniq id og kalderen skal diregeres til
 // ny page med spillet. 
-
+connection.on("EnterGame", function (game) {
+    const gameId = game.id;  
+    window.localStorage.setItem('game', gameId);
+    document.getElementById('entergame').click();
+});
 
 //Når knappen trykkes kald funktionen CreateLobby med  værdierne i felterne 
 document.getElementById("createButton").addEventListener("click", function (event) {
     var user = window.localStorage.getItem('playername');
     var lobbyName = document.getElementById("lobbyName").value;
-    console.log(user);
     connection.invoke("CreateLobby", user, lobbyName).catch(function (err) {
         return console.error(err.toString());
     });

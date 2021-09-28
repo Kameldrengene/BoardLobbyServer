@@ -20,9 +20,7 @@ connection.on("CreatePlayer", function (player) {
 });
 
 
-
 connection.start().then(function () {
-    
     document.getElementById("okbutton").disabled = false;
 }).catch(function (err) {
     return console.error(err.toString());

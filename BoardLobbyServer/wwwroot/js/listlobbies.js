@@ -21,9 +21,10 @@ function createBtn(id) {
 }
 
 connection.on("ReceiveLobbies", function (lobbies) {
+    console.log(lobbies);
     const lobbiesObj = JSON.parse(lobbies);
     var tbody = document.getElementById('lobbyTable').getElementsByTagName('tbody')[0];
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < lobbiesObj.length; i++) {
         var newRow = tbody.insertRow();
         var newCell1 = newRow.insertCell();
         var newCell2 = newRow.insertCell();
@@ -33,7 +34,11 @@ connection.on("ReceiveLobbies", function (lobbies) {
         var text1 = document.createTextNode(i + 1);
         var text2 = document.createTextNode(`${lobbiesObj[i].Leader.Name}`);
         var text3 = document.createTextNode(`${lobbiesObj[i].GameName}`);
-        var text4 = document.createTextNode(`${lobbiesObj[i].Participants.length}`);
+        if (lobbiesObj[i].Participants == null) {
+            var text4 = document.createTextNode("0");
+        } else {
+            var text4 = document.createTextNode(`${lobbiesObj[i].Participants.length}`);
+        }
         newCell1.appendChild(text1);
         newCell2.appendChild(text2);
         newCell3.appendChild(text3);
@@ -46,5 +51,7 @@ connection.on("ReceiveLobbies", function (lobbies) {
 connection.on("ReceiveGame", function (game) {
     console.log(game);
     console.log(game.gameName);
+    $('.table')
+        .append('<tr><td>' + rankPosition + '</td><td>' + rankPosition + '</td><td>' + rankings[i].name + ', ' + rankings[i].score + ' pts</tr>');
     // Tilføj spillet ind i table her
 });

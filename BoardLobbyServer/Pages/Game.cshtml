@@ -2,10 +2,9 @@
 @model BoardLobbyServer.Pages.GameModel
 @{
 }
-<h1> Gamename: </h1>
-<h1> xxx </h1>
-<h1> Leadername: </h1>
-<h1> xxx </h1>
+<h1 id="gamename"></h1>
+<h4 id="gameid"></h4>
+<h3 id="leadername"></h3>
 
 <div class="row">
     <div class="col-12">
@@ -16,10 +15,10 @@
 <div class="row">
     <div class="col-6">
         <ul id="Participants">
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
         </ul>
     </div>
 </div>
+@section Scripts{
+    <script src="~/js/game.js"></script>
+}
+<script src="~/js/signalr/dist/browser/signalr.js"></script>

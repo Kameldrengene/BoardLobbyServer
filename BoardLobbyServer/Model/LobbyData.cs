@@ -9,16 +9,16 @@ namespace BoardLobbyServer.Model
     {
         private static readonly object padlock = new object();
         private static LobbyData instance = null;
-        private List<GameData> _games;
+        private Dictionary<string,GameData> _games;
 
         LobbyData()
         {
-            _games = new List<GameData>();
+            _games = new Dictionary<string,GameData>();
             PlayerData leader = new PlayerData("Kamel");
             List<PlayerData> participants = new List<PlayerData>();
             PlayerData part1 = new PlayerData("John Doe");
             participants.Add(part1);
-            _games.Add(new GameData("game1",leader,participants));
+            _games.Add("s234dfgh34",new GameData("s234dfgh34","game1",leader,participants));
         }
 
         public static LobbyData Instance
@@ -35,7 +35,7 @@ namespace BoardLobbyServer.Model
             }
         }
 
-        public List<GameData> Games
+        public Dictionary<string,GameData> Games
         {
             get { return _games; }
             set { this._games = value; }
@@ -43,7 +43,10 @@ namespace BoardLobbyServer.Model
 
         public void AddGame(GameData game)
         {
-            this._games.Add(game);
+            Guid guid = Guid.NewGuid();
+            string gameid = guid.ToString();
+            game.Id = gameid;
+            this._games.Add(gameid,game);
         }
     }
 }

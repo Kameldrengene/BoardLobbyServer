@@ -16,12 +16,14 @@ namespace BoardLobbyServer.Model
         {
         }
 
-        public GameData(string gameName, PlayerData leader, List<PlayerData> participants)
+        public GameData(string id, string gameName, PlayerData leader, List<PlayerData> participants)
         {
+            _id = id;
             _gameName = gameName;
             _leader = leader;
             _participants = participants;
         }
+
         public string GameName
         {
             get { return _gameName; }
