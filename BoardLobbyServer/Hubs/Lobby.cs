@@ -29,7 +29,7 @@ namespace SignalRChat.Hubs
         {
             List<GameData> lobby = new List<GameData>(LobbyData.Instance.Games.Values);
             string lobbies = JsonSerializer.Serialize(lobby);
-            await Clients.All.SendAsync("ReceiveLobbies", lobbies);
+            await Clients.Caller.SendAsync("ReceiveLobbies", lobbies);
         }
         public async Task MonitorGame(string gameId)
         {
