@@ -9,19 +9,8 @@
     <button id="okbutton" type="submit" class="btn btn-primary">OK</button>
 </form>
 
-<div class="row no-gutters">
-    <div class="col-md-6 no-gutters ">
-        <div class="leftside d-flex justify-content-center align-items-center">
-            <a id="listlobbybutton" class="btn btn-link btn-lg text-dark" asp-area="" asp-page="/joinlobby">joinlobby</a>
+<a hidden id="createbutton" class="btn btn-link btn-lg text-dark" asp-area="" asp-page="/createlobby">Create Lobby</a>
 
-        </div>
-    </div>
-    <div class="col-md-6 no-gutters">
-        <div class="rightside d-flex justify-content-center align-items-center">
-            <a id="createbutton" class="btn btn-link btn-lg text-dark" asp-area="" asp-page="/createlobby">Create Lobby</a>
-        </div>
-    </div>
-</div>
 @section Scripts{ 
     <script src="~/js/playerdata.js"></script>
 }
