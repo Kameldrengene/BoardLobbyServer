@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BoardLobbyServer.DTO;
 
 namespace BoardLobbyServer.Model
 {
     public sealed class LobbyData
     {
         private static readonly object padlock = new object();
-        private List<Lobby> _games;
         private static LobbyData instance = null;
+        private Dictionary<string,GameData> _games;
 
         LobbyData()
         {
-            _games = new List<Lobby>();
-            _games.Add(new Lobby("volkan","hygge",2));
+            _games = new Dictionary<string,GameData>();
+            PlayerData leader = new PlayerData("Kamel");
+            List<PlayerData> participants = new List<PlayerData>();
+            PlayerData part1 = new PlayerData("John Doe");
+            participants.Add(part1);
+            _games.Add("s234dfgh34",new GameData("s234dfgh34","game1",leader,participants));
         }
 
         public static LobbyData Instance
@@ -32,15 +35,18 @@ namespace BoardLobbyServer.Model
             }
         }
 
-        public List<Lobby> Games
+        public Dictionary<string,GameData> Games
         {
             get { return _games; }
             set { this._games = value; }
         }
 
-        public void AddGame(Lobby game)
+        public void AddGame(GameData game)
         {
-            this._games.Add(game);
+            Guid guid = Guid.NewGuid();
+            string gameid = guid.ToString();
+            game.Id = gameid;
+            this._games.Add(gameid,game);
         }
     }
 }

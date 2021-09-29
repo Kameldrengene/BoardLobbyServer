@@ -1,0 +1,35 @@
+﻿@page
+<!-- Lobby code her. -->
+
+<div class="container">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-2">Player name</div>
+        <div id="playername" class="col-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-2">Lobby name</div>
+        <div class="col-4"><input type="text" id="lobbyName" /></div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input type="button" id="createButton" value="Create Lobby" />
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById("playername").innerHTML = window.localStorage.getItem('playername');
+</script>
+
+<!-- ^^^^^^^^^^^^^^^ -->
+
+<div class="row">
+    <div class="col-6">
+        <a hidden id="entergame" class="btn btn-link btn-lg text-dark" asp-area="" asp-page="/Game">Enter Game</a>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/create.js"></script>
+}
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
