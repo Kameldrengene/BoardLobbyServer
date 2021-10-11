@@ -10,13 +10,21 @@ connection.start().then(function () {
     return console.error(err.toString());
 })
 
-function createBtn(id) {
+function createBtn(game) {
     var element3 = document.createElement("input");
-    element3.id = id;
+    element3.id = game;
     element3.type = "button";
     element3.name = "add";
     element3.value = "Join";
     element3.className = "btn btn-primary btn-xs";
+    element3.addEventListener("click", function () {
+        let player = window.localStorage.getItem("playername");
+        alert(player);
+        connection.invoke("addParticipant", game, player).catch (function (err) {
+            return console.error(err.toString());
+        });
+    })
+
     return element3;
 }
 
@@ -43,8 +51,8 @@ connection.on("ReceiveLobbies", function (lobbies) {
         newCell2.appendChild(text2);
         newCell3.appendChild(text3);
         newCell4.appendChild(text4);
-        newCell5.appendChild(createBtn(i));
-    }
+        newCell5.appendChild(createBtn(`${lobbiesObj[i].Id}`));
+    }   
 
 });
 

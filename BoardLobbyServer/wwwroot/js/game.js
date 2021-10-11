@@ -16,4 +16,23 @@ connection.on("MonitorGame", function (game) {
     document.getElementById("gamename").innerHTML = game.gameName;
     document.getElementById("gameid").innerHTML = game.id;
     document.getElementById("leadername").innerHTML = game.leader.name;
+    Array.from(game.participants).forEach(function (participant, index) {
+        console.log(participant);
+        var ul = document.getElementById("Participants");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(participant.name));
+        ul.appendChild(li);
+    })
+});
+
+connection.on("RecieveParticipants", function (participants) {
+    //console.log(participants)
+    const gamepars = JSON.parse(participants);
+    Array.from(gamepars).forEach(function (participant, index) {
+        console.log(participant);
+        var ul = document.getElementById("Participants");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(participant.Name));
+        ul.appendChild(li);
+    })
 });

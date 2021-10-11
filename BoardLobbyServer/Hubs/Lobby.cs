@@ -19,6 +19,12 @@ namespace SignalRChat.Hubs
             await Clients.All.SendAsync("ReceiveGame", game);
             await Clients.Caller.SendAsync("EnterGame", game);
         }
+
+        public async Task JoinLobby(GameData game, PlayerData player)
+        {
+            game.Participants.Add(player);
+            await Clients.Caller.SendAsync("AddedPlayer", game);
+        }
         public async Task CreatePlayer(string playerName)
         {
             PlayerData player = new PlayerData(playerName);
@@ -30,6 +36,20 @@ namespace SignalRChat.Hubs
             List<GameData> lobby = new List<GameData>(LobbyData.Instance.Games.Values);
             string lobbies = JsonSerializer.Serialize(lobby);
             await Clients.Caller.SendAsync("ReceiveLobbies", lobbies);
+        }
+
+        public async Task addParticipant(string gameId, string playerName)
+        {
+            GameData result;
+            if (LobbyData.Instance.Games.TryGetValue(gameId, out result))
+            {
+                PlayerData playerData = new PlayerData(playerName);
+                result.Participants.Add(playerData);
+                List<PlayerData> participants = new List<PlayerData>(result.Participants);
+                string jparticipants = JsonSerializer.Serialize(participants);
+                await Clients.All.SendAsync("RecieveParticipants", jparticipants);
+            }
+            
         }
         public async Task MonitorGame(string gameId)
         {

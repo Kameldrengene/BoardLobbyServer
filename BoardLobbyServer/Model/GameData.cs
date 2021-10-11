@@ -14,6 +14,7 @@ namespace BoardLobbyServer.Model
 
         public GameData()
         {
+            Participants = new List<PlayerData>();
         }
 
         public GameData(string id, string gameName, PlayerData leader, List<PlayerData> participants)
