@@ -1,5 +1,8 @@
 # BoardLobbyServer :rocket:
 
+Prerequisite:
+* .NET 5.0
+
 Publish project with following command in project root:
 ### ` dotnet publish -c Release -o published `
 
