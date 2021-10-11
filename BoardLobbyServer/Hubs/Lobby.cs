@@ -10,6 +10,11 @@ namespace SignalRChat.Hubs
 {
     public class LobbyHub : Hub
     {
+        public override Task OnConnectedAsync()
+        {
+            Clients.Caller.SendAsync("Connected", Context.ConnectionId);
+            return base.OnConnectedAsync();
+        }
         public async Task CreateLobby(string leaderName, string gameName)
         {
             GameData game = new GameData();
