@@ -43,6 +43,12 @@ namespace SignalRChat.Hubs
             await Clients.Caller.SendAsync("ReceiveLobbies", lobbies);
         }
 
+        public async Task getBareLobbies()
+        {
+            List<GameData> lobby = new List<GameData>(LobbyData.Instance.Games.Values);
+            await Clients.Caller.SendAsync("ReceiveLobbies", lobby);
+        }
+
         public async Task addParticipant(string gameId, string playerName)
         {
             GameData result;
