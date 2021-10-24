@@ -70,8 +70,15 @@ namespace SignalRChat.Hubs
                 await Clients.Caller.SendAsync("MonitorGame", result);
             }
             
-            
-
+        }
+        public async Task deleteGame(string gameId)
+        {
+           
+            if (LobbyData.Instance.Games.ContainsKey(gameId))
+            {
+                LobbyData.Instance.Games.Remove(gameId);
+                await Clients.All.SendAsync("RemoveGame", gameId);
+            }
         }
 
     }
