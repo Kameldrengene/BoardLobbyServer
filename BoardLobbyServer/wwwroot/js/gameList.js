@@ -11,20 +11,27 @@ connection.start().then(function () {
 })
 
 function createBtn(game) {
-    var element3 = document.createElement("input");
+    var element3 = document.createElement("button");
     element3.id = game;
     element3.type = "button";
-    element3.name = "add";
-    element3.value = "Watch";
-    element3.className = "btn btn-info btn-xs";
+    element3.innerText = "Watch";
+    element3.name = "watch";
+
+    //element3.href = "/Game";
+    element3.className = "btn btn-info";
+    
     element3.addEventListener("click", function () {
-        let player = window.localStorage.getItem("playername");
-        alert(player);
-        connection.invoke("addParticipant", game, player).catch(function (err) {
+        
+        connection.invoke("MonitorGame", game).catch(function (err) {
             return console.error(err.toString());
         });
-    })
 
+
+
+       // <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
+      // <a hidden id="entergame" class="btn btn-link btn-lg text-dark" asp-area="" asp-page="/Game">Enter Game</a>
+    })
+    
     return element3;
 }
 
@@ -108,4 +115,26 @@ connection.on("RemoveGame", function (game) {
     console.log(i);
     var table = document.getElementById('lobbyTable');
     table.deleteRow(i);
+});
+
+connection.on("MonitorGame", function (game) {
+    console.log(game);
+
+    let gameinfo = "Leader: " + game.leader.name + "\n";
+    gameinfo += "Participants: \n"
+    for (let participant of game.participants) {
+        gameinfo += participant.name + "\n";
+    }
+
+
+
+    if (confirm("Game id:" + game.id +"\n"+ gameinfo)) {
+        $(document).ready(function () {
+            $('<form action="/Game"></form>').appendTo('body').submit();
+        });
+    } else {
+        
+    }
+    
+    
 });

@@ -12,5 +12,11 @@ namespace BoardLobbyServer.Pages
         public void OnGet()
         {
         }
+        [BindProperty]
+        public string GameId { get; set; }
+        public void OnPost()
+        {
+            // do something with gameId
+        }
     }
 }
