@@ -9,14 +9,21 @@
     </div>
     <div class="row">
         <div class="col-2">Lobby name</div>
-        <div class="col-4"><input type="text" id="lobbyName" /></div>
+        <div class="col-4">
+            <form id="sendgameid" method="post">
+                <input id="formgamename" type="text" name="gameid" />
+
+                <button hidden class="btn btn-primary" id="gamewatchbutton" asp-page="Game">click</button>
+            </form>
+        </div>
     </div>
     <div class="row">&nbsp;</div>
     <div class="row">
         <div class="col-6">
-            <input type="button" id="createButton" value="Create Lobby" />
+            <input type="button" class="btn btn-primary" id="createButton" value="Create Lobby" />
         </div>
     </div>
+    
 </div>
 <script>
     document.getElementById("playername").innerHTML = window.localStorage.getItem('playername');
@@ -26,7 +33,7 @@
 
 <div class="row">
     <div class="col-6">
-        <a hidden id="entergame" class="btn btn-link btn-lg text-dark" asp-area="" asp-page="/Game">Enter Game</a>
+        
     </div>
 </div>
 @section Scripts{

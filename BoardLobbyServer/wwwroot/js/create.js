@@ -16,13 +16,15 @@ connection.start().then(function () {
 connection.on("EnterGame", function (game) {
     const gameId = game.id;  
     window.localStorage.setItem('game', gameId);
-    document.getElementById('entergame').click();
+    $("#formgamename").val(gameId);
+    $("#gamewatchbutton").click();
+    
 });
 
 //Når knappen trykkes kald funktionen CreateLobby med  værdierne i felterne 
 document.getElementById("createButton").addEventListener("click", function (event) {
     var user = window.localStorage.getItem('playername');
-    var lobbyName = document.getElementById("lobbyName").value;
+    var lobbyName = document.getElementById("formgamename").value;
     connection.invoke("CreateLobby", user, lobbyName).catch(function (err) {
         return console.error(err.toString());
     });

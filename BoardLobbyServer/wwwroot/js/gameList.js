@@ -125,12 +125,14 @@ connection.on("MonitorGame", function (game) {
     for (let participant of game.participants) {
         gameinfo += participant.name + "\n";
     }
-
-
+    gameinfo += "\n"
+    gameinfo += "Watch the game lobby?"
 
     if (confirm("Game id:" + game.id +"\n"+ gameinfo)) {
         $(document).ready(function () {
-            $('<form action="/Game"></form>').appendTo('body').submit();
+            $("#formgameid").val(game.id);
+            $("#gamewatchbutton").click();
+            
         });
     } else {
         

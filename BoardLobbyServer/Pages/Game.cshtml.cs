@@ -9,14 +9,17 @@ namespace BoardLobbyServer.Pages
 {
     public class GameModel : PageModel
     {
+        public string Message { get; private set; } = "PageModel in C#";
+        public string GameId { get; set; } = "0";
         public void OnGet()
         {
+ 
         }
-        [BindProperty]
-        public string GameId { get; set; }
         public void OnPost()
         {
-            // do something with gameId
+
+            if (Request.Form.ContainsKey("gameid"))
+                GameId = Request.Form["gameid"];
         }
     }
 }

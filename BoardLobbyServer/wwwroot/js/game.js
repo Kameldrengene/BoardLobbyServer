@@ -2,7 +2,9 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/lobbyHub").build();
 
 connection.start().then(function () {
-    const game = window.localStorage.getItem('game');
+    let game = window.localStorage.getItem('game');
+     console.log(game);
+    game = $("#gameidfromlist").text();
     console.log(game);
     connection.invoke("MonitorGame", game).catch(function (err) {
         return console.error(err.toString());
@@ -26,7 +28,7 @@ connection.on("MonitorGame", function (game) {
 });
 
 connection.on("RecieveParticipants", function (participants) {
-    //console.log(participants)
+    console.log(participants)
     const gamepars = JSON.parse(participants);
     Array.from(gamepars).forEach(function (participant, index) {
         console.log(participant);
