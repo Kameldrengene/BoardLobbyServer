@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SignalRChat.Hubs;
+using BoardLobbyServer.Model;
+using Microsoft.Extensions.Options;
+using BoardLobbyServer.Services;
 
 namespace BoardLobbyServer
 {
@@ -24,6 +27,13 @@ namespace BoardLobbyServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // requires using Microsoft.Extensions.Options
+            services.Configure<BoardServerDatabaseSettings>(
+                Configuration.GetSection(nameof(BoardServerDatabaseSettings)));
+            services.AddSingleton<IBoardServerDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<BoardServerDatabaseSettings>>().Value);
+            services.AddSingleton<AdminService>();
+            services.AddControllers();
             services.AddRazorPages();
             services.AddSignalR();
         }
@@ -51,6 +61,7 @@ namespace BoardLobbyServer
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapRazorPages();
                 endpoints.MapHub<LobbyHub>("/lobbyHub");
             });
