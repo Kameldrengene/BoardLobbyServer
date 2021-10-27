@@ -56,6 +56,7 @@ connection.on("ReceiveLobbies", function (lobbies) {
 
 });
 
+
 connection.on("ReceiveGame", function (game) {
     console.log(game);
     console.log(game.gameName);

@@ -28,7 +28,10 @@ namespace SignalRChat.Hubs
         public async Task JoinLobby(GameData game, PlayerData player)
         {
             game.Participants.Add(player);
-            await Clients.Caller.SendAsync("AddedPlayer", game);
+
+            //temporary logic of changing status
+            if (game.Participants.Count == 4) game.Status = "started"; 
+            await Clients.All.SendAsync("AddedPlayer", game);
         }
         public async Task CreatePlayer(string playerName)
         {
@@ -49,6 +52,8 @@ namespace SignalRChat.Hubs
             await Clients.Caller.SendAsync("ReceiveLobbies", lobby);
         }
 
+       
+
         public async Task addParticipant(string gameId, string playerName)
         {
             GameData result;
@@ -58,7 +63,9 @@ namespace SignalRChat.Hubs
                 result.Participants.Add(playerData);
                 List<PlayerData> participants = new List<PlayerData>(result.Participants);
                 string jparticipants = JsonSerializer.Serialize(participants);
+                if (result.Participants.Count == 4) result.Status = "started";
                 await Clients.All.SendAsync("RecieveParticipants", jparticipants);
+                await Clients.All.SendAsync("RecieveUpdatedGame", result);
             }
             
         }
