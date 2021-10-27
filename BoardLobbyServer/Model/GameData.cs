@@ -11,6 +11,7 @@ namespace BoardLobbyServer.Model
         private string _gameName;
         private PlayerData _leader;
         private List<PlayerData> _participants;
+        private string _status = "not started" ;
 
         public GameData()
         {
@@ -34,6 +35,12 @@ namespace BoardLobbyServer.Model
         {
             get { return _id; }
             set { this._id = value; }
+        }
+
+        public string Status
+        {
+            get { return _status; }
+            set { this._status = value; }
         }
 
         public PlayerData Leader

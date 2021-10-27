@@ -1,5 +1,6 @@
 ﻿"use strict";
 
+
 var connection = new signalR.HubConnectionBuilder().withUrl("/lobbyHub").build();
 
 connection.start().then(function () {
@@ -35,6 +36,8 @@ function createBtn(game) {
     return element3;
 }
 
+
+
 function createDeleteBtn(game,row) {
     var delButton = document.createElement("input");
     delButton.id = "del"+game;
@@ -42,7 +45,7 @@ function createDeleteBtn(game,row) {
     delButton.name = "add";
     delButton.value = "Delete";
     delButton.className = "btn btn-danger btn-xs";
-    delButton.style.marginLeft = "10px"
+    delButton.style.marginLeft = "10px";
     delButton.addEventListener("click", function () {
         alert("Game with id: " + game + "will be deleted!");
         connection.invoke("deleteGame", game).catch(function (err) {
@@ -52,6 +55,23 @@ function createDeleteBtn(game,row) {
 
     return delButton;
 }
+
+function createStatusSpan(gameid, started) {
+    const span = document.createElement("span");
+    span.id = "status" + gameid;
+    console.log(span.id)
+    console.log(started)
+    if (started === "started") {
+        span.textContent = "started"
+        span.className = "badge badge-success"
+    } else {
+        span.textContent = "not started"
+        span.className = "badge badge-warning"
+    }
+    
+    return span
+}
+
 
 connection.on("ReceiveLobbies", function (lobbies) {
     console.log(lobbies);
@@ -64,6 +84,7 @@ connection.on("ReceiveLobbies", function (lobbies) {
         var newCell3 = newRow.insertCell();
         var newCell4 = newRow.insertCell();
         var newCell5 = newRow.insertCell();
+        var newCell6 = newRow.insertCell();
         var text1 = document.createTextNode(`${lobbiesObj[i].Id}`);
         var text2 = document.createTextNode(`${lobbiesObj[i].Leader.Name}`);
         var text3 = document.createTextNode(`${lobbiesObj[i].GameName}`);
@@ -78,6 +99,8 @@ connection.on("ReceiveLobbies", function (lobbies) {
         newCell4.appendChild(text4);
         newCell5.appendChild(createBtn(`${lobbiesObj[i].Id}`));
         newCell5.appendChild(createDeleteBtn(`${lobbiesObj[i].Id}`, newRow));
+        newCell6.appendChild(createStatusSpan(`${lobbiesObj[i].Id}`, `${lobbiesObj[i].Status}`));
+        
     }
 
 });
@@ -93,6 +116,7 @@ connection.on("ReceiveGame", function (game) {
     var newCell3 = newRow.insertCell();
     var newCell4 = newRow.insertCell();
     var newCell5 = newRow.insertCell();
+    var newCell6 = newRow.insertCell();
     var text1 = document.createTextNode(game.id);
     var text2 = document.createTextNode(`${game.leader.name}`);
     var text3 = document.createTextNode(`${game.gameName}`);
@@ -107,6 +131,7 @@ connection.on("ReceiveGame", function (game) {
     newCell4.appendChild(text4);
     newCell5.appendChild(createBtn(game.id));
     newCell5.appendChild(createDeleteBtn(game.id, newRow));
+    newCell6.appendChild(createStatusSpan(`${lobbiesObj[i].Id}`, `${lobbiesObj[i].Status}`));
 });
 
 connection.on("RemoveGame", function (game) {
@@ -115,6 +140,18 @@ connection.on("RemoveGame", function (game) {
     console.log(i);
     var table = document.getElementById('lobbyTable');
     table.deleteRow(i);
+});
+
+connection.on("RecieveUpdatedGame", function (game) {
+    console.log("hello world")
+    let status = `${game.status}`
+    console.log(status)
+    var span = document.getElementById("status" + `${game.id}`)
+    if (status === "started") {
+        console.log("im in")
+        span.textContent = "started"
+        span.className = "badge badge-success"
+    }
 });
 
 connection.on("MonitorGame", function (game) {
