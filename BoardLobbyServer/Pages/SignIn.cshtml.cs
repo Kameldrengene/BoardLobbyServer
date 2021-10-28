@@ -25,8 +25,8 @@ namespace BoardLobbyServer.Pages
         {
             try
             {
-                Admin admin = _adminService.GetByName(emailAddress);             
-                if (password.Equals(admin.Password))
+                Admin admin = _adminService.Verify(emailAddress,password);             
+                if (admin.Name.Equals(emailAddress))
                 {
                    
                     HttpContext.Session.SetString("LoggedIn", "yes");
@@ -34,7 +34,7 @@ namespace BoardLobbyServer.Pages
                 }
             }catch(Exception e)
             {
-                email = "User do not exits";
+                email = e.Message;
                 
             }
             return null;

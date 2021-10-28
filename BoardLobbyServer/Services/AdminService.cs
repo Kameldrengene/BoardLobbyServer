@@ -35,5 +35,14 @@ namespace BoardLobbyServer.Services
             _admins.DeleteOne(admin => admin.Id == adminIn.Id);
         public void Remove(string id) =>
             _admins.DeleteOne(admin => admin.Id == id);
+        public Admin Verify(string name,string password)
+        {
+            Admin admin = _admins.Find<Admin>(admin => admin.Name == name).FirstOrDefault();
+
+            if (BCrypt.Net.BCrypt.Verify(password, admin.Password))
+                return admin;
+            else
+                return null;
+        }
     }
 }
