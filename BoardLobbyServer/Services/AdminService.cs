@@ -22,6 +22,8 @@ namespace BoardLobbyServer.Services
             _admins.Find(admin => true).ToList();
         public Admin Get(string id) =>
             _admins.Find<Admin>(admin => admin.Id == id).FirstOrDefault();
+        public Admin GetByName(string name) =>
+            _admins.Find<Admin>(admin => admin.Name == name).FirstOrDefault();
         public Admin Create(Admin admin)
         {
             _admins.InsertOne(admin);

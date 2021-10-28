@@ -35,6 +35,7 @@ namespace BoardLobbyServer
             services.AddSingleton<AdminService>();
             services.AddControllers();
             services.AddRazorPages();
+            services.AddSession();
             services.AddSignalR();
         }
 
@@ -54,11 +55,9 @@ namespace BoardLobbyServer
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
