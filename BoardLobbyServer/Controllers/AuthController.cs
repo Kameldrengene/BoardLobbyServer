@@ -12,11 +12,11 @@ namespace BoardLobbyServer.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class NameController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly IJwtAuthenticationManager jwtAuthenticationManager;
 
-        public NameController(IJwtAuthenticationManager jwtAuthenticationManager)
+        public AuthController(IJwtAuthenticationManager jwtAuthenticationManager)
         {
             this.jwtAuthenticationManager = jwtAuthenticationManager;
         }

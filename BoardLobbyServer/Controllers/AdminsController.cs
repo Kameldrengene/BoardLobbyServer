@@ -21,5 +21,26 @@ namespace BoardLobbyServer.Controllers
         public ActionResult<List<Admin>> Get() =>
             _adminService.Get();
 
+        [HttpGet("{id:length(24)}", Name = "GetAdmin")]
+        public ActionResult<Admin> Get(string id)
+        {
+            var admin = _adminService.Get(id);
+
+            if (admin == null)
+            {
+                return NotFound();
+            }
+
+            return admin;
+        }
+
+        [HttpPost]
+       public ActionResult<Admin> Create(Admin admin)
+        {
+            _adminService.Create(admin);
+
+            return CreatedAtRoute("GetAdmin", new { id = admin.Id.ToString() }, admin);
+        }
+
     }
 }
