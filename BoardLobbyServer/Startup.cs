@@ -63,8 +63,7 @@ namespace BoardLobbyServer
                 };
             });
 
-            //Jwt service  
-            var servicePro = services.BuildServiceProvider();
+            //Jwt service     
             services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager(key));
         }
 

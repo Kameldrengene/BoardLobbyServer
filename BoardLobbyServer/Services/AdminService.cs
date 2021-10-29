@@ -40,6 +40,11 @@ namespace BoardLobbyServer.Services
         {
             Admin admin = _admins.Find<Admin>(admin => admin.Name == name).FirstOrDefault();
 
+            if (admin == null)
+            {
+                return null;
+            }
+
             if (BCrypt.Net.BCrypt.Verify(password, admin.Password))
                 return admin;
             else
