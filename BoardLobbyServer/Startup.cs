@@ -30,18 +30,21 @@ namespace BoardLobbyServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // requires using Microsoft.Extensions.Options
+            // Database Connection
             services.Configure<BoardServerDatabaseSettings>(
                 Configuration.GetSection(nameof(BoardServerDatabaseSettings)));
             services.AddSingleton<IBoardServerDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<BoardServerDatabaseSettings>>().Value);
+            //Database service
             services.AddSingleton<AdminService>();
+
             services.AddControllers();
             services.AddRazorPages();
             services.AddSession();
             services.AddSignalR();
 
-            var key = "thisismykeyblabla";
+            //Jwt token for authorization
+            var key = Configuration.GetValue<string>("TokenKey");
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -59,6 +62,9 @@ namespace BoardLobbyServer
 
                 };
             });
+
+            //Jwt service  
+            var servicePro = services.BuildServiceProvider();
             services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager(key));
         }
 

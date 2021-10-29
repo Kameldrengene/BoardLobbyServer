@@ -1,4 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using BoardLobbyServer.Model;
+using BoardLobbyServer.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,15 +19,19 @@ namespace BoardLobbyServer
 
         public JwtAuthenticationManager(string key)
         {
-            this.key = key;
+            this.key = key;   
         }
         public string Authenticate(string username, string password)
         {
+
+            /*
             if(!users.Any(u => u.Key == username && u.Value == password))
             {
                 return null;
             }
+            */
 
+            
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(key);
             var tokenDescriptor = new SecurityTokenDescriptor()
@@ -41,5 +48,6 @@ namespace BoardLobbyServer
             return tokenHandler.WriteToken(token);
 
         }
+
     }
 }

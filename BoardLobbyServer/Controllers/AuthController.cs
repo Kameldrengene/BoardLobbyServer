@@ -37,7 +37,7 @@ namespace BoardLobbyServer.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] UserCred userCred)
+        public IActionResult Authenticate([FromBody] UserCredentials userCred)
         {
             var token = jwtAuthenticationManager.Authenticate(userCred.Username, userCred.Password);
             if (token == null)
