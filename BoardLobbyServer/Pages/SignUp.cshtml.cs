@@ -13,7 +13,7 @@ namespace BoardLobbyServer.Pages
     public class SignUpModel : PageModel
     {
         private readonly AdminService _adminService;
-        public string email { get; set; } = "";
+        public string log { get; set; } = "";
 
         public SignUpModel(AdminService adminService)
         {
@@ -27,17 +27,16 @@ namespace BoardLobbyServer.Pages
             try
             {
                 Admin admin = new Admin();
-            
                 admin.Name = emailAddress;
                 admin.Password = password;
                 _adminService.Create(admin);
-                HttpContext.Session.SetString("LoggedIn", "yes");
+                HttpContext.Session.SetString("LoggedIn", admin.Name);
                 return Redirect("Index");
             }
             catch (Exception e)
             {
 
-                email = e.Message;
+                log = e.Message;
             }
             return null;
         }

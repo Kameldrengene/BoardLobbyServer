@@ -26,6 +26,7 @@ namespace BoardLobbyServer.Services
             _admins.Find<Admin>(admin => admin.Name == name).FirstOrDefault();
         public Admin Create(Admin admin)
         {
+            admin.Password = BCrypt.Net.BCrypt.HashPassword(admin.Password);
             _admins.InsertOne(admin);
             return admin;
         }
@@ -38,6 +39,11 @@ namespace BoardLobbyServer.Services
         public Admin Verify(string name,string password)
         {
             Admin admin = _admins.Find<Admin>(admin => admin.Name == name).FirstOrDefault();
+
+            if (admin == null)
+            {
+                return null;
+            }
 
             if (BCrypt.Net.BCrypt.Verify(password, admin.Password))
                 return admin;
