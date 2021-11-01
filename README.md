@@ -23,3 +23,13 @@ Run Below commands from MongoDb client:
 
 Run Docker container:
 ### ` docker run -it --rm -p 5000:80 --name <containername> <imagename> `
+
+
+```mermaid 
+graph TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+  ``` 
