@@ -93,9 +93,9 @@ Run Docker container:
 ```mermaid 
 graph LR
 
-Node1 -->ServiceNode1
-Node2 -->ServiceNode2
-Node2 -->ServiceNode3
+Node1 --> ServiceNode1
+Node2 --> ServiceNode2
+Node2 --> ServiceNode3
 
 subgraph "Services"
 ServiceNode1[SignalR]
@@ -106,6 +106,5 @@ end
 subgraph "Clients"
 Node1[Players]
 Node2[Admins]
-
 end
-  ``` 
+``` 
