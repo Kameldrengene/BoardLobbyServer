@@ -91,10 +91,21 @@ Run Docker container:
 
 
 ```mermaid 
-graph TD
-    A[Christmas] -->|Get money| B(Go shopping)
-    B --> C{Let me think}
-    C -->|One| D[Laptop]
-    C -->|Two| E[iPhone]
-    C -->|Three| F[fa:fa-car Car]
+graph LR
+
+Node1 -->ServiceNode1
+Node2 -->ServiceNode2
+Node2 -->ServiceNode3
+
+subgraph "Services"
+ServiceNode1[SignalR]
+ServiceNode2[Razor Pages]
+ServiceNode3[Rest]
+end
+
+subgraph "Clients"
+Node1[Players]
+Node2[Admins]
+
+end
   ``` 
