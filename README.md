@@ -91,7 +91,7 @@ Run Docker container:
 
 
 ```mermaid 
-graph LR
+flowchart LR
 
 Node1 --> ServiceNode1
 Node2 --> ServiceNode2
@@ -107,4 +107,5 @@ subgraph "Clients"
 Node1[Players]
 Node2[Admins]
 end
+
 ``` 
