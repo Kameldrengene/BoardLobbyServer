@@ -37,6 +37,8 @@ namespace BoardLobbyServer
                 sp.GetRequiredService<IOptions<BoardServerDatabaseSettings>>().Value);
             //Database service
             services.AddSingleton<AdminService>();
+            services.AddSingleton<PlayerService>();
+
 
             services.AddControllers();
             services.AddRazorPages();

@@ -43,5 +43,10 @@ namespace BoardLobbyServer.Pages
         {
             return Redirect("SignUp");
         }
+
+        public IActionResult OnPostPlayerSignup()
+        {
+            return Redirect("PlayerSignUp");
+        }
     }
 }
