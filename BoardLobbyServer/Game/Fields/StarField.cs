@@ -8,12 +8,12 @@ namespace BoardLobbyServer.Game.Fields
 {
     public class StarField : Field
     {
-        public StarField(Color color, Position position) : base(color, position)
+        public StarField(Color color, int row, int column) : base(color, row, column)
         {
             this.Name = FieldType.STAR;
         }
 
-        public override void onlanded(PlayerData playerData)
+        public override void onlanded(Piece piece)
         {
             throw new NotImplementedException();
         }

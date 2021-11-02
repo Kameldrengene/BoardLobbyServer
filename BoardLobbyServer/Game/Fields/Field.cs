@@ -12,10 +12,10 @@ namespace BoardLobbyServer.Game.Fields
         private Color color;
         private Position position;
 
-        protected Field(Color color, Position position)
+        protected Field(Color color, int row, int column)
         {
             this.color = color;
-            this.position = position;
+            this.position = new Position(row,column);
         }
         public FieldType Name {
             get { return this.name; }
@@ -32,6 +32,6 @@ namespace BoardLobbyServer.Game.Fields
             set { this.position = value; }
         }
        
-        public abstract void onlanded(PlayerData playerData);
+        public abstract void onlanded(Piece piece);
     }
 }

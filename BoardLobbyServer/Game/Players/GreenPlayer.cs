@@ -18,10 +18,10 @@ namespace BoardLobbyServer.Game.Players
         public override void initPieces()
         {
             this.pieces = new List<Piece>();
-            Piece piece1 = new Piece(Color.BLUE, this, new Home(Color.GREEN, new Position(1, 1)));
-            Piece piece2 = new Piece(Color.BLUE, this, new Home(Color.GREEN, new Position(1, 2)));
-            Piece piece3 = new Piece(Color.BLUE, this, new Home(Color.GREEN, new Position(2, 1)));
-            Piece piece4 = new Piece(Color.BLUE, this, new Home(Color.GREEN, new Position(2, 2)));
+            Piece piece1 = new Piece(Color.BLUE, this, new Home(Color.GREEN, 1,1));
+            Piece piece2 = new Piece(Color.BLUE, this, new Home(Color.GREEN, 1, 1));
+            Piece piece3 = new Piece(Color.BLUE, this, new Home(Color.GREEN, 1, 1));
+            Piece piece4 = new Piece(Color.BLUE, this, new Home(Color.GREEN, 1, 1));
             pieces.Add(piece1);
             pieces.Add(piece2);
             pieces.Add(piece3);

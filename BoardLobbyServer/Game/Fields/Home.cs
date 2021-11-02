@@ -8,12 +8,12 @@ namespace BoardLobbyServer.Game.Fields
 {
     public class Home : Field
     {
-        public Home(Color color, Position position) : base(color, position)
+        public Home(Color color, int row, int column) : base(color, row, column)
         {
             this.Name = FieldType.HOME;
         }
 
-        public override void onlanded(PlayerData playerData)
+        public override void onlanded(Piece piece)
         {
             throw new NotImplementedException();
         }

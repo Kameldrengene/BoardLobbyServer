@@ -8,12 +8,12 @@ namespace BoardLobbyServer.Game.Fields
 {
     public class GlobusField : Field
     {
-        public GlobusField(Color color, Position position) : base(color, position)
+        public GlobusField(Color color, int row, int column) : base(color, row, column)
         {
             this.Name = FieldType.GLOBUS;
         }
 
-        public override void onlanded(PlayerData playerData)
+        public override void onlanded(Piece piece)
         {
             throw new NotImplementedException();
         }
