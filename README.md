@@ -55,6 +55,9 @@
 - [ ] JWT secret
 - [ ] database connection
 ##### Player Client
+- [x] Login
+- [x] Authentication
+- [x] JWT and bcrypt
 - [ ] Tokens ?
 - [ ] Validation algo
 ##### Docker
