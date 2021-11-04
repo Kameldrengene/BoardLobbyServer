@@ -7,6 +7,11 @@ namespace BoardLobbyServer.Game
 {
     public class Board
     {
+
         
+        public void createBoard()
+        {
+            
+        }
     }
 }
