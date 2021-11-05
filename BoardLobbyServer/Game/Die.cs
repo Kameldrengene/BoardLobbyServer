@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace BoardLobbyServer.Game
 {
-    public class Game
+    public class Die
     {
-       
+
+        public int result { get; set; }
     }
 }

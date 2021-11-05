@@ -8,14 +8,14 @@ namespace BoardLobbyServer.Game.Fields
 {
     public class SafeHomeField : Field
     {
-        public SafeHomeField(Color color, int row, int column) : base(color, row, column)
+        public SafeHomeField(Color color, int position, Field next) : base(color, position, next)
         {
             this.Name = FieldType.SAFEHOME;
         }
 
         public override void onlanded(Piece piece)
         {
-            throw new NotImplementedException();
+            piece.Location = this;
         }
     }
 }
