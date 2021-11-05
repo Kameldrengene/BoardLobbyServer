@@ -14,17 +14,17 @@
             <form method="post">
                 <div class="input-group mb-3">
                     <span class="input-group-text">Admin id:</span>
-                    <input type="text" name="adminid" id="disabledTextInput" class="form-control" placeholder="@Model.adminId" disabled>
+                    <input type="text" name="idadmin" id="disabledTextInput" class="form-control" placeholder="@Model.adminId" disabled>
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">Admin name:</span>
-                    <input type="text" name="emailaddress" class="form-control" aria-label="Name of admin" value="@Model.adminName">
+                   
+                    <input type="email" name="emailaddress" class="form-control" id="floatingInput" placeholder="@Model.adminName">
 
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">Admin password:</span>
-                    <input type="text" name="password" class="form-control" aria-label="Password of admin" value="@Model.adminPassword">
-
+                    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
                 </div>
                 <div class="row">
                     <div class="col">
@@ -34,7 +34,6 @@
                         <button type="submit" class="btn btn-danger w-100" name="deletebutton">Delete</button>
                     </div>
                 </div>
-
             </form>
         </div>
         <div class="col">

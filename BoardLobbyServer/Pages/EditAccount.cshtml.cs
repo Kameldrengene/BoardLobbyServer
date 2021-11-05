@@ -45,13 +45,16 @@ namespace BoardLobbyServer.Pages
                 log = e.Message;
             }
         }
-        public IActionResult OnPost(string adminId,string emailAddress, string password, string updatebutton, string deletebutton)
+        public IActionResult OnPost()
         {
-            alert = "ehj";
-            if(updatebutton != null)
+            
+            if(this.Request.Form.Keys.Contains("updatebutton"))
             {
                 try
                 {
+                    var emailAddress = Request.Form["emailaddress"];
+                    var password = Request.Form["password"];
+                    var id = Request.Form["adminId"];
                     Admin admin = new Admin();
                     admin.Id = adminId;
                     admin.Name = adminName;
