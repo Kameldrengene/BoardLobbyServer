@@ -2,16 +2,41 @@
 @model BoardLobbyServer.Pages.IndexModel
 @{
 }
-<form id="playerdata" onsubmit="return createPlayer();">
-    <div class="form-group">
-        <label for="playername">Enter Your Name</label>
-        <input type="text" class="form-control" id="playername" aria-describedby="nameplz" placeholder="Enter Your Name">
-        <small id="nameplz" class="form-text text-muted">Please enter your name so anyone else can see you.</small>
-    </div>
-    <button id="okbutton" type="submit" class="btn btn-primary">OK</button>
-</form>
 
-<a hidden id="createbutton" class="btn btn-link btn-lg text-dark" asp-area="" asp-page="/createlobby">Create Lobby</a>
+<h1>Welcome to CamelLudo</h1>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">On going games</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <h6>To manage games please:</h6>
+                    <a class="card-link" asp-area="" asp-page="/SignIn">Sign In</a>
+                    <a class="card-link" asp-area="" asp-page="/SignUp">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="~/images/weather.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text">Weather: @Model.weather &#8451; </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
 
 @section Scripts{
     <script src="~/js/playerdata.js"></script>
