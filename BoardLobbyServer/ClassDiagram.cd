@@ -3,15 +3,8 @@
   <Class Name="BoardLobbyServer.Game.Fields.Field" Collapsed="true">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAgAAAAIAQACAAEAACAAAAAgAAAAAA=</HashCode>
+      <HashCode>AgAAIAAAAAAIAAAgAAAAAAQACAAAAAAgAAAAgAAAAAA=</HashCode>
       <FileName>Game\Fields\Field.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BoardLobbyServer.Game.Fields.Finished" Collapsed="true">
-    <Position X="9.5" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Game\Fields\Finished.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BoardLobbyServer.Game.Fields.GlobusField" Collapsed="true">
@@ -21,11 +14,11 @@
       <FileName>Game\Fields\GlobusField.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BoardLobbyServer.Game.Fields.Home" Collapsed="true">
+  <Class Name="BoardLobbyServer.Game.Fields.Entrance" Collapsed="true">
     <Position X="5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Game\Fields\Home.cs</FileName>
+      <FileName>Game\Fields\Entrance.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BoardLobbyServer.Game.Fields.NormalField" Collapsed="true">
@@ -80,11 +73,11 @@
   <Class Name="BoardLobbyServer.Game.Player" Collapsed="true">
     <Position X="5.75" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAgAAACBAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAgAAACBAAAAAI=</HashCode>
       <FileName>Game\Player.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BoardLobbyServer.Game.Piece" Collapsed="true">
+  <Class Name="BoardLobbyServer.Game.Piece">
     <Position X="1.25" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAIAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
@@ -101,7 +94,7 @@
   <Enum Name="BoardLobbyServer.Game.Fields.FieldType" Collapsed="true">
     <Position X="7.75" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAwABAAAACAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>gAgAAAAAACAAAAAAAAAAAQAAAAAQAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Fields\FieldType.cs</FileName>
     </TypeIdentifier>
   </Enum>

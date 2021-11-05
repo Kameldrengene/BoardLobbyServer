@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace BoardLobbyServer.Game.Fields
 {
-    public class Home : Field
+    public class Entrance : Field
     {
-        public Home(Color color, int row, int column) : base(color, row, column)
+        public Entrance(Color color, int position, Field next) : base(color, position, next)
         {
-            this.Name = FieldType.HOME;
+            this.Name = FieldType.ENTRANCE;
         }
 
         public override void onlanded(Piece piece)
         {
-            throw new NotImplementedException();
+            piece.Location = this;
         }
     }
 }

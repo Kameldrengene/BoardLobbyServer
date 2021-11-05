@@ -8,30 +8,25 @@ namespace BoardLobbyServer.Game.Fields
 {
     public abstract class Field 
     {
-        private FieldType name;
-        private Color color;
-        private Position position;
+        private FieldType _name;
+        private Color _color;
+        private int _position;
+        private Field _next;
+        
 
-        protected Field(Color color, int row, int column)
+        protected Field(Color color, int position, Field next)
         {
-            this.color = color;
-            this.position = new Position(row,column);
+            _color = color;
+            _position = position;
+            _next = next;
         }
-        public FieldType Name {
-            get { return this.name; }
-            set { this.name = value; }
-        }
-        public Color Color
-        {
-            get { return this.color; }
-            set { this.color = value; }
-        }
-        public Position Position
-        {
-            get { return this.position; }
-            set { this.position = value; }
-        }
-       
+        
+
+        public Field Next { get => _next; set => _next = value; }
+        public FieldType Name { get => _name; set => _name = value; }
+        public Color Color { get => _color; set => _color = value; }
+        public int Position { get => _position; set => _position = value; }
+
         public abstract void onlanded(Piece piece);
     }
 }

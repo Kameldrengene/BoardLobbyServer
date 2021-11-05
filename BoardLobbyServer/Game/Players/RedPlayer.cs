@@ -11,17 +11,17 @@ namespace BoardLobbyServer.Game.Players
     {
         public RedPlayer(string name) : base(name)
         {
-            initPieces();
+            
         }
 
         //todo correct positions
-        public override void initPieces()
+        public override void initPieces(Field field)
         {
             this.pieces = new List<Piece>();
-            Piece piece1 = new Piece(Color.BLUE, this, new Home(Color.GREEN, 1, 1));
-            Piece piece2 = new Piece(Color.BLUE, this, new Home(Color.GREEN, 1, 1));
-            Piece piece3 = new Piece(Color.BLUE, this, new Home(Color.GREEN, 1, 1));
-            Piece piece4 = new Piece(Color.BLUE, this, new Home(Color.GREEN, 1, 1));
+            Piece piece1 = new Piece(Color.RED, this, field);
+            Piece piece2 = new Piece(Color.RED, this, field);
+            Piece piece3 = new Piece(Color.RED, this, field);
+            Piece piece4 = new Piece(Color.RED, this, field);
             pieces.Add(piece1);
             pieces.Add(piece2);
             pieces.Add(piece3);

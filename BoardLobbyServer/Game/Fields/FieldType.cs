@@ -7,11 +7,10 @@ namespace BoardLobbyServer.Game.Fields
 {
     public enum FieldType
     {
-        GLOBUS,
+        GLOBE,
         STAR,
-        HOME,
-        FINISHED,
         NORMAL,
-        SAFEHOME
+        SAFEHOME,
+        ENTRANCE
     }
 }
