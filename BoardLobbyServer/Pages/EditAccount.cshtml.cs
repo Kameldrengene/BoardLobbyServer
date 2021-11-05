@@ -54,12 +54,14 @@ namespace BoardLobbyServer.Pages
                 {
                     var emailAddress = Request.Form["emailaddress"];
                     var password = Request.Form["password"];
-                    var id = Request.Form["adminId"];
+                    var id = Request.Form["idAdmin"];
                     Admin admin = new Admin();
-                    admin.Id = adminId;
-                    admin.Name = adminName;
-                    admin.Password = adminPassword;
-                    _adminService.Update(adminId, admin);
+                    admin.Id = id;
+                    admin.Name = emailAddress;
+                    admin.Password = password;
+                    _adminService.Update(admin.Id, admin);
+
+                    this.OnGet();
                 }
                 catch (Exception e)
                 {
@@ -72,17 +74,21 @@ namespace BoardLobbyServer.Pages
                 alert = "Delete";
                 try
                 {
-               
-                    _adminService.Remove(adminId);
+                    var id = Request.Form["idAdmin"];
+
+                    _adminService.Remove(id);
+                    HttpContext.Session.Remove("LoggedIn");
+                    return Redirect("Index");
                 }
                 catch (Exception e)
                 {
                     alert = e.Message;
 
                 }
+                this.OnGet();
             }
+            return null;
 
-                return null;
         }
     }
 }
