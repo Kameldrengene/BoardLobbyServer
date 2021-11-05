@@ -6,32 +6,23 @@ using System.Threading.Tasks;
 
 namespace BoardLobbyServer.Game.Fields
 {
-    public abstract class Field 
+    public abstract class Field
     {
-        private FieldType name;
-        private Color color;
-        private Position position;
+        
+        public Field nextField { get; set; }
+        protected List<Piece> pieces = new List<Piece>();
+        protected PieceColor quadrant;  // Must be same as pieces color system
+        protected int pos;
+        public Field(PieceColor q, int p)
+        {
+            this.quadrant = q;
+            this.pos = p;
+        }
+        public List<Piece> getPieces() { return this.pieces; }
+        public PieceColor getQuadrant() { return this.quadrant; }
+        public abstract void OnLand(Piece piece);
+        public abstract Field NextField(Piece piece);
 
-        protected Field(Color color, int row, int column)
-        {
-            this.color = color;
-            this.position = new Position(row,column);
-        }
-        public FieldType Name {
-            get { return this.name; }
-            set { this.name = value; }
-        }
-        public Color Color
-        {
-            get { return this.color; }
-            set { this.color = value; }
-        }
-        public Position Position
-        {
-            get { return this.position; }
-            set { this.position = value; }
-        }
-       
-        public abstract void onlanded(Piece piece);
+
     }
 }
