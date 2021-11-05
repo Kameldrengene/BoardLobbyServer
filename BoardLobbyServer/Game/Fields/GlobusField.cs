@@ -9,14 +9,42 @@ namespace BoardLobbyServer.Game.Fields
     public class GlobusField : Field
     {
         
-        public GlobusField(Color color, int position, Field next) : base(color, position, next)
+        public GlobusField(PieceColor quadrant, int pos) : base(quadrant, pos)
         {
-            this.Name = FieldType.GLOBUS;
+            
         }
 
-        public override void onlanded(Piece piece)
+        public override Field NextField(Piece piece)
         {
-            piece.Location = this;
+            if (this.nextField != null)
+                return this.nextField;
+            else
+                return null;
+
+        }
+
+        public override void OnLand(Piece piece)
+        {
+            Console.WriteLine("Landed on GlobusField!");
+
+
+            if (this.pieces.Count == 0) //no pieces yet
+            {
+                this.pieces.Add(piece); // simply adds the piece to the field
+            }
+
+            else //1 or more pieces
+            {
+                if (this.pieces[0].getPieceColor() != piece.getPieceColor()) // if the fields piece(s) are not the same color
+                {
+                    // The moving piece is sent home
+                    // TODO: add the current piece to the correct start
+                }
+                else // The pieces are all the same color
+                {
+                    this.pieces.Add(piece); // adds the piece to field
+                }
+            }
         }
     }
 }

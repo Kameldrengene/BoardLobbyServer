@@ -6,24 +6,30 @@ using System.Threading.Tasks;
 
 namespace BoardLobbyServer.Game.Fields
 {
-    public class StarField : Field
+    public class EntranceField : Field
     {
-        public StarField(PieceColor quadrant, int pos) : base(quadrant, pos)
+        private Field startBankfield;
+
+        public void setBankField(Field bank)
+        {
+            this.startBankfield = bank;
+        }
+
+        public EntranceField(PieceColor quadrant, int pos) : base(quadrant, pos)
         {
             
         }
 
-        public override Field NextField(Piece piece)
+        public override Field NextField(Piece piece) //Should have piece passed? how will it know to send the correct pieces to finish spaces?
         {
-            if (this.nextField != null)
-                return this.nextField;
-            else
-                throw new NotImplementedException();
+            if (piece.getPieceColor() == this.quadrant) return this.startBankfield;
+            return this.nextField;
+
         }
 
         public override void OnLand(Piece piece)
         {
-            Console.WriteLine("Landed on Starfield!");
+            Console.WriteLine("Landed on Entrancefield!");
 
             //Finding the next star/entrance field
 
@@ -68,7 +74,12 @@ namespace BoardLobbyServer.Game.Fields
 
         private void handleJump(Piece piece, Field nextStarField)
         {
-            if (nextStarField.getPieces().Count == 0) //no pieces yet
+            if (piece.getPieceColor() == this.quadrant) //Should not jump
+            {
+                this.pieces.Add(piece); // Adds the piece to the current field instead
+            }
+
+            else if (nextStarField.getPieces().Count == 0) //no pieces yet
             {
                 nextStarField.getPieces().Add(piece); // simply adds the piece to the field
             }

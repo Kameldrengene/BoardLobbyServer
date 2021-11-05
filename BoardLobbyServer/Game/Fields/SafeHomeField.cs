@@ -8,14 +8,52 @@ namespace BoardLobbyServer.Game.Fields
 {
     public class SafeHomeField : Field
     {
-        public SafeHomeField(Color color, int position, Field next) : base(color, position, next)
+        public SafeHomeField(PieceColor quadrant, int pos) : base(quadrant, pos)
         {
-            this.Name = FieldType.SAFEHOME;
+            
         }
 
-        public override void onlanded(Piece piece)
+        public override Field NextField(Piece piece)
         {
-            piece.Location = this;
+            if (this.nextField != null)
+                return this.nextField;
+            else
+                return null;
+
+        }
+
+        public override void OnLand(Piece piece)
+        {
+            Console.WriteLine("Landed on SafeHomeField!");
+
+            if (this.pieces.Count == 0) //no pieces yet
+            {
+                this.pieces.Add(piece); // simply adds the piece to the field
+            }
+
+            else //1 or more pieces
+            {
+                if (this.pieces[0].getPieceColor() != piece.getPieceColor()) // if the fields piece(s) are not the same color
+                {
+                    // Checking if the moving piece is of the starting color. if so, it will send any amount of pieces in the field home.
+                    // This is because the moving piece is just exiting home. pieces will never land on their SafeHomeField on any other occation than exiting home.
+                    if (piece.getPieceColor() == this.quadrant)
+                    {
+                        // TODO: The stading piece(s) are sent home
+                        this.pieces = new List<Piece>(); //set new list to clear out any pieces on the field
+                        this.pieces.Add(piece);
+                    }
+                    else
+                    {
+                        // The moving piece is sent home
+                        // TODO: add the current piece to the correct start
+                    }
+                }
+                else // The pieces are all the same color
+                {
+                    this.pieces.Add(piece); // adds the piece to field
+                }
+            }
         }
     }
 }

@@ -3,42 +3,43 @@
   <Class Name="BoardLobbyServer.Game.Fields.Field" Collapsed="true">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAAIAAAAAAIAAAgAAAAAAQACAAAAAAgAAAAgAAAAAA=</HashCode>
+      <HashCode>AAAQAAAAAAEAAAAAAAAQAJAAAAAAAAAgACAAAAAAEAA=</HashCode>
       <FileName>Game\Fields\Field.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BoardLobbyServer.Game.Fields.GlobusField" Collapsed="true">
     <Position X="0.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>Game\Fields\GlobusField.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BoardLobbyServer.Game.Fields.Entrance" Collapsed="true">
+  <Class Name="BoardLobbyServer.Game.Fields.EntranceField" Collapsed="true">
     <Position X="5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Game\Fields\Entrance.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAgABAAAAAAAAACAAAAEAA=</HashCode>
+      <FileName>Game\Fields\EntranceField.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BoardLobbyServer.Game.Fields.NormalField" Collapsed="true">
+  <Class Name="BoardLobbyServer.Game.Fields.FinishField" Collapsed="true">
     <Position X="11.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Game\Fields\NormalField.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Game\Fields\FinishField.cs</FileName>
+      <NewMemberFileName>Game\Fields\NormalField.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BoardLobbyServer.Game.Fields.SafeHomeField" Collapsed="true">
     <Position X="2.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>Game\Fields\SafeHomeField.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BoardLobbyServer.Game.Fields.StarField" Collapsed="true">
     <Position X="7.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAABAAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>Game\Fields\StarField.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -80,7 +81,7 @@
   <Class Name="BoardLobbyServer.Game.Piece">
     <Position X="1.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAACAAAAAAAAAAAIAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AACAAAAAAAAAgAAAAAAAAAAQAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>Game\Piece.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -94,7 +95,7 @@
   <Enum Name="BoardLobbyServer.Game.Fields.FieldType" Collapsed="true">
     <Position X="7.75" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAgAAAAAACAAAAAAAAAAAQAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>gAgAAAAAACAAAAAAEAAAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Fields\FieldType.cs</FileName>
     </TypeIdentifier>
   </Enum>
