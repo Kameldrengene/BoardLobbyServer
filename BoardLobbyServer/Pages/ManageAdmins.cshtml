@@ -1,0 +1,87 @@
+﻿@page
+@model BoardLobbyServer.Pages.ManageAdminsModel
+@{
+}
+
+@if (Model.logged)
+{
+    <h3 class="m-3">Admin List:</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Id</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Handle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.admins.Count; i++)
+            {
+                var admin = @Model.admins.ElementAt(i);
+                <tr>
+                    <th scope="row">@(i + 1)</th>
+                    <td>@admin.Id</td>
+                    <td id="name_@admin.Id">@admin.Name</td>
+                    <td><button type="button" id="@admin.Id" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+    @section Scripts{
+        <script>
+            $(".btn-info").on('click', function () {
+                alert("Handler for .click() called.");
+                const id = $(this).attr('id');
+                const name = $("#name_" + id).text();
+                $("#idadmin").val(id)
+                $("#emailaddress").val(name);
+            });
+
+        </script>
+    }
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Admin</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post">
+                    <div class="modal-body">
+
+                        <div class="form-floating mb-3 ">
+
+                            <input class="form-control" id="idadmin" type="text" name="idadmin" value="Readonly input here..." aria-label="readonly input example" readonly>
+                            <label for="floatingInput">Id</label>
+                        </div>
+                        <div class="form-floating mb-3 ">
+                            <input type="text" class="form-control" name="emailaddress" id="emailaddress" required>
+                            <label for="floatingInput">E-mail</label>
+                        </div>
+                        <div class="form-floating mb-3 ">
+                            <input type="password" name="password" class="form-control" id="password" aria-describedby="inputGroupPrepend2" required>
+                            <label for="floatingInput">Password</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary " name="updatebutton">Update</button>
+                        <button type="submit" class="btn btn-danger " name="deletebutton">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger d-flex align-items-center m-3" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+        <div>
+            You have to <a asp-page="SignIn" class="alert-link">log in</a> to manage admins Bro!
+        </div>
+    </div>
+}
