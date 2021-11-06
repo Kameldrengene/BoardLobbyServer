@@ -2,42 +2,58 @@
 @model BoardLobbyServer.Pages.EditAccountModel
 @{
 }
-<div class="container m-3">
-    <div class="row">
-        <div class="col">
-            
-        </div>
-        <div class="col">
-            <div class="alert alert-light" role="alert">
-                @Model.alert
-            </div>
-            <form method="post">
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Admin id:</span>
-                    <input type="text" name="idadmin" id="disabledTextInput" class="form-control" value="@Model.adminId" readonly>
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Admin name:</span>
-                   
-                    <input type="email" name="emailaddress" class="form-control" id="floatingInput" value="@Model.adminName">
 
+@if (Model.logged)
+{
+    <div class="container m-3">
+        <div class="row">
+            <div class="col">
+
+            </div>
+            <div class="col">
+                <div class="alert alert-light" role="alert">
+                    @Model.alert
                 </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Admin password:</span>
-                    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <button type="submit" class="btn btn-info w-100" name="updatebutton">Update</button>
+                <h3 class="m-3">Account Edit:</h3>
+                <form method="post">
+
+                    <div class="form-floating mb-3 ">
+
+                        <input class="form-control" id="idadmin" type="text" name="idadmin" aria-label="readonly id" value="@Model.adminId" readonly>
+                        <label for="floatingInput">Id</label>
                     </div>
-                    <div class="col">
-                        <button type="submit" class="btn btn-danger w-100" name="deletebutton">Delete</button>
+
+                    <div class="form-floating mb-3 ">
+                        <input type="text" class="form-control" name="emailaddress" id="emailaddress" value="@Model.adminName" required>
+                        <label for="floatingInput">E-mail</label>
                     </div>
-                </div>
-            </form>
-        </div>
-        <div class="col">
-           
+                    <div class="form-floating mb-3 ">
+                        <input type="password" name="password" class="form-control" id="password" aria-describedby="inputGroupPrepend2" required>
+                        <label for="floatingInput">Password</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-info w-100" name="updatebutton">Update</button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-danger w-100" name="deletebutton">Delete</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+
+            </div>
         </div>
     </div>
-</div>
+}
+else
+{
+    <div class="alert alert-danger d-flex align-items-center m-3" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+        <div>
+            You have to <a asp-page="SignIn" class="alert-link">log in</a> to manage your account Bro!
+        </div>
+    </div>
+}

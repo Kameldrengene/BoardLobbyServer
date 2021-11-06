@@ -11,13 +11,14 @@ namespace BoardLobbyServer.Pages
     public class GameListModel : PageModel
     {
         public string Message { get; private set; } = "Pagemodel";
+        public bool logged { get; private set; } = false;
         public IActionResult OnGet()
         {
             Message += $" Server time is { DateTime.Now }";
 
-            if (HttpContext.Session.GetString("LoggedIn") == null)
+            if (HttpContext.Session.GetString("LoggedIn") != null)
             {
-                return Redirect("SignIn");
+                logged = true;
             }
             return null;
 
