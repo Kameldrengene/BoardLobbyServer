@@ -1,0 +1,44 @@
+﻿@page
+@model BoardLobbyServer.Pages.ChatModel
+@{
+}
+
+<h3 class="m-3">Admin Chat</h3>
+
+
+
+<div class="container" style="height:500px">
+    <div class="row">
+        <div class="col">
+            <div class="bg-light overflow-auto" id="messagesList">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div><input type="text" id="userInput" /></div>
+            <div><input type="text" id="messageInput" /></div>
+            <input type="button" id="sendButton" value="Send Message" />
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
+
+@section Scripts{
+    <script>
+        var divHeight = $(window).height() * 50 / 100;
+        $("#messagesList").css("height", divHeight);
+    </script>
+}
+
+

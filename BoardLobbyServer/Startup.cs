@@ -15,6 +15,7 @@ using BoardLobbyServer.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using BoardLobbyServer.Hubs;
 
 namespace BoardLobbyServer
 {
@@ -94,6 +95,7 @@ namespace BoardLobbyServer
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
                 endpoints.MapHub<LobbyHub>("/lobbyHub");
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     }
