@@ -5,40 +5,34 @@
 
 <h3 class="m-3">Admin Chat</h3>
 
+@if (Model.logged)
+{
+
+<div class="bg-light overflow-auto" id="messagesList"></div>
 
 
-<div class="container" style="height:500px">
-    <div class="row">
-        <div class="col">
-            <div class="bg-light overflow-auto" id="messagesList">
-
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <div><input type="text" id="userInput" /></div>
-            <div><input type="text" id="messageInput" /></div>
-            <input type="button" id="sendButton" value="Send Message" />
-
-        </div>
+    <div class="float-start m-2"><input class="border border-0" type="text" id="userInput" value="@Model.adminName" readonly/></div>
+    <div class="float-start m-2"><input type="text" id="messageInput" /></div>
+    <input class="float-start m-2" type="button" id="sendButton" value="Send Message" />
+}
+else
+{
+<div class="alert alert-danger d-flex align-items-center m-3" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+    <div>
+        You have to <a asp-page="SignIn" class="alert-link">log in</a> to chat with your Bro's!
     </div>
 </div>
-
-
-
-
-
-
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
-
-@section Scripts{
-    <script>
-        var divHeight = $(window).height() * 50 / 100;
-        $("#messagesList").css("height", divHeight);
-    </script>
 }
+
+        <script src="~/js/signalr/dist/browser/signalr.js"></script>
+        <script src="~/js/chat.js"></script>
+
+        @section Scripts{
+            <script>
+                var divHeight = $(window).height() * 50 / 100;
+                $("#messagesList").css("height", divHeight);
+            </script>
+        }
 
 

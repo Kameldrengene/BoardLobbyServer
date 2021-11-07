@@ -7,9 +7,9 @@ document.getElementById("sendButton").disabled = true;
 
 connection.on("ReceiveMessage", function (user, message) {
     var mess = document.createElement("div");
-    var br = document.createElement("br");
+    mess.className = "d-flex flex-row justify-content-start justify-content-end";
   
-    mess.innerHTML = '<div class="card text-white bg-secondary w-50 ml-auto" ><div class="card-header">' + user + ' says:</div><div class="card-body"><p class="card-text">' + message + '</p></div></div>';
+    mess.innerHTML = '<div class="card text-white bg-secondary w-50 m-1" ><div class="card-header">' + user + ' says:</div><div class="card-body"><p class="card-text">' + message + '</p></div></div>';
 
     document.getElementById("messagesList").appendChild(mess);
   
@@ -19,9 +19,9 @@ connection.on("ReceiveMessage", function (user, message) {
 
 connection.on("ReceiveOwnMessage", function (user, message) {
     var mess = document.createElement("div");
-    var br = document.createElement("br");
+    mess.className = "d-flex flex-row justify-content-start";
 
-    mess.innerHTML = '<div class="card text-white bg-primary w-50 ml-auto"><div class="card-header">' + user + ' says:</div><div class="card-body"><p class="card-text">' + message + '</p></div></div>';
+    mess.innerHTML = '<div class="card text-white bg-primary w-50 m-1"><div class="card-header">' + user + ' says:</div><div class="card-body"><p class="card-text">' + message + '</p></div></div>';
 
     document.getElementById("messagesList").appendChild(mess);
 
