@@ -16,6 +16,7 @@ namespace BoardLobbyServer.Pages
         public List<Admin> admins { get; private set; } = null;
         public string alert { get; private set; } = "";
         public bool logged { get; private set; } = false;
+        public string log { get; private set; } = "";
 
         public ManageAdminsModel(AdminService adminService)
         {
@@ -52,7 +53,7 @@ namespace BoardLobbyServer.Pages
                 }
                 catch (Exception e)
                 {
-                    
+                    log = e.Message;
 
                 }
             }
@@ -68,8 +69,7 @@ namespace BoardLobbyServer.Pages
                 }
                 catch (Exception e)
                 {
-                    
-
+                    log = e.Message;
                 }
                 return Redirect("ManageAdmins");
             }

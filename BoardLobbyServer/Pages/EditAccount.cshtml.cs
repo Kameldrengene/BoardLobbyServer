@@ -32,19 +32,21 @@ namespace BoardLobbyServer.Pages
             if (HttpContext.Session.GetString("LoggedIn") != null)
             {
                 logged = true;
+                try
+                {
+                    _adminName = HttpContext.Session.GetString("LoggedIn");
+                    Admin admin = _adminService.GetByName(_adminName);
+                    adminId = admin.Id;
+                    adminName = admin.Name;
+                    adminPassword = "****************";
+
+                }
+                catch (Exception e)
+                {
+                    log = e.Message;
+                }
             }
-            try
-            {
-                _adminName = HttpContext.Session.GetString("LoggedIn");
-                Admin admin = _adminService.GetByName(_adminName);
-                adminId = admin.Id;
-                adminName = admin.Name;
-                adminPassword = "****************";
-                    
-            }catch(Exception e)
-            {
-                log = e.Message;
-            }
+
         }
         public IActionResult OnPost()
         {
