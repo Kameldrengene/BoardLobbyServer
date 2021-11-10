@@ -8,7 +8,7 @@ namespace BoardLobbyServer.Game.Fields
 {
     public class SafeHomeField : Field
     {
-        public SafeHomeField(PieceColor quadrant, int pos) : base(quadrant, pos)
+        public SafeHomeField(PieceColor quadrant, int pos, Board board) : base(quadrant, pos, board)
         {
             
         }
@@ -29,6 +29,7 @@ namespace BoardLobbyServer.Game.Fields
             if (this.pieces.Count == 0) //no pieces yet
             {
                 this.pieces.Add(piece); // simply adds the piece to the field
+                piece.field = this;
             }
 
             else //1 or more pieces
@@ -42,6 +43,7 @@ namespace BoardLobbyServer.Game.Fields
                         // TODO: The stading piece(s) are sent home
                         this.pieces = new List<Piece>(); //set new list to clear out any pieces on the field
                         this.pieces.Add(piece);
+                        piece.field = this;
                     }
                     else
                     {
@@ -52,6 +54,7 @@ namespace BoardLobbyServer.Game.Fields
                 else // The pieces are all the same color
                 {
                     this.pieces.Add(piece); // adds the piece to field
+                    piece.field = this;
                 }
             }
         }

@@ -8,7 +8,7 @@ namespace BoardLobbyServer.Game.Fields
 {
     public class NormalField : Field
     {
-        public NormalField(PieceColor quadrant, int pos) : base(quadrant, pos)
+        public NormalField(PieceColor quadrant, int pos, Board board) : base(quadrant, pos, board)
         {
             
         }
@@ -29,6 +29,7 @@ namespace BoardLobbyServer.Game.Fields
             if (this.pieces.Count == 0) //no pieces yet
             {
                 this.pieces.Add(piece); // simply adds the piece to the field
+                piece.field = this;
             }
 
             else if (this.pieces.Count == 1) //one piece on field
@@ -39,6 +40,7 @@ namespace BoardLobbyServer.Game.Fields
                                              // TODO: add the removed piece to the correct start
                 }
                 this.pieces.Add(piece); //adds the piece to field
+                piece.field = this;
 
             }
 
@@ -52,6 +54,7 @@ namespace BoardLobbyServer.Game.Fields
                 else // The pieces are all the same color
                 {
                     this.pieces.Add(piece); // adds the piece to field
+                    piece.field = this;
                 }
             }
 

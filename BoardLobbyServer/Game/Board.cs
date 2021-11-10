@@ -9,8 +9,14 @@ namespace BoardLobbyServer.Game
     public class Board
     {
         private List<Field>[] fieldList = { new List<Field>(), new List<Field>(), new List<Field>(), new List<Field>() };
+        private List<Piece>[] pieceList = { new List<Piece>(), new List<Piece>(), new List<Piece>(), new List<Piece>() };
         private Dictionary<PieceColor,Field> startingFields = new Dictionary<PieceColor, Field> { };
         private Dictionary<PieceColor,Field> finishFields = new Dictionary<PieceColor, Field> { };
+
+        private int[] piecesHome = { 4, 4, 4, 4 };
+        private int[] piecesDone = { 0, 0, 0, 0 };
+
+
         public void createBoard()
         {
             MakeFields();
@@ -25,6 +31,22 @@ namespace BoardLobbyServer.Game
         public Field getBank(PieceColor pieceColor)
         {
             return fieldList[(int)pieceColor][10];
+        }
+
+        public void setNewPieceOnBoard(PieceColor pieceColor)
+        {
+            Piece piece;
+            switch (pieceColor)
+            {
+                case PieceColor.blue:
+                    piecesHome[(int)pieceColor] -= 1;
+                    piece = new BluePiece();
+                    pieceList[(int)pieceColor].Add(piece);
+                    
+                    break;
+
+
+            }
         }
 
         private void AssignNextFields()
@@ -49,7 +71,7 @@ namespace BoardLobbyServer.Game
                     {
                         fieldList[i][j].nextField = fieldList[i][j - 1];
                     }
-                    else if (6 < j && j < 11) //Middle fields
+                    else if (6 < j && j < 11) //Middle Fields or Bank Fields
                     {
                         fieldList[i][j].nextField = fieldList[i][j - 1];
                     }
@@ -80,32 +102,32 @@ namespace BoardLobbyServer.Game
                         Field field = null;
                         if (j == 3 && k == 0) //Globus
                         {
-                            field = new GlobusField((PieceColor)i, pos);
+                            field = new GlobusField((PieceColor)i, pos, this);
                         }
                         else if (j == 4 && k == 2)//Starting field
                         {
-                            field = new SafeHomeField((PieceColor)i, pos);
+                            field = new SafeHomeField((PieceColor)i, pos, this);
                             startingFields[(PieceColor)i] = field;
                         }
                         else if (j == 5 && k == 1) //Entrance
                         {
-                            EntranceField eField = new EntranceField((PieceColor)i, pos);
+                            EntranceField eField = new EntranceField((PieceColor)i, pos, this);
                             eField.setBankField(getBank((PieceColor)i));
                             field = eField;
                         }
                         else if (j == 0 && k == 0) //Star
                         {
-                            field = new StarField((PieceColor)i, pos);
+                            field = new StarField((PieceColor)i, pos, this);
                         }
                         else //Default
                         {
-                            field = new NormalField((PieceColor)i, pos);
+                            field = new NormalField((PieceColor)i, pos, this);
                         }
                         fieldList[i].Add(field);
                     }
                 }
 
-                Field finishField = new NormalField((PieceColor)i, 18*4+i); //finishfields
+                Field finishField = new NormalField((PieceColor)i, 18*4+i, this); //finishfields
                 finishFields[(PieceColor)i] = finishField;
             }
             AssignNextFields();

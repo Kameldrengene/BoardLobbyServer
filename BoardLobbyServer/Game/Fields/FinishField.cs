@@ -8,7 +8,7 @@ namespace BoardLobbyServer.Game.Fields
 {
     public class FinishField : Field
     {
-        public FinishField(PieceColor quadrant, int pos) : base(quadrant, pos)
+        public FinishField(PieceColor quadrant, int pos, Board board) : base(quadrant, pos, board)
         {
             
         }
