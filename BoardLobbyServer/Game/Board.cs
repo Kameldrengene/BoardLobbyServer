@@ -20,7 +20,7 @@ namespace BoardLobbyServer.Game
         public void createBoard()
         {
             MakeFields();
-           
+            AssignNextFields();
         }
 
         public Field getStart(PieceColor pieceColor)
@@ -33,20 +33,31 @@ namespace BoardLobbyServer.Game
             return fieldList[(int)pieceColor][10];
         }
 
+        public void sendPieceHome(Piece piece)
+        {
+            pieceList[(int)piece.getPieceColor()].Remove(piece);
+            piece.field.getPieces().Remove(piece);
+            piecesHome[(int)piece.getPieceColor()] += 1;
+        }
+
         public void setNewPieceOnBoard(PieceColor pieceColor)
         {
             Piece piece;
             switch (pieceColor)
             {
                 case PieceColor.blue:
-                    piecesHome[(int)pieceColor] -= 1;
                     piece = new BluePiece();
-                    pieceList[(int)pieceColor].Add(piece);
-                    
+                    break;
+                default:
+                    piece = new RedPiece();
                     break;
 
-
             }
+            piecesHome[(int)pieceColor] -= 1;
+            pieceList[(int)pieceColor].Add(piece);
+            Field startingField = getStart(pieceColor);
+
+            startingField.OnLand(piece);
         }
 
         private void AssignNextFields()
@@ -130,7 +141,7 @@ namespace BoardLobbyServer.Game
                 Field finishField = new NormalField((PieceColor)i, 18*4+i, this); //finishfields
                 finishFields[(PieceColor)i] = finishField;
             }
-            AssignNextFields();
+            
         }
 
     }
