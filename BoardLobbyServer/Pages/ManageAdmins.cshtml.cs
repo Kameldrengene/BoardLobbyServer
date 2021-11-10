@@ -10,49 +10,35 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BoardLobbyServer.Pages
 {
-    public class EditAccountModel : PageModel
+    public class ManageAdminsModel : PageModel
     {
         private readonly AdminService _adminService;
-        public string log { get; private set; } = "";
+        public List<Admin> admins { get; private set; } = null;
         public string alert { get; private set; } = "";
-        private string _adminName;
-        public string adminId { get; private set; } = "";
-        public string adminName { get; private set; } = "";
-        public string adminPassword { get; private set; } = "";
         public bool logged { get; private set; } = false;
+        public string log { get; private set; } = "";
 
-        public EditAccountModel(AdminService adminService)
+        public ManageAdminsModel(AdminService adminService)
         {
             _adminService = adminService;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-
             if (HttpContext.Session.GetString("LoggedIn") != null)
             {
                 logged = true;
-                try
-                {
-                    _adminName = HttpContext.Session.GetString("LoggedIn");
-                    Admin admin = _adminService.GetByName(_adminName);
-                    adminId = admin.Id;
-                    adminName = admin.Name;
-                    adminPassword = "****************";
-
-                }
-                catch (Exception e)
-                {
-                    log = e.Message;
-                }
+                admins = _adminService.Get();
             }
-
+            
+            return null;
         }
         public IActionResult OnPost()
         {
-            
-            if(this.Request.Form.Keys.Contains("updatebutton"))
+
+            if (this.Request.Form.Keys.Contains("updatebutton"))
             {
+                alert = "update";
                 try
                 {
                     var emailAddress = Request.Form["emailaddress"];
@@ -63,32 +49,29 @@ namespace BoardLobbyServer.Pages
                     admin.Name = emailAddress;
                     admin.Password = password;
                     _adminService.Update(admin.Id, admin);
-
-                    this.OnGet();
+                    return Redirect("ManageAdmins");
                 }
                 catch (Exception e)
                 {
-                    alert = e.Message;
+                    log = e.Message;
 
                 }
             }
             if (this.Request.Form.Keys.Contains("deletebutton"))
             {
-               
+                alert = "delete";
+                
                 try
                 {
                     var id = Request.Form["idAdmin"];
 
                     _adminService.Remove(id);
-                    HttpContext.Session.Remove("LoggedIn");
-                    return Redirect("Index");
                 }
                 catch (Exception e)
                 {
-                    alert = e.Message;
-
+                    log = e.Message;
                 }
-                this.OnGet();
+                return Redirect("ManageAdmins");
             }
             return null;
 

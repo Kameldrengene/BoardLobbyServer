@@ -30,8 +30,12 @@ namespace BoardLobbyServer.Services
             _admins.InsertOne(admin);
             return admin;
         }
-        public void Update(string id, Admin adminIn) =>
+        public void Update(string id, Admin adminIn)
+        {
+            adminIn.Password = BCrypt.Net.BCrypt.HashPassword(adminIn.Password);
             _admins.ReplaceOne(admin => admin.Id == id, adminIn);
+        }
+            
         public void Remove(Admin adminIn) =>
             _admins.DeleteOne(admin => admin.Id == adminIn.Id);
         public void Remove(string id) =>

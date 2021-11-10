@@ -8,19 +8,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BoardLobbyServer.Pages
 {
-    public class GameListModel : PageModel
+    public class ChatModel : PageModel
     {
-        public string Message { get; private set; } = "Pagemodel";
+        public string adminName { get; private set; } = "";
         public bool logged { get; private set; } = false;
-        public IActionResult OnGet()
+        public void OnGet()
         {
-            Message += $" Server time is { DateTime.Now }";
-
             if (HttpContext.Session.GetString("LoggedIn") != null)
             {
                 logged = true;
+                adminName = HttpContext.Session.GetString("LoggedIn");
             }
-            return null;
+
 
         }
     }

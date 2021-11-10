@@ -14,6 +14,8 @@ namespace BoardLobbyServer.Pages
     public class IndexModel : PageModel
     {
         public string weather { get; set; } = "";
+        public bool logged { get; set; } = false;
+        public string adminName { get; set; } = "";
 
         private readonly ILogger<IndexModel> _logger;
 
@@ -24,6 +26,11 @@ namespace BoardLobbyServer.Pages
 
         public async Task OnGet()
         {
+            if(HttpContext.Session.GetString("LoggedIn") != null)
+            {
+                logged = true;
+                adminName = HttpContext.Session.GetString("LoggedIn");
+            }
            weather = await GetWeather();
         }
         public async Task<string> GetWeather()

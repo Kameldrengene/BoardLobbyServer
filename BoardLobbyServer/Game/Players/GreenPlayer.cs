@@ -18,10 +18,10 @@ namespace BoardLobbyServer.Game.Players
         public override void initPieces(Field field)
         {
             this.pieces = new List<Piece>();
-            Piece piece1 = new Piece(Color.GREEN, this, field);
-            Piece piece2 = new Piece(Color.GREEN, this, field);
-            Piece piece3 = new Piece(Color.GREEN, this, field);
-            Piece piece4 = new Piece(Color.GREEN, this, field);
+            Piece piece1 = new GreenPiece(); 
+            Piece piece2 = new GreenPiece();
+            Piece piece3 = new GreenPiece();
+            Piece piece4 = new GreenPiece();
             pieces.Add(piece1);
             pieces.Add(piece2);
             pieces.Add(piece3);

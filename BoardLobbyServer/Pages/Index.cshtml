@@ -10,20 +10,29 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <div class="card" style="width: 18rem;">
+            <div class="card w-50" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">On going games</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <h6>To manage games please:</h6>
-                    <a class="card-link" asp-area="" asp-page="/SignIn">Sign In</a>
-                    <a class="card-link" asp-area="" asp-page="/SignUp">Sign Up</a>
+                    @if (Model.logged)
+                    {
+                        <h6>Welcome @Model.adminName</h6>
+                    }
+                    else
+                    {
+                        <h6>To manage games please:</h6>
+                        <a class="card-link" asp-area="" asp-page="/SignIn">Sign In</a>
+                        <a class="card-link" asp-area="" asp-page="/SignUp">Sign Up</a>
+                    }
+
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="card" style="width: 18rem;">
-                <img src="~/images/weather.jpg" class="card-img-top" alt="...">
+            <div class="card w-50" style="width: 18rem;">
+                <div class="text-center bg-dark"><img src="~/images/1.png" class="card-img-top w-25 m-3 " alt="..."></div>
+                
                 <div class="card-body">
                     <p class="card-text">Weather: @Model.weather &#8451; </p>
                 </div>
