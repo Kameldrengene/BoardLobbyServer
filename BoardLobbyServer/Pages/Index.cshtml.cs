@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BoardLobbyServer.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -13,25 +14,33 @@ namespace BoardLobbyServer.Pages
 {
     public class IndexModel : PageModel
     {
+        private readonly AdminService _adminService;
         public string weather { get; set; } = "";
         public bool logged { get; set; } = false;
         public string adminName { get; set; } = "";
 
         private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger, AdminService adminService)
         {
             _logger = logger;
+            _adminService = adminService;
         }
 
-        public async Task OnGet()
+        public IActionResult OnGet()
         {
-            if(HttpContext.Session.GetString("LoggedIn") != null)
+            if (_adminService.Get().Count == 0)
+            {
+                return Redirect("/SignUp");
+            }
+            if (HttpContext.Session.GetString("LoggedIn") != null)
             {
                 logged = true;
                 adminName = HttpContext.Session.GetString("LoggedIn");
+
             }
-           weather = await GetWeather();
+            weather = GetWeather().Result;
+            return null;
         }
         public async Task<string> GetWeather()
         {
@@ -39,7 +48,7 @@ namespace BoardLobbyServer.Pages
             using (var client = new HttpClient())
             {
                 string vejr = null;
-             
+
                 var request = new HttpRequestMessage(HttpMethod.Get, "http://vejr.eu/api.php?location=Roskilde&degree=C");
                 var header1 = new MediaTypeWithQualityHeaderValue("application/json");
                 var header2 = new ProductInfoHeaderValue("CamelLudo", "1.0");
@@ -47,18 +56,18 @@ namespace BoardLobbyServer.Pages
                 request.Headers.UserAgent.Add(header2);
                 request.Headers.Accept.Add(header1);
 
-                
+
                 var resp = await client.SendAsync(request);
 
-               
+
                 if (resp.IsSuccessStatusCode)
                 {
 
-                     vejr = resp.Content.ReadAsStringAsync().Result;
+                    vejr = resp.Content.ReadAsStringAsync().Result;
 
                 }
 
-                
+
                 //returning the student list to view  
                 return vejr;
             }
