@@ -1,13 +1,16 @@
-﻿using BoardLobbyServer.Services;
+﻿using BoardLobbyServer.Model;
+using BoardLobbyServer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using SignalRChat.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace BoardLobbyServer.Pages
@@ -18,6 +21,10 @@ namespace BoardLobbyServer.Pages
         public string weather { get; set; } = "";
         public bool logged { get; set; } = false;
         public string adminName { get; set; } = "";
+        public string playerCount { get; set; } = "0";
+        public string gameCount { get; set; } = "0";
+        public string gamesOnline { get; set; } = "0";
+        public string gamesLaunched { get; set; } = "0";
 
         private readonly ILogger<IndexModel> _logger;
 
@@ -37,6 +44,9 @@ namespace BoardLobbyServer.Pages
             {
                 logged = true;
                 adminName = HttpContext.Session.GetString("LoggedIn");
+                gamesOnline = LobbyData.Instance.Games.Count.ToString();
+                playerCount = Stats.playerList.Count.ToString();
+                gameCount = Stats.gameHistory.Count.ToString();
 
             }
             weather = GetWeather().Result;
@@ -47,7 +57,8 @@ namespace BoardLobbyServer.Pages
 
             using (var client = new HttpClient())
             {
-                string vejr = null;
+                string data = null;
+                Weather weather = null;
 
                 var request = new HttpRequestMessage(HttpMethod.Get, "http://vejr.eu/api.php?location=Roskilde&degree=C");
                 var header1 = new MediaTypeWithQualityHeaderValue("application/json");
@@ -63,14 +74,19 @@ namespace BoardLobbyServer.Pages
                 if (resp.IsSuccessStatusCode)
                 {
 
-                    vejr = resp.Content.ReadAsStringAsync().Result;
+                   data = resp.Content.ReadAsStringAsync().Result;
+                   weather = JsonSerializer.Deserialize<Weather>(data);
 
                 }
-
-
-                //returning the student list to view  
-                return vejr;
+                
+                return weather.CurrentData.GetValueOrDefault("skyText") + " " + weather.CurrentData.GetValueOrDefault("temperature");
             }
         }
+    }
+    public class Weather
+    {
+        public string LocationName { get; set; }
+        public Dictionary<string, string> CurrentData { get; set; }
+
     }
 }

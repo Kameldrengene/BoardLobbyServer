@@ -3,42 +3,82 @@
 @{
 }
 
-<h1>Welcome to CamelLudo</h1>
+
+<div class="float-end m-3">
+    <img src="~/images/1.png" width="25" alt="...">
+    @Model.weather &#8451;
+</div>
+<br>
 
 
+<div class="row">
+    <div class="col-4">
+        <img src="~/images/velkom2.png" class="img-fluid" alt="...">
+    </div>
+    <div class="col-8">
+        <div class="row">
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Camel Ludo</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Admin Panel</h6>
+                        @if (Model.logged)
+                        {
+                            <h6>Welcome @Model.adminName</h6>
+                        }
+                        else
+                        {
+                            <p class="card-text">To be able use this admin panel please sign in down below:</p>
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <div class="card w-50" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">On going games</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    @if (Model.logged)
-                    {
-                        <h6>Welcome @Model.adminName</h6>
-                    }
-                    else
-                    {
-                        <h6>To manage games please:</h6>
-                        <a class="card-link" asp-area="" asp-page="/SignIn">Sign In</a>
-                        <a class="card-link" asp-area="" asp-page="/SignUp">Sign Up</a>
-                    }
+                            <a class="btn btn-primary" asp-area="" asp-page="/SignIn">Sign In</a>
+                        }
 
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card w-50" style="width: 18rem;">
-                <div class="text-center bg-dark"><img src="~/images/1.png" class="card-img-top w-25 m-3 " alt="..."></div>
-                
-                <div class="card-body">
-                    <p class="card-text">Weather: @Model.weather &#8451; </p>
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <div class="card float-start text-center" style="width: 9rem;">
+                            <div class="card-body">
+
+                                Total games created:
+                              <h3 class="text-primary">  @Model.gameCount</h3>
+                            </div>
+                        </div>
+                       <div class="card float-start text-center" style="width: 9rem;">
+                            <div class="card-body">
+                                Games Launched:
+
+                                <h3 class="text-primary"> @Model.gamesLaunched </h3>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="col">
+                         <div class="card float-start text-center" style="width: 9rem;">
+                            <div class="card-body">
+                                Games online:
+                              <h3 class="text-primary">  @Model.gamesOnline </h3>
+                            </div>
+                        </div>
+                        
+                         <div class="card float-start text-center" style="width: 9rem;">
+                            <div class="card-body">
+                                Players online:
+
+                                <h3 class="text-primary"> @Model.playerCount </h3>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -47,7 +87,11 @@
 
 
 
+
+
+
+
 @section Scripts{
-    <script src="~/js/playerdata.js"></script>
+<script src="~/js/playerdata.js"></script>
 }
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
