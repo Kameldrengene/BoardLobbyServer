@@ -8,31 +8,29 @@
 @if (Model.logged)
 {
 
-<div class="bg-light overflow-auto rounded" id="messagesList"></div>
-
-
-    <div class="float-start m-2"><input class="border border-0" type="text" id="userInput" value="@Model.adminName" readonly/></div>
+    <div class="bg-light overflow-auto rounded" id="messagesList"></div>
+    <div class="float-start m-2"><input class="border border-0" type="text" id="userInput" value="@Model.adminName" readonly /></div>
     <div class="float-start m-2"><input type="text" id="messageInput" /></div>
     <input class="float-start m-2" type="button" id="sendButton" value="Send Message" />
 }
 else
 {
-<div class="alert alert-danger d-flex align-items-center m-3" role="alert">
-    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
-    <div>
-        You have to <a asp-page="SignIn" class="alert-link">log in</a> to chat with your Bro's!
+    <div class="alert alert-danger d-flex align-items-center m-3" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+        <div>
+            You have to <a asp-page="SignIn" class="alert-link">log in</a> to chat with your Bro's!
+        </div>
     </div>
-</div>
 }
 
-        <script src="~/js/signalr/dist/browser/signalr.js"></script>
-        <script src="~/js/chat.js"></script>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
 
-        @section Scripts{
-            <script>
-                var divHeight = $(window).height() * 50 / 100;
-                $("#messagesList").css("height", divHeight);
-            </script>
+@section Scripts{
+<script>
+    var divHeight = $(window).height() * 50 / 100;
+    $("#messagesList").css("height", divHeight);
+</script>
         }
 
 
