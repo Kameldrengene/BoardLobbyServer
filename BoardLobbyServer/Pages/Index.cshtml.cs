@@ -25,6 +25,7 @@ namespace BoardLobbyServer.Pages
         public string gameCount { get; set; } = "0";
         public string gamesOnline { get; set; } = "0";
         public string gamesLaunched { get; set; } = "0";
+        public string adminAvatar { get; set; } = "";
 
         private readonly ILogger<IndexModel> _logger;
 
@@ -42,14 +43,23 @@ namespace BoardLobbyServer.Pages
             }
             if (HttpContext.Session.GetString("LoggedIn") != null)
             {
+                
                 logged = true;
                 adminName = HttpContext.Session.GetString("LoggedIn");
+                Admin admin = _adminService.GetByName(adminName);
+                adminAvatar = admin.Avatar;
                 gamesOnline = LobbyData.Instance.Games.Count.ToString();
                 playerCount = Stats.playerList.Count.ToString();
                 gameCount = Stats.gameHistory.Count.ToString();
 
             }
-            weather = GetWeather().Result;
+            try
+            {
+                weather = GetWeather().Result;
+            }catch (Exception ex)
+            {
+
+            }
             return null;
         }
         public async Task<string> GetWeather()

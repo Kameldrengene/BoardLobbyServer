@@ -5,71 +5,101 @@
 
 @if (Model.master)
 {
-<div class="container">
-    <div class="row">
-        <div class="col">
-            
-        </div>
-        <div class="col">
-            <h2 class="m-3">Creating Admin Account</h2>
-            <form method="post">
-                <div class="form-floating mb-3 ">
-                    <input type="email" name="emailaddress" class="form-control" id="floatingInput" placeholder="name@example.com" required>
-                    <label for="floatingInput">Email address</label>
+
+    <div class="container d-flex justify-content-center p-3">
+        <form method="post" class="border bg-light shadow-sm rounded w-50 p-3">
+            <div class="container d-flex justify-content-center">
+                <h3 class="m-3">Admin Account</h3>
+            </div>
+            <div class="text-center">
+                <div class="dropdown">
+                    <img src="~/images/avatars/1.png" id="mainimg" class="rounded dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" alt="...">
+                    <div class="container dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <div class="row">
+                            @for (var i = 1; i < 36; i++)
+                            {
+                                string img = i + ".png";
+                                <div class="col">
+                                    <img src="~/images/avatars/@img" id="avatar" class="rounded" style="width: 75px" alt="/images/avatars/@img" onclick="setValue(this)">
+                                </div>
+                            }
+                        </div>
+                    </div>
                 </div>
-                <div class="form-floating">
-                    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
-                    <label for="floatingPassword">Password</label>
-                </div>
+            </div>
+            <input type="hidden" id="imgsrc" name="imgsrc" value="">
+            <div class="form-floating mb-3 ">
+                <input type="email" name="emailaddress" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                <label for="floatingPassword">Password</label>
+            </div>
 
-                <button type="submit" class="btn btn-primary w-100 mt-3">Sign Up</button>
-
-            </form>
-        </div>
-        <div class="col">
-
-        </div>
+            <button type="submit" class="btn btn-primary w-100 mt-3">Sign Up</button>
+        </form>
     </div>
-</div>
 }
 else if (Model.firstTime)
 {
-<div class="container">
-    <div class="row">
-        <div class="col">
-        </div>
-        <div class="col">
-            <h2 class="m-3">Creating Master Account</h2>
-            <form method="post">
-                <div class="form-floating mb-3 ">
-                    <input type="email" name="emailaddress" class="form-control" id="floatingInput" placeholder="name@example.com" required>
-                    <label for="floatingInput">Email address</label>
+ <div class="container d-flex justify-content-center p-3">
+        <form method="post" class="border bg-light shadow-sm rounded w-50 p-3">
+            <div class="container d-flex justify-content-center">
+                <h3 class="m-3">Master Account</h3>
+            </div>
+            <div class="text-center">
+                <div class="dropdown">
+                    <img src="~/images/avatars/1.png" id="mainimg" class="rounded dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" alt="...">
+                    <div class="container dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <div class="row">
+                            @for (var i = 1; i < 36; i++)
+                            {
+                                string img = i + ".png";
+                                <div class="col">
+                                    <img src="~/images/avatars/@img" id="avatar" class="rounded" style="width: 75px" alt="/images/avatars/@img" onclick="setValue(this)">
+                                </div>
+                            }
+                        </div>
+                    </div>
                 </div>
-                <div class="form-floating">
-                    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
-                    <label for="floatingPassword">Password</label>
-                </div>
+            </div>
+            <input type="hidden" id="imgsrc" name="imgsrc" value="">
+            <div class="form-floating mb-3 ">
+                <input type="email" name="emailaddress" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                <label for="floatingPassword">Password</label>
+            </div>
 
-                <button type="submit" class="btn btn-primary w-100 mt-3">Sign Up</button>
-
-            </form>
-        </div>
-        <div class="col">
-
-        </div>
+            <button type="submit" class="btn btn-primary w-100 mt-3">Sign Up</button>
+        </form>
     </div>
-</div>
 }
 else
 {
-<div class="alert alert-danger d-flex align-items-center m-3" role="alert">
-    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
-    <div>
-        You have to be Master with giga ballz to create accounts bro!
+    <div class="alert alert-danger d-flex align-items-center m-3" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+        <div>
+            You have to be Master with giga ballz to create accounts bro!
+        </div>
     </div>
-</div>
 }
 
 <div>
     @Model.log
 </div>
+
+@section Scripts{
+
+<script>
+    function setValue(img){
+        let src = img.alt;
+        document.getElementById("imgsrc").value = src;
+        document.getElementById("mainimg").src = src;
+    }
+
+</script>
+}

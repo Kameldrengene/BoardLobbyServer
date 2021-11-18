@@ -54,5 +54,17 @@ namespace BoardLobbyServer.Services
             else
                 return null;
         }
+        public bool isMaster(string id)
+        {
+            Admin admin = this.Get(id);
+            if (admin.AdminType == Admin.Type.Master)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

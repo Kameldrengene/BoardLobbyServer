@@ -40,13 +40,14 @@ namespace BoardLobbyServer.Pages
             }
 
         }
-        public IActionResult OnPost(string emailAddress, string password)
+        public IActionResult OnPost(string emailAddress, string password, string imgsrc)
         {
             try
             {
                 Admin admin = new Admin();
                 admin.Name = emailAddress;
                 admin.Password = password;
+                admin.Avatar = imgsrc;
                 if (_adminService.Get().Count == 0)
                 {
                     admin.AdminType = Admin.Type.Master;

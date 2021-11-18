@@ -19,7 +19,10 @@ namespace BoardLobbyServer.Pages
         public string adminId { get; private set; } = "";
         public string adminName { get; private set; } = "";
         public string adminPassword { get; private set; } = "";
+        public string adminAvatar { get; private set; }
         public bool logged { get; private set; } = false;
+        public bool updated { get; private set; } = false;
+        public bool deleted { get; private set; } = false;
 
         public EditAccountModel(AdminService adminService)
         {
@@ -39,6 +42,7 @@ namespace BoardLobbyServer.Pages
                     adminId = admin.Id;
                     adminName = admin.Name;
                     adminPassword = "****************";
+                    adminAvatar = admin.Avatar;
 
                 }
                 catch (Exception e)
@@ -57,12 +61,26 @@ namespace BoardLobbyServer.Pages
                 {
                     var emailAddress = Request.Form["emailaddress"];
                     var password = Request.Form["password"];
+                    var avatar = Request.Form["imgsrc"];
                     var id = Request.Form["idAdmin"];
                     Admin admin = new Admin();
                     admin.Id = id;
                     admin.Name = emailAddress;
                     admin.Password = password;
+                    admin.Avatar = avatar;
+
+                    if (_adminService.isMaster(id))
+                    {
+                        admin.AdminType = Admin.Type.Master;
+                    }
+                    else
+                    {
+                        admin.AdminType = Admin.Type.Admin;
+                    }
+
                     _adminService.Update(admin.Id, admin);
+                    deleted = false;
+                    updated = true;
 
                     this.OnGet();
                 }
@@ -88,6 +106,8 @@ namespace BoardLobbyServer.Pages
                     alert = e.Message;
 
                 }
+                updated = false;
+                deleted = true;
                 this.OnGet();
             }
             return null;

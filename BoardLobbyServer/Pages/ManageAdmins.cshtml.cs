@@ -56,6 +56,14 @@ namespace BoardLobbyServer.Pages
                     admin.Id = id;
                     admin.Name = emailAddress;
                     admin.Password = password;
+                    if (_adminService.isMaster(id))
+                    {
+                        admin.AdminType = Admin.Type.Master;
+                    }
+                    else
+                    {
+                        admin.AdminType = Admin.Type.Admin;
+                    }
                     _adminService.Update(admin.Id, admin);
                     return Redirect("ManageAdmins");
                 }
@@ -80,6 +88,28 @@ namespace BoardLobbyServer.Pages
                     log = e.Message;
                 }
                 return Redirect("ManageAdmins");
+            }
+            if (this.Request.Form.Keys.Contains("addbutton"))
+            {
+                alert = "add";
+
+                try
+                {
+                    var emailAddress = Request.Form["emailaddress"];
+                    var password = Request.Form["password"];                  
+                    Admin admin = new Admin();
+                    admin.Name = emailAddress;
+                    admin.Password = password;
+                    admin.AdminType = Admin.Type.Admin;
+                    admin.Avatar = "/images/kamel.png";
+                    _adminService.Create(admin);
+                    return Redirect("ManageAdmins");
+                }
+                catch (Exception e)
+                {
+                    log = e.Message;
+                }
+                
             }
             return null;
 

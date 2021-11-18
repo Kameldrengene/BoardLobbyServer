@@ -23,6 +23,7 @@ namespace BoardLobbyServer.Model
             Master
         }
         public Type AdminType { get; set; }
+        public string Avatar { get; set; }
 
     }
 }
