@@ -8,15 +8,15 @@
 @if (Model.logged)
 {
     <div class="d-flex justify-content-start">
-    <div class="bg-light overflow-auto rounded w-25 m-3 shadow" id="adminList"></div>
-    <div class="bg-light overflow-auto rounded m-3 shadow" style="width:70%" id="messagesList"></div>
+    <div class="bg-light overflow-auto rounded w-25 m-3 shadow text-center" id="adminList"> <div class="text-secondary text-center m-2">Online admins</div></div>
+    <div class="bg-light overflow-auto rounded m-3 shadow" style="width:70%" id="messagesList"><div class="text-secondary text-center m-2">Chat window</div></div>
     </div>
 
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center m-3">
     <div><img src="@Model.adminAvatar" id="avatar" class="rounded" style="width: 50px" alt="..." > </div>
     <div id="userInput" class=" badge rounded-pill bg-primary"  style="font-size:15px;">@Model.adminName</div>
     <div>
-   <input type="text" class="form-control float-start m-2" id="messageInput">
+   <input type="text" class="form-control float-start m-2 bg-light shadow" id="messageInput">
    </div>
 
     <input class="btn btn-primary m-3" type="button" id="sendButton" value="Send Message" />

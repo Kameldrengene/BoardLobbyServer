@@ -28,6 +28,17 @@ connection.on("ReceiveOwnMessage", function (user, message) {
 
 });
 
+connection.on("Connected", function (id) {
+
+    const adminname = $('#userInput').text();
+    const img = $('#avatar').attr('src')
+    connection.invoke("BroadcastStatus", id, adminname, img).catch(function (err)){
+        return console.error(err.toString());
+    }
+});
+
+
+
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
 }).catch(function (err) {
