@@ -31,7 +31,7 @@ namespace BoardLobbyServer.Pages
             {
                 if (HttpContext.Session.GetString("LoggedIn") != null)
                 {
-                    Admin admin = _adminService.GetByName(HttpContext.Session.GetString("LoggedIn"));
+                    Admin admin = _adminService.Get(HttpContext.Session.GetString("LoggedIn"));
                     if (admin.AdminType == Admin.Type.Master)
                     {
                         master = true;
@@ -53,7 +53,8 @@ namespace BoardLobbyServer.Pages
                     admin.AdminType = Admin.Type.Master;
                 }
                 _adminService.Create(admin);
-                HttpContext.Session.SetString("LoggedIn", admin.Name);
+                string id = _adminService.GetByName(admin.Name).Id;
+                HttpContext.Session.SetString("LoggedIn", id);
                 return Redirect("Index");
             }
             catch (Exception e)

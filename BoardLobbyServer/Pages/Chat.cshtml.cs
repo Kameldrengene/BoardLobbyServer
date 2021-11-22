@@ -17,7 +17,8 @@ namespace BoardLobbyServer.Pages
         {
             _adminService = adminService;
         }
-        public string adminName { get; private set; } = "";
+        public string adminId { get; private set; } = "";
+        public Admin admin { get; private set; } = null;
         public bool logged { get; private set; } = false;
         public string adminAvatar { get; set; } = "";
         public void OnGet()
@@ -25,9 +26,9 @@ namespace BoardLobbyServer.Pages
             if (HttpContext.Session.GetString("LoggedIn") != null)
             {
                 logged = true;
-                adminName = HttpContext.Session.GetString("LoggedIn");
+                adminId = HttpContext.Session.GetString("LoggedIn");
 
-                Admin admin = _adminService.GetByName(adminName);
+                admin = _adminService.Get(adminId);
                 adminAvatar = admin.Avatar;
 
             }

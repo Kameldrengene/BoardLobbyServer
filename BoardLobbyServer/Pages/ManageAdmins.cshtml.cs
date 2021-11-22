@@ -30,7 +30,7 @@ namespace BoardLobbyServer.Pages
                 logged = true;
                 admins = _adminService.Get();
                 int ismaster = (from admin in admins
-                                where admin.Name.Contains(HttpContext.Session.GetString("LoggedIn"))
+                                where admin.Id.Contains(HttpContext.Session.GetString("LoggedIn"))
                                 && admin.AdminType == Admin.Type.Master
                                 select admin.AdminType).Count();
                 if (ismaster == 1)

@@ -15,7 +15,7 @@ namespace BoardLobbyServer.Pages
         private readonly AdminService _adminService;
         public string log { get; private set; } = "";
         public string alert { get; private set; } = "";
-        private string _adminName;
+        private string _adminId = null;
         public string adminId { get; private set; } = "";
         public string adminName { get; private set; } = "";
         public string adminPassword { get; private set; } = "";
@@ -37,8 +37,8 @@ namespace BoardLobbyServer.Pages
                 logged = true;
                 try
                 {
-                    _adminName = HttpContext.Session.GetString("LoggedIn");
-                    Admin admin = _adminService.GetByName(_adminName);
+                    _adminId = HttpContext.Session.GetString("LoggedIn");
+                    Admin admin = _adminService.Get(_adminId);
                     adminId = admin.Id;
                     adminName = admin.Name;
                     adminPassword = "****************";

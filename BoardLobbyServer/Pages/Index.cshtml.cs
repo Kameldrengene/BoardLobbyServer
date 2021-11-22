@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using SignalRChat.Hubs;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,10 @@ namespace BoardLobbyServer.Pages
     public class IndexModel : PageModel
     {
         private readonly AdminService _adminService;
-        public string weather { get; set; } = "";
+        public Weather _weather { get; set; } = null;
         public bool logged { get; set; } = false;
-        public string adminName { get; set; } = "";
+        public string adminId { get; set; } = "";
+        public Admin admin { get; set; } = null;
         public string playerCount { get; set; } = "0";
         public string gameCount { get; set; } = "0";
         public string gamesOnline { get; set; } = "0";
@@ -45,8 +47,8 @@ namespace BoardLobbyServer.Pages
             {
                 
                 logged = true;
-                adminName = HttpContext.Session.GetString("LoggedIn");
-                Admin admin = _adminService.GetByName(adminName);
+                adminId = HttpContext.Session.GetString("LoggedIn");
+                admin = _adminService.Get(adminId);
                 adminAvatar = admin.Avatar;
                 gamesOnline = LobbyData.Instance.Games.Count.ToString();
                 playerCount = Stats.playerList.Count.ToString();
@@ -55,22 +57,23 @@ namespace BoardLobbyServer.Pages
             }
             try
             {
-                weather = GetWeather().Result;
+                _weather = GetWeather().Result;
             }catch (Exception ex)
             {
-
+                _weather = new Weather();
+                _weather._temperature = ex.Message;
             }
             return null;
         }
-        public async Task<string> GetWeather()
+        public async Task<Weather> GetWeather()
         {
 
             using (var client = new HttpClient())
             {
-                string data = null;
-                Weather weather = null;
-
-                var request = new HttpRequestMessage(HttpMethod.Get, "http://vejr.eu/api.php?location=Roskilde&degree=C");
+              
+                Weather weather = new Weather();
+               
+                var request = new HttpRequestMessage(HttpMethod.Get, "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=55.73107&lon=12.39702");
                 var header1 = new MediaTypeWithQualityHeaderValue("application/json");
                 var header2 = new ProductInfoHeaderValue("CamelLudo", "1.0");
 
@@ -84,19 +87,23 @@ namespace BoardLobbyServer.Pages
                 if (resp.IsSuccessStatusCode)
                 {
 
-                   data = resp.Content.ReadAsStringAsync().Result;
-                   weather = JsonSerializer.Deserialize<Weather>(data);
+                    string data = resp.Content.ReadAsStringAsync().Result;
+                   
+                    dynamic result = JObject.Parse(data);
+                    weather._temperature = result["properties"]["timeseries"][0]["data"]["instant"]["details"]["air_temperature"]; 
+                    weather._skytext = result["properties"]["timeseries"][0]["data"]["next_1_hours"]["summary"]["symbol_code"];
+
 
                 }
-                
-                return weather.CurrentData.GetValueOrDefault("skyText") + " " + weather.CurrentData.GetValueOrDefault("temperature");
+
+                return weather;
             }
         }
     }
     public class Weather
     {
-        public string LocationName { get; set; }
-        public Dictionary<string, string> CurrentData { get; set; }
+        public string _temperature { get; set; }
+        public string _skytext { get; set; }
 
     }
 }

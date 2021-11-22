@@ -5,8 +5,13 @@
 
 
 <div class="d-flex justify-content-end m-3">
-    <img src="~/images/1.png" width="25" alt="...">
-    @Model.weather &#8451;
+    @{
+        string sky = @Model._weather._skytext + ".png";
+    }
+    <img src="~/images/weather/@sky" width="25" alt="...">
+    <div class="ps-2">
+    @Model._weather._temperature &#8451;
+    </div>
 </div>
 
 <div class="d-flex justify-content-center">
@@ -25,7 +30,7 @@
                         {
                             <h6>Welcome: </h6>
                             <img src="@Model.adminAvatar" id="avatar" class="rounded" style="width: 50px" alt="..." >
-                            @Model.adminName
+                            @Model.admin.Name
                         }
                         else
                         {
