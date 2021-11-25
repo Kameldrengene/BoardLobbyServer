@@ -58,6 +58,11 @@ namespace BoardLobbyServer.Game
                     {
                         fieldList[i][j].nextField = finishFields[(PieceColor)i];
                     }
+
+                    else if (j == 12)
+                    {
+                        fieldList[i][j].nextField = fieldList[((i + 1) % 4)][0];
+                    }
                 }
 
                 finishFields[(PieceColor)i].nextField = fieldList[i][10];
