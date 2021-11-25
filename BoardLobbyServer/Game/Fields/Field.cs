@@ -13,10 +13,12 @@ namespace BoardLobbyServer.Game.Fields
         protected List<Piece> pieces = new List<Piece>();
         protected PieceColor quadrant;  // Must be same as pieces color system
         protected int pos;
-        public Field(PieceColor q, int p)
+        protected Board board;
+        public Field(PieceColor q, int p, Board b)
         {
             this.quadrant = q;
             this.pos = p;
+            this.board = b;
         }
         public List<Piece> getPieces() { return this.pieces; }
         public PieceColor getQuadrant() { return this.quadrant; }

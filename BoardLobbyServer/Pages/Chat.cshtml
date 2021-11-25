@@ -7,32 +7,48 @@
 
 @if (Model.logged)
 {
+    <div class="d-flex justify-content-start">
+        <div class="bg-light overflow-auto rounded w-25 m-3 shadow text-center" id="adminList"> <div class="text-secondary text-center m-2">Online admins</div></div>
+        <div class="bg-light overflow-auto rounded m-3 shadow" style="width:70%" id="messagesList"><div class="text-secondary text-center m-2">Chat window</div></div>
+    </div>
 
-<div class="bg-light overflow-auto rounded" id="messagesList"></div>
 
-
-    <div class="float-start m-2"><input class="border border-0" type="text" id="userInput" value="@Model.adminName" readonly/></div>
-    <div class="float-start m-2"><input type="text" id="messageInput" /></div>
-    <input class="float-start m-2" type="button" id="sendButton" value="Send Message" />
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-4 mb-3">
+                <div class="d-flex justify-content-center align-items-center">
+                    <div><img src="@Model.adminAvatar" id="avatar" class="rounded" style="width: 50px" alt="..."> </div>
+                    <div id="userInput" class=" badge rounded-pill bg-primary" style="font-size:15px;">@Model.admin.Name</div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <input type="text" class="form-control float-start bg-light shadow w-100" id="messageInput">
+            </div>
+            <div class="col-md-4 mb-3">
+                <input class="btn btn-primary " type="button" id="sendButton" value="Send Message" />
+            </div>
+        </div>
+    </div>
 }
 else
 {
-<div class="alert alert-danger d-flex align-items-center m-3" role="alert">
-    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
-    <div>
-        You have to <a asp-page="SignIn" class="alert-link">log in</a> to chat with your Bro's!
+    <div class="alert alert-danger d-flex align-items-center m-3" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+        <div>
+            You have to <a asp-page="SignIn" class="alert-link">log in</a> to chat with your Bro's!
+        </div>
     </div>
-</div>
 }
 
-        <script src="~/js/signalr/dist/browser/signalr.js"></script>
-        <script src="~/js/chat.js"></script>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
 
-        @section Scripts{
-            <script>
-                var divHeight = $(window).height() * 50 / 100;
-                $("#messagesList").css("height", divHeight);
-            </script>
+@section Scripts{
+<script>
+    var divHeight = $(window).height() * 50 / 100;
+    $("#messagesList").css("height", divHeight);
+    $("#adminList").css("height", divHeight);
+</script>
         }
 
 

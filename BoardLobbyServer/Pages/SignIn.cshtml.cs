@@ -28,7 +28,7 @@ namespace BoardLobbyServer.Pages
                 Admin admin = _adminService.Verify(emailAddress,password);             
                 if (admin!=null)
                 {
-                    HttpContext.Session.SetString("LoggedIn", admin.Name);
+                    HttpContext.Session.SetString("LoggedIn", admin.Id);
                     return Redirect("Index");
                 }
             }catch(Exception e)

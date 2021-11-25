@@ -9,7 +9,7 @@ namespace BoardLobbyServer.Game.Fields
     public class GlobusField : Field
     {
         
-        public GlobusField(PieceColor quadrant, int pos) : base(quadrant, pos)
+        public GlobusField(PieceColor quadrant, int pos, Board board) : base(quadrant, pos, board)
         {
             
         }
@@ -31,6 +31,7 @@ namespace BoardLobbyServer.Game.Fields
             if (this.pieces.Count == 0) //no pieces yet
             {
                 this.pieces.Add(piece); // simply adds the piece to the field
+                piece.field = this;
             }
 
             else //1 or more pieces
@@ -43,6 +44,7 @@ namespace BoardLobbyServer.Game.Fields
                 else // The pieces are all the same color
                 {
                     this.pieces.Add(piece); // adds the piece to field
+                    piece.field = this;
                 }
             }
         }

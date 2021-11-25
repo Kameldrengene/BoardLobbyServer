@@ -16,8 +16,8 @@ namespace BoardLobbyServer.Pages
         public List<Admin> admins { get; private set; } = null;
         public string alert { get; private set; } = "";
         public bool logged { get; private set; } = false;
+        public bool master { get; private set; } = false;
         public string log { get; private set; } = "";
-
         public ManageAdminsModel(AdminService adminService)
         {
             _adminService = adminService;
@@ -29,8 +29,16 @@ namespace BoardLobbyServer.Pages
             {
                 logged = true;
                 admins = _adminService.Get();
+                int ismaster = (from admin in admins
+                                where admin.Id.Contains(HttpContext.Session.GetString("LoggedIn"))
+                                && admin.AdminType == Admin.Type.Master
+                                select admin.AdminType).Count();
+                if (ismaster == 1)
+                {
+                    master = true;
+                }
             }
-            
+
             return null;
         }
         public IActionResult OnPost()
@@ -48,6 +56,14 @@ namespace BoardLobbyServer.Pages
                     admin.Id = id;
                     admin.Name = emailAddress;
                     admin.Password = password;
+                    if (_adminService.isMaster(id))
+                    {
+                        admin.AdminType = Admin.Type.Master;
+                    }
+                    else
+                    {
+                        admin.AdminType = Admin.Type.Admin;
+                    }
                     _adminService.Update(admin.Id, admin);
                     return Redirect("ManageAdmins");
                 }
@@ -60,7 +76,7 @@ namespace BoardLobbyServer.Pages
             if (this.Request.Form.Keys.Contains("deletebutton"))
             {
                 alert = "delete";
-                
+
                 try
                 {
                     var id = Request.Form["idAdmin"];
@@ -72,6 +88,28 @@ namespace BoardLobbyServer.Pages
                     log = e.Message;
                 }
                 return Redirect("ManageAdmins");
+            }
+            if (this.Request.Form.Keys.Contains("addbutton"))
+            {
+                alert = "add";
+
+                try
+                {
+                    var emailAddress = Request.Form["emailaddress"];
+                    var password = Request.Form["password"];                  
+                    Admin admin = new Admin();
+                    admin.Name = emailAddress;
+                    admin.Password = password;
+                    admin.AdminType = Admin.Type.Admin;
+                    admin.Avatar = "/images/kamel.png";
+                    _adminService.Create(admin);
+                    return Redirect("ManageAdmins");
+                }
+                catch (Exception e)
+                {
+                    log = e.Message;
+                }
+                
             }
             return null;
 

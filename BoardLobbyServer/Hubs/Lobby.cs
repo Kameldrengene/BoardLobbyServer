@@ -12,15 +12,23 @@ namespace SignalRChat.Hubs
     {
         public override Task OnConnectedAsync()
         {
+            Stats.playerList.Add(Context.ConnectionId);
             Clients.Caller.SendAsync("Connected", Context.ConnectionId);
             return base.OnConnectedAsync();
         }
+        public override Task OnDisconnectedAsync(Exception exception)
+        {
+            Stats.playerList.Remove(Context.ConnectionId);
+            return base.OnDisconnectedAsync(exception);
+        }
+
         public async Task CreateLobby(string leaderName, string gameName)
         {
             GameData game = new GameData();
             game.Leader = new PlayerData(leaderName);
             game.GameName = gameName;
             LobbyData.Instance.AddGame(game);
+            Stats.gameHistory.Add(gameName);
             await Clients.All.SendAsync("ReceiveGame", game);
             await Clients.Caller.SendAsync("EnterGame", game);
         }
@@ -88,5 +96,11 @@ namespace SignalRChat.Hubs
             }
         }
 
+    }
+    public static class Stats
+    {
+        public static HashSet<string> playerList = new HashSet<string>();
+        public static HashSet<string> gameHistory = new HashSet<string>();
+        public static HashSet<string> gamesLunched = new HashSet<string>();
     }
 }

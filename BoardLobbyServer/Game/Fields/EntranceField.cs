@@ -15,7 +15,7 @@ namespace BoardLobbyServer.Game.Fields
             this.startBankfield = bank;
         }
 
-        public EntranceField(PieceColor quadrant, int pos) : base(quadrant, pos)
+        public EntranceField(PieceColor quadrant, int pos, Board board) : base(quadrant, pos, board)
         {
             
         }
@@ -39,10 +39,15 @@ namespace BoardLobbyServer.Game.Fields
                 nextStarField = nextStarField.NextField(piece);
             }
 
+            // the check for if the piece should not jump is in handleJump()
+
             if (this.pieces.Count == 0) //no pieces yet
             {
+               
+                
                 // handle the jump on the next field
                 this.handleJump(piece, nextStarField);
+                
             }
 
             else if (this.pieces.Count == 1) //one piece on field
@@ -77,21 +82,25 @@ namespace BoardLobbyServer.Game.Fields
             if (piece.getPieceColor() == this.quadrant) //Should not jump
             {
                 this.pieces.Add(piece); // Adds the piece to the current field instead
+                piece.field = this;
             }
 
             else if (nextStarField.getPieces().Count == 0) //no pieces yet
             {
                 nextStarField.getPieces().Add(piece); // simply adds the piece to the field
+                piece.field = nextStarField;
             }
 
             else if (nextStarField.getPieces().Count == 1) //one piece on field
             {
                 if (nextStarField.getPieces()[0].getPieceColor() != piece.getPieceColor()) // if the fields piece is not the same color
                 {
+                    Piece deadPiece = nextStarField.getPieces()[0];
                     nextStarField.getPieces().RemoveAt(0); // Remove piece and send it to start
                                                            // TODO: add the removed piece to the correct start
                 }
                 nextStarField.getPieces().Add(piece); //adds the piece to field
+                piece.field = nextStarField;
 
             }
 
@@ -105,6 +114,7 @@ namespace BoardLobbyServer.Game.Fields
                 else // The pieces are all the same color
                 {
                     nextStarField.getPieces().Add(piece); // adds the piece to field
+                    piece.field = nextStarField;
                 }
             }
         }

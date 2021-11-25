@@ -8,7 +8,7 @@ namespace BoardLobbyServer.Game.Fields
 {
     public class StarField : Field
     {
-        public StarField(PieceColor quadrant, int pos) : base(quadrant, pos)
+        public StarField(PieceColor quadrant, int pos, Board board) : base(quadrant, pos, board)
         {
             
         }
@@ -71,6 +71,7 @@ namespace BoardLobbyServer.Game.Fields
             if (nextStarField.getPieces().Count == 0) //no pieces yet
             {
                 nextStarField.getPieces().Add(piece); // simply adds the piece to the field
+                piece.field = nextStarField;
             }
 
             else if (nextStarField.getPieces().Count == 1) //one piece on field
@@ -81,6 +82,7 @@ namespace BoardLobbyServer.Game.Fields
                                                            // TODO: add the removed piece to the correct start
                 }
                 nextStarField.getPieces().Add(piece); //adds the piece to field
+                piece.field = nextStarField;
 
             }
 
@@ -94,6 +96,7 @@ namespace BoardLobbyServer.Game.Fields
                 else // The pieces are all the same color
                 {
                     nextStarField.getPieces().Add(piece); // adds the piece to field
+                    piece.field = nextStarField;
                 }
             }
         }
