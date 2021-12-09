@@ -96,6 +96,7 @@ namespace BoardLobbyServer
                 endpoints.MapRazorPages();
                 endpoints.MapHub<LobbyHub>("/lobbyHub");
                 endpoints.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<GameHub>("/gameHub");
             });
         }
     }
