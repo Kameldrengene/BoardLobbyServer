@@ -12,7 +12,7 @@ namespace BoardLobbyServer.Game
     {
         private Board board = new Board();
         private List<PlayerData> players;
-        private int playerPointer = 0; //points to the current player in players (0,1,2,3 corresponding to PieceColor in Piece.cs 
+        private PieceColor playerPointer = 0; //points to the current player in players (0,1,2,3 corresponding to PieceColor in Piece.cs 
 
         public void startGame(List<PlayerData> ps)
         {
@@ -30,7 +30,7 @@ namespace BoardLobbyServer.Game
             bool won = false;
             for (int i = 0; i < players.Count; i++)
             {
-                if (board.piecesDone[i] == 4)
+                if (board.piecesDone[i].Count == 4)
                 {
                     won = true;
                     break;
