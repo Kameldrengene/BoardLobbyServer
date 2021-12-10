@@ -28,9 +28,19 @@ namespace BoardLobbyServer.Hubs
         public async Task LaunchGame(string id)
         {
             GameData game;
-            if (LobbyData.Instance.Games.TryGetValue(id, out game))
+            if (LobbyData.Instance.Games.TryGetValue(id, out game)) 
             {
                 await Clients.Group(id).SendAsync("LaunchGame", game);
+            }
+        }
+
+        public async Task TakeTurn(string id,string r, string lm) 
+        {
+            //Send board state out not game
+            GameData game;
+            if (LobbyData.Instance.Games.TryGetValue(id, out game))
+            {
+                await Clients.Group(id).SendAsync("TakeTurn", game);
             }
         }
 
