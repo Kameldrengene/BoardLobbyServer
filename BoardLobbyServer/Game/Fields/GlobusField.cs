@@ -38,8 +38,7 @@ namespace BoardLobbyServer.Game.Fields
             {
                 if (this.pieces[0].getPieceColor() != piece.getPieceColor()) // if the fields piece(s) are not the same color
                 {
-                    // The moving piece is sent home
-                    // TODO: add the current piece to the correct start
+                    board.sendPieceHome(piece);
                 }
                 else // The pieces are all the same color
                 {

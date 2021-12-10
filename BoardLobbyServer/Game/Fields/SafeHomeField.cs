@@ -41,12 +41,14 @@ namespace BoardLobbyServer.Game.Fields
                     if (piece.getPieceColor() == this.quadrant)
                     {
                         // TODO: The stading piece(s) are sent home
-                        this.pieces = new List<Piece>(); //set new list to clear out any pieces on the field
+                        while (this.pieces.Count > 0) board.sendPieceHome(this.pieces[0]);
+                        this.pieces.Clear(); //set new list to clear out any pieces on the field
                         this.pieces.Add(piece);
                         piece.field = this;
                     }
                     else
                     {
+                        board.sendPieceHome(piece);
                         // The moving piece is sent home
                         // TODO: add the current piece to the correct start
                     }

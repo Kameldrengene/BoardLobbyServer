@@ -43,8 +43,7 @@ namespace BoardLobbyServer.Game.Fields
             {
                 if (this.pieces[0].getPieceColor() != piece.getPieceColor()) // if the fields piece is not the same color
                 {
-                    this.pieces.RemoveAt(0); // Remove piece and send it to start
-                                             // TODO: add the removed piece to the correct start
+                    board.sendPieceHome(this.pieces[0]);
                 }
                 // handle the jump on the next field
                 this.handleJump(piece, nextStarField);
@@ -56,7 +55,7 @@ namespace BoardLobbyServer.Game.Fields
                 if (this.pieces[0].getPieceColor() != piece.getPieceColor()) // if the fields pieces are not the same color
                 {
                     // The moving piece is sent home
-                    // TODO: add the current piece to the correct start
+                    board.sendPieceHome(piece);
                 }
                 else // The pieces are all the same color
                 {
@@ -78,8 +77,7 @@ namespace BoardLobbyServer.Game.Fields
             {
                 if (nextStarField.getPieces()[0].getPieceColor() != piece.getPieceColor()) // if the fields piece is not the same color
                 {
-                    nextStarField.getPieces().RemoveAt(0); // Remove piece and send it to start
-                                                           // TODO: add the removed piece to the correct start
+                    board.sendPieceHome(nextStarField.getPieces()[0]);// Remove piece and send it to start
                 }
                 nextStarField.getPieces().Add(piece); //adds the piece to field
                 piece.field = nextStarField;
@@ -90,6 +88,7 @@ namespace BoardLobbyServer.Game.Fields
             {
                 if (nextStarField.getPieces()[0].getPieceColor() != piece.getPieceColor()) // if the fields pieces are not the same color
                 {
+                    board.sendPieceHome(piece);
                     // The moving piece is sent home
                     // TODO: add the current piece to the correct start
                 }
