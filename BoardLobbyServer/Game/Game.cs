@@ -34,19 +34,7 @@ namespace BoardLobbyServer.Game
         }
 
 
-        public bool isWon()
-        {
-            bool won = false;
-            for (int i = 0; i < players.Count; i++)
-            {
-                if (board.piecesDone[i].Count == 4)
-                {
-                    won = true;
-                    break;
-                }
-            }
-            return won;
-        }
+        
 
 
     }

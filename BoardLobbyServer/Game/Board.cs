@@ -260,5 +260,19 @@ namespace BoardLobbyServer.Game
             
         }
 
+        public bool isWon()
+        {
+            bool won = false;
+            for (int i = 0; i < 4; i++) //Hardcoded for 4 players
+            {
+                if (this.piecesDone[i].Count == 4)
+                {
+                    won = true;
+                    break;
+                }
+            }
+            return won;
+        }
+
     }
 }

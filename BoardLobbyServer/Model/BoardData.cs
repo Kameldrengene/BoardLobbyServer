@@ -10,6 +10,7 @@ namespace BoardLobbyServer.Model
     {
         private List<PieceData> pieces;
         public PieceColor currentPlayer;
+        private bool isWon;
 
         public BoardData(Board board)
         {
@@ -21,6 +22,7 @@ namespace BoardLobbyServer.Model
         public void readyNextTurn(Board board)
         {
             currentPlayer = (PieceColor)((((int)currentPlayer)+1)%4); //Should be %amount of players, but hardcoded to 4 for now
+            isWon = board.isWon();
             generateList(board);
         }
 
