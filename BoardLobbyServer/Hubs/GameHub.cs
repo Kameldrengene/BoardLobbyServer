@@ -40,13 +40,8 @@ namespace BoardLobbyServer.Hubs
             GameData game;
             if (LobbyData.Instance.GameData.TryGetValue(id, out game))
             {
-                game.Game.Roll = int.Parse(r);
-                game.Game.IsWon = !game.Game.IsWon;
-                Console.WriteLine("Roll: " + r +" "+ game.Game.Roll);
-                Console.WriteLine("UpdateGame sent");
-                Console.WriteLine("GameID: " + id);
-                Console.WriteLine("UserID: " + Context.ConnectionId);
-                Console.WriteLine("Is won?: " + game.Game.IsWon);
+                game.Game.Roll = int.Parse(r); 
+                //game.Game = Game.Play(game.Game)
                 await Clients.Group(id).SendAsync("UpdateGame", game); //Update game for everyone
             }
         }
