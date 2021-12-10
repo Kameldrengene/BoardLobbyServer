@@ -10,7 +10,6 @@ namespace BoardLobbyServer.Model
         private static readonly object padlock = new object();
         private static LobbyData instance = null;
         private Dictionary<string,GameData> _gameData;
-        private Dictionary<string,BoardLobbyServer.Game.Game> _games;
 
         LobbyData()
         {
@@ -41,11 +40,7 @@ namespace BoardLobbyServer.Model
             get { return _gameData; }
             set { this._gameData = value; }
         }
-        public Dictionary<string, BoardLobbyServer.Game.Game> Games
-        {
-            get { return _games; }
-            set { this._games = value; }
-        }
+
 
         public void AddGame(GameData gameData)
         {
@@ -53,8 +48,6 @@ namespace BoardLobbyServer.Model
             string gameid = guid.ToString();
             gameData.Id = gameid;
             this._gameData.Add(gameid,gameData);
-            /*BoardData  = new BoardData(new Game.Board());
-            this._games.Add(gameid, _games);*/
         }
     }
 }

@@ -12,10 +12,12 @@ namespace BoardLobbyServer.Model
         private PlayerData _leader;
         private List<PlayerData> _participants;
         private string _status = "not started" ;
+        public Game.Game _game { get; set; }
 
         public GameData()
         {
             Participants = new List<PlayerData>();
+            _game = new Game.Game();
         }
 
         public GameData(string id, string gameName, PlayerData leader, List<PlayerData> participants)
@@ -24,6 +26,8 @@ namespace BoardLobbyServer.Model
             _gameName = gameName;
             _leader = leader;
             _participants = participants;
+            _game = new Game.Game();
+
         }
 
         public string GameName

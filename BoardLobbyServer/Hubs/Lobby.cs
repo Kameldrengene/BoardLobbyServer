@@ -115,7 +115,7 @@ namespace SignalRChat.Hubs
            GameData tempData;
             if (LobbyData.Instance.GameData.TryGetValue(gameId, out tempData))
             {
-                LobbyData.Instance.Games.Remove(gameId);
+                LobbyData.Instance.GameData.Remove(gameId);
                 await Clients.All.SendAsync("RemoveGame", tempData);
             }
         }

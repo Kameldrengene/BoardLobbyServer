@@ -50,7 +50,7 @@ namespace BoardLobbyServer.Pages
                 adminId = HttpContext.Session.GetString("LoggedIn");
                 admin = _adminService.Get(adminId);
                 adminAvatar = admin.Avatar;
-                gamesOnline = LobbyData.Instance.Games.Count.ToString();
+                gamesOnline = LobbyData.Instance.GameData.Count.ToString();
                 playerCount = Stats.playerList.Count.ToString();
                 gameCount = Stats.gameHistory.Count.ToString();
 
