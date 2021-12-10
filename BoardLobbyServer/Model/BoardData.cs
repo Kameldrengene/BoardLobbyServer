@@ -8,9 +8,9 @@ namespace BoardLobbyServer.Model
 {
     public class BoardData
     {
-        private List<PieceData> pieces;
+        public List<PieceData> pieces;
         public PieceColor currentPlayer;
-        private bool isWon;
+        public bool isWon;
 
         public BoardData(Board board)
         {

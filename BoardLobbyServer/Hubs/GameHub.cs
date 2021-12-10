@@ -42,6 +42,7 @@ namespace BoardLobbyServer.Hubs
             {
                 //await Clients.Caller.SendAsync("TakeTurn", game); // Send TakeTurn to user whose turn it is
                 Console.WriteLine("UpdateGame sent");
+                Console.WriteLine("Is won?: " + game.Game.isWon);
                 await Clients.Group(id).SendAsync("UpdateGame", game); //Update game for everyone
             }
         }
