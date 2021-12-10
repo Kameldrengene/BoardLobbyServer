@@ -27,7 +27,7 @@ namespace BoardLobbyServer.Game
 
         public Board()
         {
-            createBoard();
+            //createBoard();
         }
 
         public Board(BoardData data)
