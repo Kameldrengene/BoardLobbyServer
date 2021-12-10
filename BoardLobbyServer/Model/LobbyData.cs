@@ -10,6 +10,7 @@ namespace BoardLobbyServer.Model
         private static readonly object padlock = new object();
         private static LobbyData instance = null;
         private Dictionary<string,GameData> _games;
+        private Dictionary<string,BoardData> _boards;
 
         LobbyData()
         {
@@ -39,6 +40,11 @@ namespace BoardLobbyServer.Model
         {
             get { return _games; }
             set { this._games = value; }
+        }
+        public Dictionary<string,BoardData> Boards
+        {
+            get { return _boards; }
+            set { this._boards = value; }
         }
 
         public void AddGame(GameData game)
