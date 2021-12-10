@@ -25,6 +25,8 @@ namespace BoardLobbyServer.Game
             initPieces();
         }
 
+       
+
         public List<PieceData> getColorPieceData(PieceColor color)
         {
             List<PieceData> data = new List<PieceData>();
@@ -35,6 +37,7 @@ namespace BoardLobbyServer.Game
                     color,
                     p.pieceID,
                     p.field.getID(),
+                    (int)p.field.getQuadrant(),
                     false,
                     false
                     ));
@@ -46,6 +49,7 @@ namespace BoardLobbyServer.Game
                     color,
                     p.pieceID,
                     p.field.getID(),
+                    (int)p.field.getQuadrant(),
                     true,
                     false
                     ));
@@ -57,6 +61,7 @@ namespace BoardLobbyServer.Game
                     color,
                     p.pieceID,
                     p.field.getID(),
+                    (int)p.field.getQuadrant(),
                     true,
                     true
                     ));

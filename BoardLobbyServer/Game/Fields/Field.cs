@@ -23,7 +23,7 @@ namespace BoardLobbyServer.Game.Fields
 
         public int getID()
         {
-            return 18 * (int)this.quadrant + pos;
+            return pos;
         }
 
         public List<Piece> getPieces() { return this.pieces; }
