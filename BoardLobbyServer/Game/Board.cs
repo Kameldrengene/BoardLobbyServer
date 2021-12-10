@@ -10,11 +10,11 @@ namespace BoardLobbyServer.Game
     {
         private List<Field>[] fieldList = { new List<Field>(), new List<Field>(), new List<Field>(), new List<Field>() };
         private List<Piece>[] pieceList = { new List<Piece>(), new List<Piece>(), new List<Piece>(), new List<Piece>() };
-        private Dictionary<PieceColor,Field> startingFields = new Dictionary<PieceColor, Field> { };
-        private Dictionary<PieceColor,Field> finishFields = new Dictionary<PieceColor, Field> { };
+        private Dictionary<PieceColor, Field> startingFields = new Dictionary<PieceColor, Field> { };
+        private Dictionary<PieceColor, Field> finishFields = new Dictionary<PieceColor, Field> { };
 
         private int[] piecesHome = { 4, 4, 4, 4 };
-        private int[] piecesDone = { 0, 0, 0, 0 };
+        public int[] piecesDone = { 0, 0, 0, 0 };
 
 
         public void createBoard()
@@ -22,6 +22,14 @@ namespace BoardLobbyServer.Game
             MakeFields();
             AssignNextFields();
         }
+
+
+        public void movePiece(int color, int choice, int roll)
+        {
+            Piece piece = pieceList[color][choice];
+            
+        }
+
 
         public Field getStart(PieceColor pieceColor)
         {
