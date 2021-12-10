@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace BoardLobbyServer.Model
@@ -19,6 +20,7 @@ namespace BoardLobbyServer.Model
             Participants = new List<PlayerData>();
             BoardDataFactory fac = new BoardDataFactory();
             _game = fac.generateBoardData(new BoardLobbyServer.Game.Board());
+            Console.WriteLine("Json Pieces: "+_game.Pieces);
         }
 
         public GameData(string id, string gameName, PlayerData leader, List<PlayerData> participants)

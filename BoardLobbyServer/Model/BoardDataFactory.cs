@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace BoardLobbyServer.Model
@@ -11,7 +12,7 @@ namespace BoardLobbyServer.Model
         public BoardData generateBoardData(Board board)
         {
             List<PieceData> pieces = generateList(board);
-            return new BoardData(pieces, PieceColor.yellow, board.isWon(), 4);
+            return new BoardData(JsonSerializer.Serialize(pieces), PieceColor.yellow, board.isWon(), 4);
         }
 
         private List<PieceData> generateList(Board board)

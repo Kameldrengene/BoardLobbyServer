@@ -8,12 +8,17 @@ namespace BoardLobbyServer.Model
 {
     public class BoardData
     {
-        private List<PieceData> _pieces;
+        private string _pieces;
         private PieceColor _currentPlayer;
         private bool _isWon;
         private int _roll;
 
-        public BoardData(List<PieceData> ps, PieceColor currentPlayer, bool isWon, int roll)
+        public BoardData()
+        {
+
+        }
+
+        public BoardData(string ps, PieceColor currentPlayer, bool isWon, int roll)
         {
             this._pieces = ps;
             this._currentPlayer = currentPlayer;
@@ -21,7 +26,7 @@ namespace BoardLobbyServer.Model
             this._roll = roll;
         }
         
-        public List<PieceData> Pieces
+        public string Pieces
         {
             get { return _pieces; }
             set { this._pieces = value; }

@@ -27,14 +27,14 @@ namespace BoardLobbyServer.Game
 
         public Board()
         {
-            //createBoard();
+            createBoard();
         }
 
         public Board(BoardData data)
         {
             MakeFields();
             AssignNextFields();
-            foreach (PieceData pd in data.Pieces)
+            /*foreach (PieceData pd in data.Pieces)
             {
                 Piece piece = new YellowPiece(-1);
                 switch (pd.PieceColor)
@@ -72,7 +72,7 @@ namespace BoardLobbyServer.Game
                 {
                     piecesDone[(int)pd.PieceColor].Add(piece);
                 }
-            }
+            }*/
         }
 
         public List<PieceData> getColorPieceData(PieceColor color)
