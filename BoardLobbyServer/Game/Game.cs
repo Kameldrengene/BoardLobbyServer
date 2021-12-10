@@ -15,7 +15,8 @@ namespace BoardLobbyServer.Game
         private BoardData boardData;
         public Game()
         {
-             boardData = new BoardData(board);
+            BoardDataFactory fac = new BoardDataFactory();
+            this.boardData = fac.generateBoardData(board);
         }
 
         public Board Board { get => board; set => board = value; }
@@ -32,7 +33,7 @@ namespace BoardLobbyServer.Game
             {
                 board.tryToMove(boardData.CurrentPlayer, choice, roll);
             }
-            boardData.readyNextTurn(board);
+            //boardData.readyNextTurn(board);
         }
 
 

@@ -17,7 +17,8 @@ namespace BoardLobbyServer.Model
         public GameData()
         {
             Participants = new List<PlayerData>();
-            _game = new BoardData(new Game.Board());
+            BoardDataFactory fac = new BoardDataFactory();
+            _game = fac.generateBoardData(new BoardLobbyServer.Game.Board());
         }
 
         public GameData(string id, string gameName, PlayerData leader, List<PlayerData> participants)
