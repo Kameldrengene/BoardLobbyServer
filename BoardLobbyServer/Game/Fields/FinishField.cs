@@ -28,7 +28,14 @@ namespace BoardLobbyServer.Game.Fields
 
             //TODO remove piece from play and update the board
 
+            board.piecesDone[(int)piece.getPieceColor()].Add(piece);
 
+
+        }
+
+        public override void OnMoveOut(Piece piece) //Will not be used
+        {
+            this.pieces.Remove(piece);
         }
     }
 }
