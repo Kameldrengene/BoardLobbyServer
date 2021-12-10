@@ -28,7 +28,7 @@ namespace BoardLobbyServer.Game
         {
             if(choice > 0) //actual choice
             {
-                board.tryToMove(boardData.currentPlayer, choice, roll);
+                board.tryToMove(boardData.CurrentPlayer, choice, roll);
             }
             boardData.readyNextTurn(board);
         }

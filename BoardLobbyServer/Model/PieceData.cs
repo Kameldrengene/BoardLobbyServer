@@ -8,11 +8,11 @@ namespace BoardLobbyServer.Model
 {
     public class PieceData
     {
-        private PieceColor pieceColor;
-        private int pieceID;
-        private int fieldID;
-        private bool isInPlay;
-        private bool isDone;
+        public PieceColor pieceColor;
+        public int pieceID;
+        public int fieldID;
+        public bool isInPlay;
+        public bool isDone;
 
         public PieceData(PieceColor pc, int pID, int fID, bool inPlay, bool Done)
         {

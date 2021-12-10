@@ -8,33 +8,55 @@ namespace BoardLobbyServer.Model
 {
     public class BoardData
     {
-        public List<PieceData> pieces;
-        public PieceColor currentPlayer;
-        public bool isWon;
+        private List<PieceData> _pieces;
+        private PieceColor _currentPlayer;
+        private bool _isWon;
+        private int _roll;
 
         public BoardData(Board board)
         {
-            currentPlayer = PieceColor.blue;
+            _currentPlayer = PieceColor.blue;
             readyNextTurn(board);
         }
 
 
         public void readyNextTurn(Board board)
         {
-            currentPlayer = (PieceColor)((((int)currentPlayer)+1)%4); //Should be %amount of players, but hardcoded to 4 for now
-            isWon = board.isWon();
+            _currentPlayer = (PieceColor)((((int)_currentPlayer)+1)%4); //Should be %amount of players, but hardcoded to 4 for now
+            _isWon = board.isWon();
             generateList(board);
         }
 
         private void generateList(Board board)
         {
-            pieces = new List<PieceData>();
+            _pieces = new List<PieceData>();
             for(int i = 0; i < 4; i++)
             {
-                pieces.AddRange(board.getColorPieceData((PieceColor)i));
+                _pieces.AddRange(board.getColorPieceData((PieceColor)i));
             }
         }
+        public List<PieceData> Pieces
+        {
+            get { return _pieces; }
+            set { this._pieces = value; }
+        }
+
+        public PieceColor CurrentPlayer
+        {
+            get { return _currentPlayer; }
+            set { this._currentPlayer = value; }
+        }
+
+        public bool IsWon
+        {
+            get { return _isWon; }
+            set { this._isWon = value; }
+        }
+        public int Roll
+        {
+            get { return _roll; }
+            set { this._roll = value; }
+        }
+
     }
-
-
 }

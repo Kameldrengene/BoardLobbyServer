@@ -26,8 +26,16 @@ namespace BoardLobbyServer.Model
             _gameName = gameName;
             _leader = leader;
             _participants = participants;
-            _game = new BoardData(new Game.Board());
         }
+        public GameData(string id, string gameName, PlayerData leader, List<PlayerData> participants, BoardData boardData)
+        {
+            _id = id;
+            _gameName = gameName;
+            _leader = leader;
+            _participants = participants;
+            _game = boardData;
+        }
+
 
         public string GameName
         {
