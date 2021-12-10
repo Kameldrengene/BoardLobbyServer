@@ -25,6 +25,7 @@ namespace BoardLobbyServer.Game
 
 
         public void tryToMove(PieceColor color, int choice, int roll) //Maybe return boolean? true if legal mode, false if not?
+            //no, valid moves are checked in client. 
         {
             Piece piece = new YellowPiece(-1); //tmp piece for now
             foreach (Piece p in pieceList[(int)color])
