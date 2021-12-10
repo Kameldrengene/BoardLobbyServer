@@ -9,10 +9,10 @@ namespace BoardLobbyServer.Game
 {
     public enum PieceColor
     {
-        blue = 0,
-        yellow = 1,
-        green = 2,
-        red = 3
+        blue = 3,
+        yellow = 0,
+        green = 1,
+        red = 2
     }
 
     public abstract class Piece
@@ -20,10 +20,11 @@ namespace BoardLobbyServer.Game
         protected PieceColor pieceColor;
         public Field field { get; set; }
         protected Player owner;
+        public int pieceID;
 
-        protected Piece()
+        protected Piece(int id)
         {
-
+            this.pieceID = id;
         }
 
         public PieceColor getPieceColor()
@@ -34,7 +35,7 @@ namespace BoardLobbyServer.Game
 
     public class RedPiece : Piece
     {
-        public RedPiece()
+        public RedPiece(int id): base(id)
         {
             this.pieceColor = PieceColor.red;
         }
@@ -43,7 +44,7 @@ namespace BoardLobbyServer.Game
 
     public class BluePiece : Piece
     {
-        public BluePiece()
+        public BluePiece(int id) : base(id)
         {
             this.pieceColor = PieceColor.blue;
         }
@@ -51,7 +52,7 @@ namespace BoardLobbyServer.Game
 
     public class YellowPiece : Piece
     {
-        public YellowPiece()
+        public YellowPiece(int id) : base(id)
         {
             this.pieceColor = PieceColor.yellow;
         }
@@ -59,7 +60,7 @@ namespace BoardLobbyServer.Game
 
     public class GreenPiece : Piece
     {
-        public GreenPiece()
+        public GreenPiece(int id) : base(id)
         {
             this.pieceColor = PieceColor.green;
         }

@@ -21,7 +21,9 @@ namespace BoardLobbyServer.Game.Fields
             this.board = b;
         }
         public List<Piece> getPieces() { return this.pieces; }
+
         public PieceColor getQuadrant() { return this.quadrant; }
+        public abstract void OnMoveOut(Piece piece);
         public abstract void OnLand(Piece piece);
         public abstract Field NextField(Piece piece);
 

@@ -48,5 +48,10 @@ namespace BoardLobbyServer.Game.Fields
                 }
             }
         }
+
+        public override void OnMoveOut(Piece piece)
+        {
+            this.pieces.Remove(piece);
+        }
     }
 }

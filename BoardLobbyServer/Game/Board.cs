@@ -10,11 +10,11 @@ namespace BoardLobbyServer.Game
     {
         private List<Field>[] fieldList = { new List<Field>(), new List<Field>(), new List<Field>(), new List<Field>() };
         private List<Piece>[] pieceList = { new List<Piece>(), new List<Piece>(), new List<Piece>(), new List<Piece>() };
-        private Dictionary<PieceColor,Field> startingFields = new Dictionary<PieceColor, Field> { };
-        private Dictionary<PieceColor,Field> finishFields = new Dictionary<PieceColor, Field> { };
+        private Dictionary<PieceColor, Field> startingFields = new Dictionary<PieceColor, Field> { };
+        private Dictionary<PieceColor, Field> finishFields = new Dictionary<PieceColor, Field> { };
 
         private int[] piecesHome = { 4, 4, 4, 4 };
-        private int[] piecesDone = { 0, 0, 0, 0 };
+        public List<Piece>[] piecesDone = { new List<Piece>(), new List<Piece>(), new List<Piece>(), new List<Piece>() };
 
 
         public void createBoard()
@@ -22,6 +22,65 @@ namespace BoardLobbyServer.Game
             MakeFields();
             AssignNextFields();
         }
+
+
+        public void tryToMove(PieceColor color, int choice, int roll) //Maybe return boolean? true if legal mode, false if not?
+            //no, valid moves are checked in client. 
+        {
+            Piece piece = new YellowPiece(-1); //tmp piece for now
+            foreach (Piece p in pieceList[(int)color])
+            {
+                if (p.pieceID == choice)
+                {
+                    piece = p;
+                    break;
+                }
+            }
+
+            if (piece.pieceID == -1) //Piece not found / not started yet
+            {
+                foreach (Piece p in piecesDone[(int)color])
+                {
+                    if (p.pieceID == choice)
+                    {
+                        piece = p;
+                        break;
+                    }
+                }
+                if (piece.pieceID == -1 && piecesHome[(int)color] > 0 && roll == 6) //Not found in done pieces and more pieces at home
+                { // start new piece
+                    setNewPieceOnBoard(color, choice);
+                }
+                else
+                {
+                    //TODO make error?
+                    Console.Write("Error: Wrong piece chosen. either already done or trying to get new piece out without rolling a 6");
+                }
+            }
+
+            else //Piece found on board
+            {
+                movePiece(piece, roll);
+            }
+
+            
+        }
+
+        private void movePiece(Piece piece, int roll)
+        {
+            Field currField = piece.field;
+            currField.OnMoveOut(piece);
+            int x = roll;
+            while (x > 0)
+            {
+                currField = currField.NextField(piece);
+                x -= 1;
+            }
+
+            currField.OnLand(piece);
+
+        }
+
 
         public Field getStart(PieceColor pieceColor)
         {
@@ -40,16 +99,22 @@ namespace BoardLobbyServer.Game
             piecesHome[(int)piece.getPieceColor()] += 1;
         }
 
-        public void setNewPieceOnBoard(PieceColor pieceColor)
+        public void setNewPieceOnBoard(PieceColor pieceColor, int choice)
         {
             Piece piece;
             switch (pieceColor)
             {
                 case PieceColor.blue:
-                    piece = new BluePiece();
+                    piece = new BluePiece(choice);
+                    break;
+                case PieceColor.yellow:
+                    piece = new YellowPiece(choice);
+                    break;
+                case PieceColor.green:
+                    piece = new GreenPiece(choice);
                     break;
                 default:
-                    piece = new RedPiece();
+                    piece = new RedPiece(choice);
                     break;
 
             }
