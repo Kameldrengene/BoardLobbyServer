@@ -20,6 +20,12 @@ namespace BoardLobbyServer.Game.Fields
             this.pos = p;
             this.board = b;
         }
+
+        public int getID()
+        {
+            return 18 * (int)this.quadrant + pos;
+        }
+
         public List<Piece> getPieces() { return this.pieces; }
 
         public PieceColor getQuadrant() { return this.quadrant; }

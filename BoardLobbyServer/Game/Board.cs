@@ -1,4 +1,5 @@
 ﻿using BoardLobbyServer.Game.Fields;
+using BoardLobbyServer.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,45 @@ namespace BoardLobbyServer.Game
             initPieces();
         }
 
+        public List<PieceData> getColorPieceData(PieceColor color)
+        {
+            List<PieceData> data = new List<PieceData>();
+
+            foreach(Piece p in this.piecesHome[(int)color])
+            {
+                data.Add(new PieceData(
+                    color,
+                    p.pieceID,
+                    p.field.getID(),
+                    false,
+                    false
+                    ));
+            }
+
+            foreach(Piece p in this.pieceList[(int)color])
+            {
+                data.Add(new PieceData(
+                    color,
+                    p.pieceID,
+                    p.field.getID(),
+                    true,
+                    false
+                    ));
+            }
+
+            foreach(Piece p in this.piecesDone[(int)color])
+            {
+                data.Add(new PieceData(
+                    color,
+                    p.pieceID,
+                    p.field.getID(),
+                    true,
+                    true
+                    ));
+            }
+
+            return data;
+        }
 
         public void tryToMove(PieceColor color, int choice, int roll) //Maybe return boolean? true if legal mode, false if not?
             //no, valid moves are checked in client. 
