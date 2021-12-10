@@ -18,6 +18,8 @@ namespace BoardLobbyServer.Game
              boardData = new BoardData(board);
         }
 
+        public Board Board { get => board; set => board = value; }
+
         public void startGame(List<PlayerData> ps)
         {
             this.players = ps;
