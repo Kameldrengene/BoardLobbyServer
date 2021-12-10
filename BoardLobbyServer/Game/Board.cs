@@ -13,7 +13,7 @@ namespace BoardLobbyServer.Game
         private Dictionary<PieceColor, Field> startingFields = new Dictionary<PieceColor, Field> { };
         private Dictionary<PieceColor, Field> finishFields = new Dictionary<PieceColor, Field> { };
 
-        private int[] piecesHome = { 4, 4, 4, 4 };
+        private List<Piece>[] piecesHome = { new List<Piece>(), new List<Piece>(), new List<Piece>(), new List<Piece>() };
         public List<Piece>[] piecesDone = { new List<Piece>(), new List<Piece>(), new List<Piece>(), new List<Piece>() };
 
 
@@ -21,6 +21,7 @@ namespace BoardLobbyServer.Game
         {
             MakeFields();
             AssignNextFields();
+            initPieces();
         }
 
 
@@ -47,7 +48,7 @@ namespace BoardLobbyServer.Game
                         break;
                     }
                 }
-                if (piece.pieceID == -1 && piecesHome[(int)color] > 0 && roll == 6) //Not found in done pieces and more pieces at home
+                if (piece.pieceID == -1 && piecesHome[(int)color].Count > 0 && roll == 6) //Not found in done pieces and more pieces at home
                 { // start new piece
                     setNewPieceOnBoard(color, choice);
                 }
@@ -81,6 +82,17 @@ namespace BoardLobbyServer.Game
 
         }
 
+        private void initPieces()
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                piecesHome[0].Add(new YellowPiece(i + 1));
+                piecesHome[1].Add(new GreenPiece(i + 1));
+                piecesHome[2].Add(new RedPiece(i + 1));
+                piecesHome[3].Add(new BluePiece(i + 1));
+            }
+        }
+
 
         public Field getStart(PieceColor pieceColor)
         {
@@ -96,29 +108,23 @@ namespace BoardLobbyServer.Game
         {
             pieceList[(int)piece.getPieceColor()].Remove(piece);
             piece.field.getPieces().Remove(piece);
-            piecesHome[(int)piece.getPieceColor()] += 1;
+            piecesHome[(int)piece.getPieceColor()].Add(piece);
         }
 
         public void setNewPieceOnBoard(PieceColor pieceColor, int choice)
         {
-            Piece piece;
-            switch (pieceColor)
+            Piece piece = new YellowPiece(-1);
+            foreach(Piece p in piecesHome[(int)pieceColor])
             {
-                case PieceColor.blue:
-                    piece = new BluePiece(choice);
+                if (p.pieceID == choice)
+                {
+                    piece = p;
                     break;
-                case PieceColor.yellow:
-                    piece = new YellowPiece(choice);
-                    break;
-                case PieceColor.green:
-                    piece = new GreenPiece(choice);
-                    break;
-                default:
-                    piece = new RedPiece(choice);
-                    break;
-
+                }
             }
-            piecesHome[(int)pieceColor] -= 1;
+
+            if (piece.pieceID == -1) {Console.Write("Error: setNewPieceOnBoard did not find piece"); return; } //Error
+
             pieceList[(int)pieceColor].Add(piece);
             Field startingField = getStart(pieceColor);
 
