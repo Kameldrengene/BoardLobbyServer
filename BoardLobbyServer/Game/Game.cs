@@ -23,7 +23,6 @@ namespace BoardLobbyServer.Game
         public void startGame(List<PlayerData> ps)
         {
             this.players = ps;
-            board.createBoard();
         }
 
         public void turn(int choice, int roll)
