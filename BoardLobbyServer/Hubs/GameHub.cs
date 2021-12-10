@@ -19,7 +19,7 @@ namespace BoardLobbyServer.Hubs
         public async Task GetGame(string id)
         {
             GameData game;
-            if(LobbyData.Instance.Games.TryGetValue(id, out game))
+            if(LobbyData.Instance.GameData.TryGetValue(id, out game))
             {
                 await Clients.Caller.SendAsync("GetGame",game);
             }
@@ -28,7 +28,7 @@ namespace BoardLobbyServer.Hubs
         public async Task LaunchGame(string id)
         {
             GameData game;
-            if (LobbyData.Instance.Games.TryGetValue(id, out game)) 
+            if (LobbyData.Instance.GameData.TryGetValue(id, out game)) 
             {
                 await Clients.Group(id).SendAsync("LaunchGame", game);
             }
@@ -38,7 +38,7 @@ namespace BoardLobbyServer.Hubs
         {
             //Should recieve game id, roll and legal moves, then send board state to other players on update
             GameData game;
-            if (LobbyData.Instance.Games.TryGetValue(id, out game))
+            if (LobbyData.Instance.GameData.TryGetValue(id, out game))
             {
                 //await Clients.Caller.SendAsync("TakeTurn", game); // Send TakeTurn to user whose turn it is
                 Console.WriteLine("UpdateGame sent");

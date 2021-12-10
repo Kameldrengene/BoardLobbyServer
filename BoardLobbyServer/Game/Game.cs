@@ -12,7 +12,11 @@ namespace BoardLobbyServer.Game
     {
         private Board board = new Board();
         private List<PlayerData> players;
-        private PieceColor playerPointer = 0; //points to the current player in players (0,1,2,3 corresponding to PieceColor in Piece.cs) 
+        private BoardData boardData;
+        public Game()
+        {
+             boardData = new BoardData(board);
+        }
 
         public void startGame(List<PlayerData> ps)
         {
@@ -24,9 +28,9 @@ namespace BoardLobbyServer.Game
         {
             if(choice > 0) //actual choice
             {
-                board.tryToMove(playerPointer, choice, roll);
+                board.tryToMove(boardData.currentPlayer, choice, roll);
             }
-            playerPointer = (PieceColor)(((int)playerPointer + 1) % players.Count);
+            boardData.readyNextTurn(board);
         }
 
 

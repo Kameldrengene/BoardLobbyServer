@@ -49,14 +49,14 @@ namespace SignalRChat.Hubs
         }
         public async Task getLobbies()
         {
-            List<GameData> lobby = new List<GameData>(LobbyData.Instance.Games.Values);
+            List<GameData> lobby = new List<GameData>(LobbyData.Instance.GameData.Values);
             string lobbies = JsonSerializer.Serialize(lobby);
             await Clients.Caller.SendAsync("ReceiveLobbies", lobbies);
         }
 
         public async Task getBareLobbies()
         {
-            List<GameData> lobby = new List<GameData>(LobbyData.Instance.Games.Values);
+            List<GameData> lobby = new List<GameData>(LobbyData.Instance.GameData.Values);
             await Clients.Caller.SendAsync("ReceiveLobbies", lobby);
         }
 
@@ -65,7 +65,7 @@ namespace SignalRChat.Hubs
         public async Task addParticipant(string gameId, string playerName)
         {
             GameData result;
-            if (LobbyData.Instance.Games.TryGetValue(gameId, out result))
+            if (LobbyData.Instance.GameData.TryGetValue(gameId, out result))
             {
                 PlayerData playerData = new PlayerData(playerName);
                 result.Participants.Add(playerData);
@@ -81,7 +81,7 @@ namespace SignalRChat.Hubs
         public async Task RemoveParticipant(string gameId, string playerName)
         {
             GameData result;
-            if (LobbyData.Instance.Games.TryGetValue(gameId, out result))
+            if (LobbyData.Instance.GameData.TryGetValue(gameId, out result))
             {
                 
                 for (int i = 0; i < result.Participants.Count; i++)
@@ -104,7 +104,7 @@ namespace SignalRChat.Hubs
         public async Task MonitorGame(string gameId)
         {
             GameData result;
-            if(LobbyData.Instance.Games.TryGetValue(gameId, out result))
+            if(LobbyData.Instance.GameData.TryGetValue(gameId, out result))
             {
                 await Clients.Caller.SendAsync("MonitorGame", result);
             }
@@ -113,7 +113,7 @@ namespace SignalRChat.Hubs
         public async Task deleteGame(string gameId)
         {
            GameData tempData;
-            if (LobbyData.Instance.Games.TryGetValue(gameId, out tempData))
+            if (LobbyData.Instance.GameData.TryGetValue(gameId, out tempData))
             {
                 LobbyData.Instance.Games.Remove(gameId);
                 await Clients.All.SendAsync("RemoveGame", tempData);

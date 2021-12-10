@@ -9,7 +9,7 @@ namespace BoardLobbyServer.Model
     public class BoardData
     {
         private List<PieceData> pieces;
-        private PieceColor currentPlayer;
+        public PieceColor currentPlayer;
 
         public BoardData(Board board)
         {
