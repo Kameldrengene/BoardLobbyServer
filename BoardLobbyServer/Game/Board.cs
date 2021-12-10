@@ -25,7 +25,55 @@ namespace BoardLobbyServer.Game
             initPieces();
         }
 
-       
+        public Board()
+        {
+
+        }
+
+        public Board(BoardData data)
+        {
+            MakeFields();
+            AssignNextFields();
+            foreach (PieceData pd in data.Pieces)
+            {
+                Piece piece = new YellowPiece(-1);
+                switch (pd.PieceColor)
+                {
+                    case PieceColor.yellow:
+                        piece = new YellowPiece(pd.PieceID);
+                        break;
+                    case PieceColor.green:
+                        piece = new GreenPiece(pd.PieceID);
+                        break;
+                    case PieceColor.red:
+                        piece = new RedPiece(pd.PieceID);
+                        break;
+                    case PieceColor.blue:
+                        piece = new BluePiece(pd.PieceID);
+                        break;
+                }
+
+
+
+                if (!pd.IsDone && !pd.IsInPlay) //still home
+                {
+                    piecesHome[(int)pd.PieceColor].Add(piece);
+                }
+                else if (pd.IsInPlay && !pd.IsDone) // on the board
+                {
+                    pieceList[(int)pd.PieceColor].Add(piece);
+
+                    // findind correct field to stand on
+                    Field field = fieldList[pd.FieldQuadrant][pd.FieldID];
+                    field.getPieces().Add(piece);
+                    piece.field = field;
+                }
+                else //finished
+                {
+                    piecesDone[(int)pd.PieceColor].Add(piece);
+                }
+            }
+        }
 
         public List<PieceData> getColorPieceData(PieceColor color)
         {
