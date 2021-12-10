@@ -27,7 +27,7 @@ namespace BoardLobbyServer.Game
 
         public Board()
         {
-            createBoard();
+            //createBoard();
         }
 
         public Board(BoardData data)
@@ -84,8 +84,8 @@ namespace BoardLobbyServer.Game
                 data.Add(new PieceData(
                     color,
                     p.pieceID,
-                    p.field.getID(),
-                    (int)p.field.getQuadrant(),
+                    -1,
+                    -1,
                     false,
                     false
                     ));
@@ -108,8 +108,8 @@ namespace BoardLobbyServer.Game
                 data.Add(new PieceData(
                     color,
                     p.pieceID,
-                    p.field.getID(),
-                    (int)p.field.getQuadrant(),
+                    -1,
+                    -1,
                     true,
                     true
                     ));
