@@ -34,14 +34,15 @@ namespace BoardLobbyServer.Hubs
             }
         }
 
-        public async Task TakeTurn(string id,string r, string lm) 
+        public async Task UpdateGame(string id,string r, string lm) 
         {
             //Should recieve game id, roll and legal moves, then send board state to other players on update
-            BoardData board;
-            if (LobbyData.Instance.Boards.TryGetValue(id, out board))
+            GameData game;
+            if (LobbyData.Instance.Games.TryGetValue(id, out game))
             {
                 //await Clients.Caller.SendAsync("TakeTurn", game); // Send TakeTurn to user whose turn it is
-                await Clients.Group(id).SendAsync("UpdateGame", board); //Update game for everyone
+                Console.WriteLine("UpdateGame sent");
+                await Clients.Caller.SendAsync("UpdateGame", game); //Update game for everyone
             }
         }
 
