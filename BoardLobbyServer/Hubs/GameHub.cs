@@ -36,13 +36,16 @@ namespace BoardLobbyServer.Hubs
 
         public async Task TakeTurn(string id,string r, string lm) 
         {
-            //Send board state out not game
+            //Should recieve game id, roll and legal moves, then send board state to other players on update
             GameData game;
             if (LobbyData.Instance.Games.TryGetValue(id, out game))
             {
-                await Clients.Group(id).SendAsync("TakeTurn", game);
+                await Clients.Caller.SendAsync("TakeTurn", game);
+                await Clients.Group(id).SendAsync("UpdateGame", game);
+
             }
         }
+
 
         // Tænker på at groupName bliver game id. Medlemmer tilføjes når de joiner en game room.
         public async Task AddToGroup(string groupName)
