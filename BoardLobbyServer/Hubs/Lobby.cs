@@ -70,13 +70,37 @@ namespace SignalRChat.Hubs
                 PlayerData playerData = new PlayerData(playerName);
                 result.Participants.Add(playerData);
                 List<PlayerData> participants = new List<PlayerData>(result.Participants);
-                string jparticipants = JsonSerializer.Serialize(participants);
+               
                 if (result.Participants.Count == 4) result.Status = "started";
-                await Clients.All.SendAsync("RecieveParticipants", jparticipants);
+                await Clients.All.SendAsync("RecieveParticipants", participants);
                 await Clients.All.SendAsync("RecieveUpdatedGame", result);
             }
             
         }
+
+        public async Task RemoveParticipant(string gameId, string playerName)
+        {
+            GameData result;
+            if (LobbyData.Instance.Games.TryGetValue(gameId, out result))
+            {
+                
+                for (int i = 0; i < result.Participants.Count; i++)
+                {
+                    if (result.Participants[i].Name.Contains(playerName))
+                    {
+                        result.Participants.RemoveAt(i);
+                    }
+                       
+                }
+                List<PlayerData> participants = new List<PlayerData>(result.Participants);
+
+                if (result.Participants.Count == 4) result.Status = "started";
+                await Clients.All.SendAsync("RecieveParticipants", participants);
+                await Clients.All.SendAsync("RecieveUpdatedGame", result);
+            }
+
+        }
+
         public async Task MonitorGame(string gameId)
         {
             GameData result;
@@ -88,11 +112,11 @@ namespace SignalRChat.Hubs
         }
         public async Task deleteGame(string gameId)
         {
-           
-            if (LobbyData.Instance.Games.ContainsKey(gameId))
+           GameData tempData;
+            if (LobbyData.Instance.Games.TryGetValue(gameId, out tempData))
             {
                 LobbyData.Instance.Games.Remove(gameId);
-                await Clients.All.SendAsync("RemoveGame", gameId);
+                await Clients.All.SendAsync("RemoveGame", tempData);
             }
         }
 
