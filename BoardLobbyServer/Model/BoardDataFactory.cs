@@ -9,10 +9,10 @@ namespace BoardLobbyServer.Model
 {
     public class BoardDataFactory
     {
-        public BoardData generateBoardData(Board board)
+        public BoardData generateBoardData(Board board, PieceColor pc, int lastRoll)
         {
             List<PieceData> pieces = generateList(board);
-            return new BoardData(JsonSerializer.Serialize(pieces), PieceColor.yellow, board.isWon(), 4);
+            return new BoardData(JsonSerializer.Serialize(pieces), pc, board.isWon(), lastRoll);
         }
 
         private List<PieceData> generateList(Board board)

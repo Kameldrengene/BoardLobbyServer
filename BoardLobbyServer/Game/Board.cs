@@ -3,6 +3,7 @@ using BoardLobbyServer.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace BoardLobbyServer.Game
@@ -34,7 +35,9 @@ namespace BoardLobbyServer.Game
         {
             MakeFields();
             AssignNextFields();
-            /*foreach (PieceData pd in data.Pieces)
+            List<PieceData> dataPiecesList = JsonSerializer.Deserialize<List<PieceData>>(data.Pieces);
+            Console.WriteLine("dataPieceList len: " + dataPiecesList.Count);
+            foreach (PieceData pd in dataPiecesList)
             {
                 Piece piece = new YellowPiece(-1);
                 switch (pd.PieceColor)
@@ -54,12 +57,11 @@ namespace BoardLobbyServer.Game
                 }
 
 
-
-                if (!pd.IsDone && !pd.IsInPlay) //still home
+                if (!pd.IsDone && !pd.IsInPlay) //still home piece
                 {
                     piecesHome[(int)pd.PieceColor].Add(piece);
                 }
-                else if (pd.IsInPlay && !pd.IsDone) // on the board
+                else if (pd.IsInPlay && !pd.IsDone) // on the board piece
                 {
                     pieceList[(int)pd.PieceColor].Add(piece);
 
@@ -68,11 +70,11 @@ namespace BoardLobbyServer.Game
                     field.getPieces().Add(piece);
                     piece.field = field;
                 }
-                else //finished
+                else //finished piece
                 {
                     piecesDone[(int)pd.PieceColor].Add(piece);
                 }
-            }*/
+            }
         }
 
         public List<PieceData> getColorPieceData(PieceColor color)
@@ -118,14 +120,18 @@ namespace BoardLobbyServer.Game
             return data;
         }
 
-        public void tryToMove(PieceColor color, int choice, int roll) //Maybe return boolean? true if legal mode, false if not?
+        public void tryToMove(PieceColor color, int c, int roll) //Maybe return boolean? true if legal mode, false if not?
             //no, valid moves are checked in client. 
         {
+            int choice = c + 1;
+            Console.WriteLine("color: " + color.ToString() +", choice: " + choice + ", roll: " + roll);
             Piece piece = new YellowPiece(-1); //tmp piece for now
+            Console.WriteLine("len of lin of pieces out: " + pieceList[(int)color].Count);
             foreach (Piece p in pieceList[(int)color])
             {
                 if (p.pieceID == choice)
                 {
+                    Console.WriteLine("Piece found!");
                     piece = p;
                     break;
                 }
@@ -162,11 +168,13 @@ namespace BoardLobbyServer.Game
 
         private void movePiece(Piece piece, int roll)
         {
+
             Field currField = piece.field;
             currField.OnMoveOut(piece);
             int x = roll;
             while (x > 0)
             {
+                Console.WriteLine("X: " + x + ", ");
                 currField = currField.NextField(piece);
                 x -= 1;
             }
@@ -207,8 +215,10 @@ namespace BoardLobbyServer.Game
         public void setNewPieceOnBoard(PieceColor pieceColor, int choice)
         {
             Piece piece = new YellowPiece(-1);
+
             foreach(Piece p in piecesHome[(int)pieceColor])
             {
+                Console.WriteLine("Color: "+ pieceColor.ToString() +", Choice:" + choice + ", pieceID: " + p.pieceID);
                 if (p.pieceID == choice)
                 {
                     piece = p;
@@ -218,6 +228,7 @@ namespace BoardLobbyServer.Game
 
             if (piece.pieceID == -1) {Console.Write("Error: setNewPieceOnBoard did not find piece"); return; } //Error
 
+            piecesHome[(int)pieceColor].Remove(piece);
             pieceList[(int)pieceColor].Add(piece);
             Field startingField = getStart(pieceColor);
 

@@ -25,6 +25,11 @@ namespace BoardLobbyServer.Model
             this._isDone = Done;
         }
 
+        public PieceData()
+        {
+
+        }
+
         public PieceColor PieceColor { get { return _pieceColor; } set { this._pieceColor = value; } }
         public int PieceID { get { return _pieceID; } set { this._pieceID = value; } }
         public int FieldID { get { return _fieldID; } set { this._fieldID = value; } }
