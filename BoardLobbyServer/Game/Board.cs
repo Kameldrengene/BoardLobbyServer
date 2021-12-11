@@ -77,9 +77,17 @@ namespace BoardLobbyServer.Game
             }
         }
 
+        public void finalizePiece(Piece piece)
+        {
+            pieceList[(int)piece.getPieceColor()].Remove(piece);
+            piecesDone[(int)piece.getPieceColor()].Add(piece);
+        }
+
         public List<PieceData> getColorPieceData(PieceColor color)
         {
             List<PieceData> data = new List<PieceData>();
+
+            Console.WriteLine("len home, len list, len done " + this.piecesHome[(int)color].Count + " " + this.pieceList[(int)color].Count + " " + this.piecesDone[(int)color].Count);
 
             foreach(Piece p in this.piecesHome[(int)color])
             {
@@ -174,7 +182,6 @@ namespace BoardLobbyServer.Game
             int x = roll;
             while (x > 0)
             {
-                Console.WriteLine("X: " + x + ", ");
                 currField = currField.NextField(piece);
                 x -= 1;
             }
@@ -318,7 +325,7 @@ namespace BoardLobbyServer.Game
                     }
                 }
 
-                Field finishField = new NormalField((PieceColor)i, 18*4+i, this); //finishfields
+                Field finishField = new FinishField((PieceColor)i, -1, this); //finishfields
                 finishFields[(PieceColor)i] = finishField;
             }
             

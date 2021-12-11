@@ -26,9 +26,7 @@ namespace BoardLobbyServer.Game.Fields
         {
             Console.WriteLine("Landed on FinishField!");
 
-            //TODO remove piece from play and update the board
-
-            board.piecesDone[(int)piece.getPieceColor()].Add(piece);
+            board.finalizePiece(piece);
 
 
         }
