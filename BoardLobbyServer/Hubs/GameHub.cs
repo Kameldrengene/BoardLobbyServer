@@ -31,6 +31,7 @@ namespace BoardLobbyServer.Hubs
             GameData game;
             if (LobbyData.Instance.GameData.TryGetValue(id, out game)) 
             {
+                Console.WriteLine("Launch game: " + id);
                 await Clients.Group(id).SendAsync("LaunchGame", game);
             }
         }
@@ -68,6 +69,8 @@ namespace BoardLobbyServer.Hubs
         // Tænker på at groupName bliver game id. Medlemmer tilføjes når de joiner en game room.
         public async Task AddToGroup(string groupName)
         {
+            Console.WriteLine(Context.ConnectionId + "has joined group: " + groupName);
+
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
             // Kald til medlemmer i gruppen (den metode der skal køre på klienten)
@@ -80,6 +83,12 @@ namespace BoardLobbyServer.Hubs
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
 
            // await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has left the group {groupName}.");
+        }
+
+        public async Task Ping()
+        {
+            Console.WriteLine(Context.ConnectionId + "has pinged.");
+            await Clients.Caller.SendAsync("Ping");
         }
     }
 }
