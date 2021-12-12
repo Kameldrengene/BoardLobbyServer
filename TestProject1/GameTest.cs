@@ -44,7 +44,7 @@ namespace TestProject1
             board.tryToMove(colorVal, choice, roll);
             
             // Assert
-            Assert.AreEqual(choice, board.PieceList[(int)PieceColor.yellow][0].pieceID);
+            Assert.AreEqual(choice+1, board.PieceList[(int)PieceColor.yellow][0].pieceID);
 
         }
 
