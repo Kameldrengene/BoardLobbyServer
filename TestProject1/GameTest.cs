@@ -1,13 +1,9 @@
 using NUnit.Framework;
-using BoardLobbyServer;
 using BoardLobbyServer.Game;
 using BoardLobbyServer.Game.Fields;
-using System.Threading.Tasks;
-using BoardLobbyServer.Controllers;
 using BoardLobbyServer.Model;
 using Moq;
 using BoardLobbyServer.Services;
-using BoardLobbyServer.Model;
 using MongoDB.Driver;
 
 namespace TestProject1
@@ -143,8 +139,11 @@ namespace TestProject1
 
         private Mock<IMongoClient> _mockClient;
         [Test]
-        public void Test_MongoDBPlayerservice_Contructor()
+        public void Test_MongoDBPlayerservice_playerExists()
         {
+            _mockSettings = new Mock<IBoardServerDatabaseSettings>();
+            _mockDB = new Mock<IMongoDatabase>();
+            _mockClient = new Mock<IMongoClient>();
             var settings = new BoardServerDatabaseSettings()
             {
                 ConnectionString = "mongodb://root:kamel1234@localhost:27017/",
@@ -152,6 +151,45 @@ namespace TestProject1
                 AdminsCollectionName = "Admins",
                 PlayersCollectionName = "Players"
             };
+
+            
+            _mockSettings.Setup(s => s.ConnectionString).Returns(settings.ConnectionString);
+            _mockSettings.Setup(s => s.DatabaseName).Returns(settings.DatabaseName);
+            _mockSettings.Setup(s => s.AdminsCollectionName).Returns(settings.AdminsCollectionName);
+            _mockSettings.Setup(s => s.PlayersCollectionName).Returns(settings.PlayersCollectionName);
+            _mockClient.Setup(c => c
+            .GetDatabase(_mockSettings.Object.DatabaseName, null))
+                .Returns(_mockDB.Object);
+
+             
+            var context = new PlayerService(_mockSettings.Object);
+            PlayerData player = new PlayerData();
+            player.Name = "kamel";
+            player.password = "1234";
+
+            //Act
+            var myCollection = context.Get();
+            var newPlayer = myCollection.Find(e => e.Name == player.Name);
+
+            //Assert 
+            Assert.Null(newPlayer);
+
+        }
+
+        [Test]
+        public void Test_MongoDBPlayerservice_playerCreated()
+        {
+            _mockSettings = new Mock<IBoardServerDatabaseSettings>();
+            _mockDB = new Mock<IMongoDatabase>();
+            _mockClient = new Mock<IMongoClient>();
+            var settings = new BoardServerDatabaseSettings()
+            {
+                ConnectionString = "mongodb://root:kamel1234@localhost:27017/",
+                DatabaseName = "BoardServerDB",
+                AdminsCollectionName = "Admins",
+                PlayersCollectionName = "Players"
+            };
+
 
             _mockSettings.Setup(s => s.ConnectionString).Returns(settings.ConnectionString);
             _mockSettings.Setup(s => s.DatabaseName).Returns(settings.DatabaseName);
@@ -161,12 +199,186 @@ namespace TestProject1
             .GetDatabase(_mockSettings.Object.DatabaseName, null))
                 .Returns(_mockDB.Object);
 
-            //Act 
+            
             var context = new PlayerService(_mockSettings.Object);
+            PlayerData player = new PlayerData();
+            player.Name = "cool";
+            player.password = "1234";
+
+            //Act 
+            context.Create(player);
+            var myCollection = context.Get();
+            var newPlayer = myCollection.Find(e => e.Name == player.Name);
+           
+            //Assert 
+            Assert.NotNull(newPlayer);
+            
+        }
+
+        [Test]
+        public void Test_PlayerVerify()
+        {
+            _mockSettings = new Mock<IBoardServerDatabaseSettings>();
+            _mockDB = new Mock<IMongoDatabase>();
+            _mockClient = new Mock<IMongoClient>();
+            var settings = new BoardServerDatabaseSettings()
+            {
+                ConnectionString = "mongodb://root:kamel1234@localhost:27017/",
+                DatabaseName = "BoardServerDB",
+                AdminsCollectionName = "Admins",
+                PlayersCollectionName = "Players"
+            };
+
+
+            _mockSettings.Setup(s => s.ConnectionString).Returns(settings.ConnectionString);
+            _mockSettings.Setup(s => s.DatabaseName).Returns(settings.DatabaseName);
+            _mockSettings.Setup(s => s.AdminsCollectionName).Returns(settings.AdminsCollectionName);
+            _mockSettings.Setup(s => s.PlayersCollectionName).Returns(settings.PlayersCollectionName);
+            _mockClient.Setup(c => c
+            .GetDatabase(_mockSettings.Object.DatabaseName, null))
+                .Returns(_mockDB.Object);
+
+
+            var context = new PlayerService(_mockSettings.Object);
+            PlayerData player = new PlayerData();
+            player.Name = "cool";
+            player.password = "1234";
+
+            //Act 
+            var verified = context.Verify(player.Name, player.password);
+            //Assert 
+            Assert.NotNull(verified);
+
+        }
+    }
+    
+
+    public class Test_MongoAdminService
+    {
+        private Mock<IBoardServerDatabaseSettings> _mockSettings;
+
+        private Mock<IMongoDatabase> _mockDB;
+
+        private Mock<IMongoClient> _mockClient;
+
+        [Test]
+        public void Test_MongoDBAdminservice_adminExists()
+        {
+            _mockSettings = new Mock<IBoardServerDatabaseSettings>();
+            _mockDB = new Mock<IMongoDatabase>();
+            _mockClient = new Mock<IMongoClient>();
+            var settings = new BoardServerDatabaseSettings()
+            {
+                ConnectionString = "mongodb://root:kamel1234@localhost:27017/",
+                DatabaseName = "BoardServerDB",
+                AdminsCollectionName = "Admins",
+                PlayersCollectionName = "Players"
+            };
+
+
+            _mockSettings.Setup(s => s.ConnectionString).Returns(settings.ConnectionString);
+            _mockSettings.Setup(s => s.DatabaseName).Returns(settings.DatabaseName);
+            _mockSettings.Setup(s => s.AdminsCollectionName).Returns(settings.AdminsCollectionName);
+            _mockSettings.Setup(s => s.PlayersCollectionName).Returns(settings.PlayersCollectionName);
+            _mockClient.Setup(c => c
+            .GetDatabase(_mockSettings.Object.DatabaseName, null))
+                .Returns(_mockDB.Object);
+
+
+            var context = new AdminService(_mockSettings.Object);
+            Admin admin = new Admin();
+            admin.Name = "coolboy";
+            admin.Password = "1234";
+
+            //Act
+            var myCollection = context.Get();
+            var newAdmin = myCollection.Find(e => e.Name == admin.Name);
 
             //Assert 
-            Assert.NotNull(context);
+            Assert.Null(newAdmin);
+
         }
+
+
+        [Test]
+        public void Test_MongoDBAdminservice_adminCreated()
+        {
+            _mockSettings = new Mock<IBoardServerDatabaseSettings>();
+            _mockDB = new Mock<IMongoDatabase>();
+            _mockClient = new Mock<IMongoClient>();
+            var settings = new BoardServerDatabaseSettings()
+            {
+                ConnectionString = "mongodb://root:kamel1234@localhost:27017/",
+                DatabaseName = "BoardServerDB",
+                AdminsCollectionName = "Admins",
+                PlayersCollectionName = "Players"
+            };
+
+
+            _mockSettings.Setup(s => s.ConnectionString).Returns(settings.ConnectionString);
+            _mockSettings.Setup(s => s.DatabaseName).Returns(settings.DatabaseName);
+            _mockSettings.Setup(s => s.AdminsCollectionName).Returns(settings.AdminsCollectionName);
+            _mockSettings.Setup(s => s.PlayersCollectionName).Returns(settings.PlayersCollectionName);
+            _mockClient.Setup(c => c
+            .GetDatabase(_mockSettings.Object.DatabaseName, null))
+                .Returns(_mockDB.Object);
+
+
+            var context = new AdminService(_mockSettings.Object);
+            Admin admin = new Admin();
+            admin.Name = "kamel";
+            admin.Password = "1234";
+
+            //Act 
+            context.Create(admin);
+            var myCollection = context.Get();
+            var newAdmin = myCollection.Find(e => e.Name == admin.Name);
+
+            //Assert 
+            Assert.NotNull(newAdmin);
+
+        }
+
+
+
+        [Test]
+        public void Test_MongoDBAdminservice_adminVerify()
+        {
+            _mockSettings = new Mock<IBoardServerDatabaseSettings>();
+            _mockDB = new Mock<IMongoDatabase>();
+            _mockClient = new Mock<IMongoClient>();
+            var settings = new BoardServerDatabaseSettings()
+            {
+                ConnectionString = "mongodb://root:kamel1234@localhost:27017/",
+                DatabaseName = "BoardServerDB",
+                AdminsCollectionName = "Admins",
+                PlayersCollectionName = "Players"
+            };
+
+
+            _mockSettings.Setup(s => s.ConnectionString).Returns(settings.ConnectionString);
+            _mockSettings.Setup(s => s.DatabaseName).Returns(settings.DatabaseName);
+            _mockSettings.Setup(s => s.AdminsCollectionName).Returns(settings.AdminsCollectionName);
+            _mockSettings.Setup(s => s.PlayersCollectionName).Returns(settings.PlayersCollectionName);
+            _mockClient.Setup(c => c
+            .GetDatabase(_mockSettings.Object.DatabaseName, null))
+                .Returns(_mockDB.Object);
+
+
+            var context = new AdminService(_mockSettings.Object);
+            Admin admin = new Admin();
+            admin.Name = "kamel";
+            admin.Password = "1234";
+
+            //Act 
+            var verified = context.Verify(admin.Name, admin.Password);
+            //Assert 
+            Assert.NotNull(verified);
+
+        }
+
+
+
     }
 
 }

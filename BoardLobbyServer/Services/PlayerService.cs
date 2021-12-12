@@ -16,6 +16,7 @@ namespace BoardLobbyServer.Services
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
             _player = database.GetCollection<PlayerData>(settings.PlayersCollectionName);
+            Console.WriteLine("connection estabished");
         }
 
         public List<PlayerData> Get() =>
