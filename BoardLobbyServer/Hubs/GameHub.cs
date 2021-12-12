@@ -1,4 +1,5 @@
-﻿using BoardLobbyServer.Model;
+﻿using BoardLobbyServer.Game;
+using BoardLobbyServer.Model;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -40,8 +41,25 @@ namespace BoardLobbyServer.Hubs
             GameData game;
             if (LobbyData.Instance.GameData.TryGetValue(id, out game))
             {
-                game.Game.Roll = int.Parse(r); 
-                //game.Game = Game.Play(game.Game)
+                //This is the turn of a game!
+
+                //game.Game is BoardData
+                int roll = int.Parse(r);
+                int legalMoves = int.Parse(lm);
+                int pieceID = int.Parse(pID);
+                PieceColor pieceColor = game.Game.CurrentPlayer;
+
+                Board tmpBoard = new Board(game.Game);
+
+                if (legalMoves > 0)
+                    tmpBoard.tryToMove(pieceColor, pieceID, roll);
+
+                pieceColor = (PieceColor)(((int)pieceColor + 1) % 4);
+
+                BoardDataFactory fac = new BoardDataFactory(); //Updating to next players turn
+
+                game.Game = fac.generateBoardData(tmpBoard,pieceColor,roll);
+
                 await Clients.Group(id).SendAsync("UpdateGame", game); //Update game for everyone
             }
         }

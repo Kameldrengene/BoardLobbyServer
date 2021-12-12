@@ -19,7 +19,7 @@ namespace BoardLobbyServer.Model
         {
             Participants = new List<PlayerData>();
             BoardDataFactory fac = new BoardDataFactory();
-            _game = fac.generateBoardData(new BoardLobbyServer.Game.Board());
+            _game = fac.generateBoardData(new BoardLobbyServer.Game.Board(), BoardLobbyServer.Game.PieceColor.yellow, 0);
             Console.WriteLine("Json Pieces: "+_game.Pieces);
         }
 

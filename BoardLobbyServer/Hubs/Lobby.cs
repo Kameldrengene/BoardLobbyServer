@@ -120,6 +120,12 @@ namespace SignalRChat.Hubs
             }
         }
 
+        public async Task Ping()
+        {
+            Console.WriteLine(Context.ConnectionId + "has pinged.");
+            await Clients.Caller.SendAsync("Ping");
+        }
+
     }
     public static class Stats
     {

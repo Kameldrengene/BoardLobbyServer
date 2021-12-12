@@ -16,7 +16,7 @@ namespace BoardLobbyServer.Game
         public Game()
         {
             BoardDataFactory fac = new BoardDataFactory();
-            this.boardData = fac.generateBoardData(board);
+            this.boardData = fac.generateBoardData(board, PieceColor.yellow, 0);
         }
 
         public Board Board { get => board; set => board = value; }
