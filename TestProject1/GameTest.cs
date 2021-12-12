@@ -2,6 +2,13 @@ using NUnit.Framework;
 using BoardLobbyServer;
 using BoardLobbyServer.Game;
 using BoardLobbyServer.Game.Fields;
+using System.Threading.Tasks;
+using BoardLobbyServer.Controllers;
+using BoardLobbyServer.Model;
+using Moq;
+using BoardLobbyServer.Services;
+using BoardLobbyServer.Model;
+using MongoDB.Driver;
 
 namespace TestProject1
 {
@@ -50,6 +57,19 @@ namespace TestProject1
 
 
 
+        [Test]
+        public void Test_setNewPieceOnBoard()
+        {
+            Board board = new Board();
+            Piece piece = new YellowPiece(2);
+
+            board.setNewPieceOnBoard((int)PieceColor.yellow,piece.pieceID);
+            
+            Assert.AreEqual(piece.pieceID,board.PieceList[(int)PieceColor.yellow][0].pieceID);
+        }
+
+
+
 
     }
 
@@ -61,23 +81,24 @@ namespace TestProject1
         public void TestField_onLand_FirstTime_Piece()
         {
             Piece piece = new YellowPiece(1);
-            Field field = new SafeHomeField(PieceColor.yellow,16,null);
-            
+            Field field = new SafeHomeField(PieceColor.yellow, 16, null);
+
             field.OnLand(piece);
 
-            Assert.AreEqual(piece,field.getPieces()[0]);
-         
+            Assert.AreEqual(piece, field.getPieces()[0]);
+
 
         }
 
 
-        //checks if the the previous piece is removed if new piece is of fields color.
+        //checks if the the previous piece is removed from safehomefield
+        //if new piece is of fields color.
         [Test]
         public void TestField_onLand_SecondTime_Piece()
         {
             Piece pieceyellow = new YellowPiece(1);
             Piece pieceblue = new BluePiece(2);
-           
+
             Board board = new Board();
             Field field = new SafeHomeField(PieceColor.yellow, 16, board);
 
@@ -86,7 +107,7 @@ namespace TestProject1
 
             Assert.AreEqual(pieceyellow, field.getPieces()[0]);
             Assert.AreEqual(1, field.getPieces().Count);
-            
+
         }
 
 
@@ -98,7 +119,7 @@ namespace TestProject1
             Field starField = new StarField(PieceColor.red, 22, new Board());
             Piece pieceyellow = new YellowPiece(1);
             Piece pieceblue = new BluePiece(2);
-            starField.nextField = new StarField(PieceColor.blue,48 , new Board());
+            starField.nextField = new StarField(PieceColor.blue, 48, new Board());
 
             // first test if blue piece lands correctly on empty star field
             starField.OnLand(pieceblue);
@@ -111,5 +132,41 @@ namespace TestProject1
 
 
         }
+
     }
+    public class Test_MongoPlayerService
+    {
+
+        private Mock<IBoardServerDatabaseSettings> _mockSettings;
+
+        private Mock<IMongoDatabase> _mockDB;
+
+        private Mock<IMongoClient> _mockClient;
+        [Test]
+        public void Test_MongoDBPlayerservice_Contructor()
+        {
+            var settings = new BoardServerDatabaseSettings()
+            {
+                ConnectionString = "mongodb://root:kamel1234@localhost:27017/",
+                DatabaseName = "BoardServerDB",
+                AdminsCollectionName = "Admins",
+                PlayersCollectionName = "Players"
+            };
+
+            _mockSettings.Setup(s => s.ConnectionString).Returns(settings.ConnectionString);
+            _mockSettings.Setup(s => s.DatabaseName).Returns(settings.DatabaseName);
+            _mockSettings.Setup(s => s.AdminsCollectionName).Returns(settings.AdminsCollectionName);
+            _mockSettings.Setup(s => s.PlayersCollectionName).Returns(settings.PlayersCollectionName);
+            _mockClient.Setup(c => c
+            .GetDatabase(_mockSettings.Object.DatabaseName, null))
+                .Returns(_mockDB.Object);
+
+            //Act 
+            var context = new PlayerService(_mockSettings.Object);
+
+            //Assert 
+            Assert.NotNull(context);
+        }
+    }
+
 }

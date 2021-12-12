@@ -10,7 +10,7 @@ namespace BoardLobbyServer.Game
 {
     public class Board
     {
-        public const string Rolled_More_Message = "The roll value exceeded 6";
+        public const string Rolled_More_Message = "Error: Wrong piece chosen. either already done or trying to get new piece out without rolling a 6";
         private List<Field>[] fieldList = { new List<Field>(), new List<Field>(), new List<Field>(), new List<Field>() };
         private List<Piece>[] pieceList = { new List<Piece>(), new List<Piece>(), new List<Piece>(), new List<Piece>() };
         private Dictionary<PieceColor, Field> startingFields = new Dictionary<PieceColor, Field> { };
