@@ -56,6 +56,24 @@ function createDeleteBtn(game,row) {
     return delButton;
 }
 
+function createJoinBtn(game, row) {
+    var joinButton = document.createElement("input");
+    joinButton.id = "join" + game;
+    joinButton.type = "button";
+    joinButton.name = "add";
+    joinButton.value = "Join";
+    joinButton.className = "btn btn-success btn-xs";
+    joinButton.style.marginLeft = "10px";
+    joinButton.addEventListener("click", function () {
+        
+        connection.invoke("addParticipant", game,"test").catch(function (err) {
+            return console.error(err.toString());
+        });
+    })
+
+    return joinButton;
+}
+
 function createStatusSpan(gameid, started) {
     const span = document.createElement("span");
     span.id = "status" + gameid;
@@ -99,6 +117,7 @@ connection.on("ReceiveLobbies", function (lobbies) {
         newCell4.appendChild(text4);
         newCell5.appendChild(createBtn(`${lobbiesObj[i].Id}`));
         newCell5.appendChild(createDeleteBtn(`${lobbiesObj[i].Id}`, newRow));
+        newCell5.appendChild(createJoinBtn(`${lobbiesObj[i].Id}`, newRow));
         newCell6.appendChild(createStatusSpan(`${lobbiesObj[i].Id}`, `${lobbiesObj[i].Status}`));
         
     }
@@ -131,6 +150,7 @@ connection.on("ReceiveGame", function (game) {
     newCell4.appendChild(text4);
     newCell5.appendChild(createBtn(game.id));
     newCell5.appendChild(createDeleteBtn(game.id, newRow));
+    newCell5.appendChild(createJoinBtn(game.id, newRow));
     newCell6.appendChild(createStatusSpan(`${lobbiesObj[i].Id}`, `${lobbiesObj[i].Status}`));
 });
 

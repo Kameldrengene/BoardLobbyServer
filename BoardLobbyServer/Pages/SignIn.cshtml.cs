@@ -13,7 +13,7 @@ namespace BoardLobbyServer.Pages
     public class SignInModel : PageModel
     {
         private readonly AdminService _adminService;
-        public string email { get; set; } = "";
+        public string log { get; set; } = "";
         public SignInModel(AdminService adminService)
         {
             _adminService = adminService;
@@ -26,15 +26,14 @@ namespace BoardLobbyServer.Pages
             try
             {
                 Admin admin = _adminService.Verify(emailAddress,password);             
-                if (admin.Name.Equals(emailAddress))
+                if (admin!=null)
                 {
-                   
-                    HttpContext.Session.SetString("LoggedIn", "yes");
+                    HttpContext.Session.SetString("LoggedIn", admin.Id);
                     return Redirect("Index");
                 }
             }catch(Exception e)
             {
-                email = e.Message;
+                log = e.Message;
                 
             }
             return null;
@@ -43,6 +42,11 @@ namespace BoardLobbyServer.Pages
         public IActionResult OnPostSignup()
         {
             return Redirect("SignUp");
+        }
+
+        public IActionResult OnPostPlayerSignup()
+        {
+            return Redirect("PlayerSignUp");
         }
     }
 }

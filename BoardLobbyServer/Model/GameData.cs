@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace BoardLobbyServer.Model
@@ -12,10 +13,14 @@ namespace BoardLobbyServer.Model
         private PlayerData _leader;
         private List<PlayerData> _participants;
         private string _status = "not started" ;
+        private BoardData _game;
 
         public GameData()
         {
             Participants = new List<PlayerData>();
+            BoardDataFactory fac = new BoardDataFactory();
+            _game = fac.generateBoardData(new BoardLobbyServer.Game.Board(), BoardLobbyServer.Game.PieceColor.yellow, 0);
+            Console.WriteLine("Json Pieces: "+_game.Pieces);
         }
 
         public GameData(string id, string gameName, PlayerData leader, List<PlayerData> participants)
@@ -25,12 +30,28 @@ namespace BoardLobbyServer.Model
             _leader = leader;
             _participants = participants;
         }
+        public GameData(string id, string gameName, PlayerData leader, List<PlayerData> participants, BoardData boardData)
+        {
+            _id = id;
+            _gameName = gameName;
+            _leader = leader;
+            _participants = participants;
+            _game = boardData;
+        }
+
 
         public string GameName
         {
             get { return _gameName; }
             set { this._gameName = value; }
         }
+
+        public BoardData Game
+        {
+            get { return _game; }
+            set { this._game= value; }
+        }
+
         public string Id
         {
             get { return _id; }

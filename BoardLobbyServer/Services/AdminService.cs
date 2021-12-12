@@ -26,11 +26,16 @@ namespace BoardLobbyServer.Services
             _admins.Find<Admin>(admin => admin.Name == name).FirstOrDefault();
         public Admin Create(Admin admin)
         {
+            admin.Password = BCrypt.Net.BCrypt.HashPassword(admin.Password);
             _admins.InsertOne(admin);
             return admin;
         }
-        public void Update(string id, Admin adminIn) =>
+        public void Update(string id, Admin adminIn)
+        {
+            adminIn.Password = BCrypt.Net.BCrypt.HashPassword(adminIn.Password);
             _admins.ReplaceOne(admin => admin.Id == id, adminIn);
+        }
+            
         public void Remove(Admin adminIn) =>
             _admins.DeleteOne(admin => admin.Id == adminIn.Id);
         public void Remove(string id) =>
@@ -39,10 +44,27 @@ namespace BoardLobbyServer.Services
         {
             Admin admin = _admins.Find<Admin>(admin => admin.Name == name).FirstOrDefault();
 
+            if (admin == null)
+            {
+                return null;
+            }
+
             if (BCrypt.Net.BCrypt.Verify(password, admin.Password))
                 return admin;
             else
                 return null;
+        }
+        public bool isMaster(string id)
+        {
+            Admin admin = this.Get(id);
+            if (admin.AdminType == Admin.Type.Master)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

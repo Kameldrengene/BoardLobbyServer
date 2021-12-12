@@ -1,0 +1,109 @@
+﻿@page
+@model BoardLobbyServer.Pages.EditAccountModel
+@{
+}
+
+@if (Model.logged)
+{
+
+    <div class="container d-flex justify-content-center p-3">
+        <form method="post" class="border bg-light shadow-sm rounded w-50 p-3">
+            <div class="container d-flex justify-content-center">
+                <h3 class="m-3">Edit Account</h3>
+            </div>
+            <div class="text-center">
+                <div class="dropdown">
+                    <img src="@Model.adminAvatar" id="mainimg" class="rounded dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" alt="...">
+                    <div class="container dropdown-menu" aria-labelledby="mainimg">
+                        <div class="row">
+                            @for (var i = 1; i < 36; i++)
+                            {
+                                string img = i + ".png";
+                                <div class="col">
+                                    <img src="~/images/avatars/@img" id="avatar" class="rounded" style="width: 75px" alt="/images/avatars/@img" onclick="setValue(this)">
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="imgsrc" name="imgsrc" value="">
+            <div class="form-floating mb-3 ">
+
+                <input class="form-control" id="idadmin" type="text" name="idadmin" aria-label="readonly id" value="@Model.adminId" readonly>
+                <label for="floatingInput">Id</label>
+            </div>
+            <div class="form-floating mb-3 ">
+                <input type="text" class="form-control" name="emailaddress" id="emailaddress" value="@Model.adminName" required>
+                <label for="floatingInput">E-mail</label>
+            </div>
+            <div class="form-floating mb-3 ">
+                <input type="password" name="password" class="form-control" id="password" aria-describedby="inputGroupPrepend2" required>
+                <label for="floatingInput">Password</label>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary w-100" name="updatebutton">Update</button>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-danger w-100" name="deletebutton">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="@Model.adminAvatar" class="rounded me-2" style="width:50px" alt="...">
+                <strong class="me-auto">@Model.adminName</strong>
+                <small>just now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastbody">
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger d-flex align-items-center m-3" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+        <div>
+            You have to <a asp-page="SignIn" class="alert-link">log in</a> to manage your account Bro!
+        </div>
+    </div>
+}
+@section Scripts{
+
+<script>
+    function setValue(img){
+        let src = img.alt;
+        document.getElementById("imgsrc").value = src;
+        document.getElementById("mainimg").src = src;
+    }
+</script>
+
+@if(Model.updated){
+    <script>
+        var toastbody = document.getElementById("toastbody");
+        toastbody.innerHTML = "Update done..."
+        var element = document.getElementById("liveToast");
+        var myToast = new bootstrap.Toast(element);
+        myToast.show();
+    </script>
+}
+
+@if(Model.deleted){
+    <script>
+        var toastbody = document.getElementById("toastbody");
+        toastbody.innerHTML = "Delete done..."
+        var element = document.getElementById("liveToast");
+        var myToast = new bootstrap.Toast(element);
+        myToast.show();
+    </script>
+}
+
+
+}

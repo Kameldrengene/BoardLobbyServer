@@ -12,8 +12,10 @@ namespace BoardLobbyServer.Pages
 {
     public class SignUpModel : PageModel
     {
+        public bool master { get; private set; } = false;
+        public bool firstTime { get; private set; } = false;
         private readonly AdminService _adminService;
-        public string email { get; set; } = "";
+        public string log { get; set; } = "";
 
         public SignUpModel(AdminService adminService)
         {
@@ -21,23 +23,44 @@ namespace BoardLobbyServer.Pages
         }
         public void OnGet()
         {
+            if (_adminService.Get().Count == 0)
+            {
+                firstTime = true;
+            }
+            else
+            {
+                if (HttpContext.Session.GetString("LoggedIn") != null)
+                {
+                    Admin admin = _adminService.Get(HttpContext.Session.GetString("LoggedIn"));
+                    if (admin.AdminType == Admin.Type.Master)
+                    {
+                        master = true;
+                    }
+                }
+            }
+
         }
-        public IActionResult OnPost(string emailAddress, string password)
+        public IActionResult OnPost(string emailAddress, string password, string imgsrc)
         {
             try
             {
                 Admin admin = new Admin();
-            
                 admin.Name = emailAddress;
                 admin.Password = password;
+                admin.Avatar = imgsrc;
+                if (_adminService.Get().Count == 0)
+                {
+                    admin.AdminType = Admin.Type.Master;
+                }
                 _adminService.Create(admin);
-                HttpContext.Session.SetString("LoggedIn", "yes");
+                string id = _adminService.GetByName(admin.Name).Id;
+                HttpContext.Session.SetString("LoggedIn", id);
                 return Redirect("Index");
             }
             catch (Exception e)
             {
 
-                email = e.Message;
+                log = e.Message;
             }
             return null;
         }

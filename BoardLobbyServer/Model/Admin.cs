@@ -17,5 +17,13 @@ namespace BoardLobbyServer.Model
 
         public string Password { get; set; }
 
+        public enum Type
+        {
+            Admin,
+            Master
+        }
+        public Type AdminType { get; set; }
+        public string Avatar { get; set; }
+
     }
 }

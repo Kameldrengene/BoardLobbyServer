@@ -15,6 +15,8 @@ using BoardLobbyServer.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using BoardLobbyServer.Hubs;
+using Microsoft.OpenApi.Models;
 
 namespace BoardLobbyServer
 {
@@ -30,18 +32,23 @@ namespace BoardLobbyServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // requires using Microsoft.Extensions.Options
+            // Database Connection
             services.Configure<BoardServerDatabaseSettings>(
                 Configuration.GetSection(nameof(BoardServerDatabaseSettings)));
             services.AddSingleton<IBoardServerDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<BoardServerDatabaseSettings>>().Value);
+            //Database service
             services.AddSingleton<AdminService>();
+            services.AddSingleton<PlayerService>();
+
+
             services.AddControllers();
             services.AddRazorPages();
             services.AddSession();
             services.AddSignalR();
 
-            var key = "thisismykeyblabla";
+            //Jwt token for authorization
+            var key = Configuration.GetValue<string>("TokenKey");
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -59,7 +66,13 @@ namespace BoardLobbyServer
 
                 };
             });
+
+            //Jwt service     
             services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager(key));
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CamelLudo", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +81,8 @@ namespace BoardLobbyServer
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CamelLudo v1"));
             }
             else
             {
@@ -87,6 +102,8 @@ namespace BoardLobbyServer
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
                 endpoints.MapHub<LobbyHub>("/lobbyHub");
+                endpoints.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<GameHub>("/gameHub");
             });
         }
     }
