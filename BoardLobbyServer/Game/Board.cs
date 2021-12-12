@@ -10,6 +10,7 @@ namespace BoardLobbyServer.Game
 {
     public class Board
     {
+        public const string Rolled_More_Message = "The roll value exceeded 6";
         private List<Field>[] fieldList = { new List<Field>(), new List<Field>(), new List<Field>(), new List<Field>() };
         private List<Piece>[] pieceList = { new List<Piece>(), new List<Piece>(), new List<Piece>(), new List<Piece>() };
         private Dictionary<PieceColor, Field> startingFields = new Dictionary<PieceColor, Field> { };
@@ -163,6 +164,7 @@ namespace BoardLobbyServer.Game
                 {
                     //TODO make error?
                     Console.Write("Error: Wrong piece chosen. either already done or trying to get new piece out without rolling a 6");
+                    throw new ArgumentOutOfRangeException("roll",roll,Rolled_More_Message);
                 }
             }
 
@@ -343,6 +345,16 @@ namespace BoardLobbyServer.Game
                 }
             }
             return won;
+        }
+
+        public List<Piece>[] PieceList   // property
+        {
+            get { return pieceList; }   // get method
+        }
+
+        public List<Piece>[] PieceHome
+        {
+            get { return piecesHome; }
         }
 
     }
