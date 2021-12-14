@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BoardLobbyServer.Hubs;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace BoardLobbyServer
 {
@@ -44,7 +45,14 @@ namespace BoardLobbyServer
 
             services.AddControllers();
             services.AddRazorPages();
-            services.AddSession();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(4);
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.Cookie.HttpOnly = true;           
+            });
             services.AddSignalR();
 
             //Jwt token for authorization
@@ -95,6 +103,7 @@ namespace BoardLobbyServer
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseCookiePolicy();
             app.UseSession();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
