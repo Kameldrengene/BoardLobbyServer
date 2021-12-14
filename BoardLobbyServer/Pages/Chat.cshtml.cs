@@ -7,16 +7,13 @@ using BoardLobbyServer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 
 namespace BoardLobbyServer.Pages
 {
     public class ChatModel : PageModel
     {
-        private readonly AdminService _adminService;
-        public ChatModel(AdminService adminService)
-        {
-            _adminService = adminService;
-        }
+
         public string adminId { get; private set; } = "";
         public Admin admin { get; private set; } = null;
         public bool logged { get; private set; } = false;
@@ -26,14 +23,10 @@ namespace BoardLobbyServer.Pages
             if (HttpContext.Session.GetString("LoggedIn") != null)
             {
                 logged = true;
-                adminId = HttpContext.Session.GetString("LoggedIn");
-
-                admin = _adminService.Get(adminId);
+                admin = JsonConvert.DeserializeObject<Admin>(HttpContext.Session.GetString("LoggedIn"));
                 adminAvatar = admin.Avatar;
-
+              
             }
-
-
         }
     }
 }

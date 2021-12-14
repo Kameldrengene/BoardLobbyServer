@@ -31,7 +31,7 @@ namespace BoardLobbyServer.Pages
             {
                 PlayerData player = new PlayerData();
                 player.Name = emailAddress;
-                player.password = password;
+                player.Password = password;
                 _playerservice.Create(player);
                 HttpContext.Session.SetString("LoggedIn", player.Name);
                 return Redirect("Index");

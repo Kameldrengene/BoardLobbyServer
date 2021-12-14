@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SignalRChat.Hubs;
 using System;
@@ -48,7 +49,7 @@ namespace BoardLobbyServer.Pages
                 
                 logged = true;
                 adminId = HttpContext.Session.GetString("LoggedIn");
-                admin = _adminService.Get(adminId);
+                admin = JsonConvert.DeserializeObject<Admin>(HttpContext.Session.GetString("LoggedIn"));
                 adminAvatar = admin.Avatar;
                 gamesOnline = LobbyData.Instance.GameData.Count.ToString();
                 playerCount = Stats.playerList.Count.ToString();
