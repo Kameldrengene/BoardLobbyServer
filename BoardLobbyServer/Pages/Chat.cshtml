@@ -7,10 +7,15 @@
 
 @if (Model.logged)
 {
-    <div class="d-flex justify-content-start">
-        <div class="bg-light overflow-auto rounded w-25 m-3 shadow text-center" id="adminList"> <div class="text-secondary text-center m-2">Online admins</div></div>
-        <div class="bg-light overflow-auto rounded m-3 shadow" style="width:70%" id="messagesList"><div class="text-secondary text-center m-2">Chat window</div></div>
+    <div class="row justify-content-center m-4">
+        <div class="col-sm-12 col-lg-4 p-2">
+            <div class="bg-light overflow-auto rounded shadow text-center" id="adminList"> <div class="text-secondary text-center m-2">Online admins</div></div>
+        </div>
+        <div class="col-sm-12 col-lg-8 p-2">
+            <div class="bg-light overflow-auto rounded shadow" id="messagesList"><div class="text-secondary text-center m-2">Chat window</div></div>
+        </div>
     </div>
+
 
 
     <div class="container">

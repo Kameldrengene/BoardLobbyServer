@@ -14,7 +14,6 @@ namespace BoardLobbyServer.Model
         public string Id { get; set; }
 
         private string _name;
-        private string password;
 
         public PlayerData(string name)
         {
@@ -28,10 +27,6 @@ namespace BoardLobbyServer.Model
             set { this._name = value; }
         }
 
-        public string Password
-        {
-            get { return password; }
-            set { password = value; }
-        }
+        public string password { get; set; }
     }
 }

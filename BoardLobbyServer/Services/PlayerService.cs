@@ -25,7 +25,7 @@ namespace BoardLobbyServer.Services
             _player.Find<PlayerData>(player => player.Id == id).FirstOrDefault();
         public PlayerData Create(PlayerData player)
         {
-            player.Password = BCrypt.Net.BCrypt.HashPassword(player.Password);
+            player.password = BCrypt.Net.BCrypt.HashPassword(player.password);
             _player.InsertOne(player);
             return player;
         }
@@ -39,7 +39,7 @@ namespace BoardLobbyServer.Services
                 return null;
             }
 
-            if (BCrypt.Net.BCrypt.Verify(password, player.Password))
+            if (BCrypt.Net.BCrypt.Verify(password, player.password))
                 return player;
             else
                 return null;

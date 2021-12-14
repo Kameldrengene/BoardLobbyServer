@@ -22,7 +22,6 @@ namespace BoardLobbyServer.Pages
         private readonly AdminService _adminService;
         public Weather _weather { get; set; } = null;
         public bool logged { get; set; } = false;
-        public string adminId { get; set; } = "";
         public Admin admin { get; set; } = null;
         public string playerCount { get; set; } = "0";
         public string gameCount { get; set; } = "0";
@@ -47,8 +46,7 @@ namespace BoardLobbyServer.Pages
             if (HttpContext.Session.GetString("LoggedIn") != null)
             {
                 
-                logged = true;
-                adminId = HttpContext.Session.GetString("LoggedIn");
+                logged = true;            
                 admin = JsonConvert.DeserializeObject<Admin>(HttpContext.Session.GetString("LoggedIn"));
                 adminAvatar = admin.Avatar;
                 gamesOnline = LobbyData.Instance.GameData.Count.ToString();

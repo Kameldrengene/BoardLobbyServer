@@ -7,6 +7,7 @@ using BoardLobbyServer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 
 namespace BoardLobbyServer.Pages
 {
@@ -27,10 +28,11 @@ namespace BoardLobbyServer.Pages
         {
             if (HttpContext.Session.GetString("LoggedIn") != null)
             {
+                Admin adminInfo = JsonConvert.DeserializeObject<Admin>(HttpContext.Session.GetString("LoggedIn"));
                 logged = true;
                 admins = _adminService.Get();
                 int ismaster = (from admin in admins
-                                where admin.Id.Contains(HttpContext.Session.GetString("LoggedIn"))
+                                where admin.Id.Contains(adminInfo.Id)
                                 && admin.AdminType == Admin.Type.Master
                                 select admin.AdminType).Count();
                 if (ismaster == 1)
