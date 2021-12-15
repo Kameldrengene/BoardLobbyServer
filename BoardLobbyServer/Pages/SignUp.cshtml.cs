@@ -7,6 +7,7 @@ using BoardLobbyServer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 
 namespace BoardLobbyServer.Pages
 {
@@ -31,7 +32,8 @@ namespace BoardLobbyServer.Pages
             {
                 if (HttpContext.Session.GetString("LoggedIn") != null)
                 {
-                    Admin admin = _adminService.Get(HttpContext.Session.GetString("LoggedIn"));
+                    Admin admin = JsonConvert.DeserializeObject<Admin>(HttpContext.Session.GetString("LoggedIn"));
+
                     if (admin.AdminType == Admin.Type.Master)
                     {
                         master = true;
@@ -54,7 +56,18 @@ namespace BoardLobbyServer.Pages
                 }
                 _adminService.Create(admin);
                 string id = _adminService.GetByName(admin.Name).Id;
-                HttpContext.Session.SetString("LoggedIn", id);
+
+                var adminValues = new
+                {
+                    Id = id,
+                    Name = admin.Name,
+                    AdminType = Admin.Type.Admin,
+                    Avatar = admin.Avatar
+                };
+
+                string adminJson = JsonConvert.SerializeObject(adminValues);          
+                HttpContext.Session.SetString("LoggedIn", adminJson);
+   
                 return Redirect("Index");
             }
             catch (Exception e)

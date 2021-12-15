@@ -7,23 +7,45 @@ using System.Threading.Tasks;
 
 namespace BoardLobbyServer.Model
 {
+    [Serializable]
     public class Admin
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        [BsonElement("Name")]
-        public string Name { get; set; }
 
-        public string Password { get; set; }
+        private string _name { get; set; }
+
+        private string _password { get; set; }
 
         public enum Type
         {
             Admin,
             Master
         }
-        public Type AdminType { get; set; }
-        public string Avatar { get; set; }
+        private Type _admintype { get; set; }
+        private string _avatar { get; set; }
+
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; }
+        }
+        public Type AdminType
+        {
+            get { return _admintype; }
+            set { _admintype = value; }
+        }
+        public string Avatar
+        {
+            get { return _avatar; }
+            set { _avatar = value; }
+        }
 
     }
 }

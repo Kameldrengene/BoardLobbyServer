@@ -22,14 +22,6 @@ namespace BoardLobbyServer.Hubs
             await base.OnDisconnectedAsync(exception);
         }
 
-        //public async Task RemoveDisconnected(string id)
-        //{
-        //    await Task.Run(() =>
-        //    {
-        //        admins.Remove(id);
-        //    });
-        //}
-
         public async Task BroadcastStatus(string id,string adminname, string img)
         {
             OnlineAdmin online = new OnlineAdmin{ _id = id, _adminname = adminname, _img = img };

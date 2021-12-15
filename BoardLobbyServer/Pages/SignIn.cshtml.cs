@@ -7,6 +7,7 @@ using BoardLobbyServer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 
 namespace BoardLobbyServer.Pages
 {
@@ -28,7 +29,16 @@ namespace BoardLobbyServer.Pages
                 Admin admin = _adminService.Verify(emailAddress,password);             
                 if (admin!=null)
                 {
-                    HttpContext.Session.SetString("LoggedIn", admin.Id);
+                    var adminValues = new {
+                        Id = admin.Id,
+                        Name = admin.Name,
+                        AdminType = admin.AdminType,
+                        Avatar = admin.Avatar
+                    };
+
+                    string adminJson = JsonConvert.SerializeObject(adminValues);
+                    Console.WriteLine(adminJson);
+                    HttpContext.Session.SetString("LoggedIn", adminJson);
                     return Redirect("Index");
                 }
             }catch(Exception e)

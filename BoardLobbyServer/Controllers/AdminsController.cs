@@ -1,4 +1,5 @@
-﻿using BoardLobbyServer.Model;
+﻿using BoardLobbyServer.Exceptions;
+using BoardLobbyServer.Model;
 using BoardLobbyServer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,69 +31,89 @@ namespace BoardLobbyServer.Controllers
         [HttpGet("{id:length(24)}", Name = "GetAdmin")]
         public ActionResult<Admin> Get(string id)
         {
-            var admin = _adminService.Get(id);
-
-            if (admin == null)
+            try
             {
-                return NotFound();
+                var admin = _adminService.Get(id);
+                return admin;
+            }catch (ResourceNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
-
-            return admin;
+            
         }
 
         [HttpPut("{id:length(24)}")]
         public IActionResult Update(string id, Admin adminIn)
         {
-            var admin = _adminService.Get(id);
-
-            if (admin == null)
+            try 
             {
-                return NotFound();
+                _adminService.Update(id, adminIn);
+                return Accepted(adminIn);
+            }catch (InputIsNotValidException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ResourceNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
 
-            _adminService.Update(id, adminIn);
-
-            return Accepted(admin);
         }
 
         [HttpDelete("{id:length(24)}")]
         public IActionResult Delete(string id)
         {
-            var admin = _adminService.Get(id);
-
-            if (admin == null)
+            try
             {
-                return NotFound();
+                _adminService.Remove(id);
+                return Accepted(id);
             }
-
-            _adminService.Remove(admin.Id);
-
-            return Accepted(admin);
+            catch (ResourceNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [AllowAnonymous]
         [HttpPost]
        public ActionResult<Admin> Create(Admin admin)
         {
-            _adminService.Create(admin);
+            try
+            {
+                _adminService.Create(admin);
+                var token = _jwtAuthenticationManager.Authenticate(admin.Name);
 
-            var token = _jwtAuthenticationManager.Authenticate(admin.Name);
+                if (token == null)
+                    return Unauthorized();
 
-            if (token == null)
-                return Unauthorized();
-
-            return Created("/api/Admins", token);
+                return Created("/api/Admins", token);
+            }
+            catch (InputIsNotValidException ex)
+            {       
+                return ValidationProblem(ex.Message);
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
         }
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] UserCredentials userCred)
         {
-            Admin admin = _adminService.Verify(userCred.Username,userCred.Password);
-
-            if (admin == null)
+            try
             {
-                return Unauthorized("Bad credentials: " + userCred.Username + ".");
+                Admin admin = _adminService.Verify(userCred.Username, userCred.Password);
+            }catch (ResourceNotFoundException ex)
+            {          
+                return Unauthorized(ex.Message);
+            }catch(Exception ex)
+            {
+                return Unauthorized(ex.Message);
             }
 
             var token = _jwtAuthenticationManager.Authenticate(userCred.Username);
