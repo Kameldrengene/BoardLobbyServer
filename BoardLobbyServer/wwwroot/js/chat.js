@@ -50,10 +50,10 @@ connection.on("Disconnected", function (id) {
 connection.on("ReceiveOnlineAdmins", function (AdminList) {
     
     for (let admin of AdminList) {
-        console.log(admin);
+
         let item =  '<div id="'+ admin.value._id +'" class="d-flex justify-content-center align-items-center">' +
             '<div><img src="' + admin.value._img +'" class="rounded" style="width: 50px" alt="..."> </div>'+
-            '<div id="userInput" class=" badge rounded-pill bg-primary" style="font-size:15px;">' + admin.value._adminname+'</div>'+
+            '<div id="adminList" class=" badge rounded-pill bg-primary" style="font-size:15px;">' + admin.value._adminname+'</div>'+
                     '</div>';
         $('#adminList').append(item);
     }
@@ -64,7 +64,7 @@ connection.on("ReceiveOnlineAdmins", function (AdminList) {
 connection.on("UpdateOnlineAdmins", function (admin) {
     let item = '<div id="'+admin._id+'" class="d-flex justify-content-center align-items-center">' +
         '<div><img src="' + admin._img + '" class="rounded" style="width: 50px" alt="..."> </div>' +
-        '<div id="userInput" class=" badge rounded-pill bg-primary" style="font-size:15px;">' + admin._adminname + '</div>' +
+        '<div id="adminList" class=" badge rounded-pill bg-primary" style="font-size:15px;">' + admin._adminname + '</div>' +
         '</div>';
     $('#adminList').append(item);
 });
