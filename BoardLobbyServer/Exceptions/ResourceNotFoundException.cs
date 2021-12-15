@@ -14,8 +14,7 @@ namespace BoardLobbyServer.Exceptions
         {
             get
             {
-                msg = base.Message;
-                msg += "Class name: " + className + " resources not found";
+                msg = "We could not find what you are looking for.";
                 return msg;
             }
         }

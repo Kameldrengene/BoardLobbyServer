@@ -57,13 +57,11 @@ connection.on("ReceiveOnlineAdmins", function (AdminList) {
                     '</div>';
         $('#adminList').append(item);
     }
-    console.log(AdminList);
     
     
 });
 
 connection.on("UpdateOnlineAdmins", function (admin) {
-    console.log(admin);
     let item = '<div id="'+admin._id+'" class="d-flex justify-content-center align-items-center">' +
         '<div><img src="' + admin._img + '" class="rounded" style="width: 50px" alt="..."> </div>' +
         '<div id="userInput" class=" badge rounded-pill bg-primary" style="font-size:15px;">' + admin._adminname + '</div>' +

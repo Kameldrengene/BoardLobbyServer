@@ -16,8 +16,7 @@ namespace BoardLobbyServer.Exceptions
         {
             get
             {
-                msg = base.Message;
-                msg += "Class name: " + className;
+                msg = "Input is not valid";
                 return msg;
             }
         }
